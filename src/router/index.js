@@ -1,4 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
+import { useAuthStore } from '@/stores/auth.store'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -57,9 +58,12 @@ const router = createRouter({
 
 // ── GUARD AUTH ──
 router.beforeEach((to) => {
-  const isLoggedIn = false // à remplacer par le vrai store auth plus tard
-  if (to.meta.requiresAuth && !isLoggedIn) {
-    return { name: 'login' }
+  const authStore = useAuthStore()
+
+  // Si la route nécessite d'être connecté et qu'on ne l'est pas
+  // on redirige vers /login en gardant la route demandée en paramètre
+  if (to.meta.requiresAuth && !authStore.isLoggedIn) {
+    return { name: 'login', query: { redirect: to.fullPath } }
   }
 })
 
