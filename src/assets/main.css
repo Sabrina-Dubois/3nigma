@@ -2,6 +2,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,400&family=IM+Fell+English:ital@0;1&family=JetBrains+Mono:wght@400;700&display=swap');
 
 @import 'tailwindcss';
+@import '@mdi/font/css/materialdesignicons.min.css';
 
 /* ── THÈME PARCHEMIN ── */
 :root {
@@ -30,4 +31,36 @@ body {
   color: var(--ink);
   font-family: 'Crimson Pro', Georgia, serif;
   min-height: 100vh;
+}
+
+
+.btn-primary {
+  align-items: center;
+  background: var(--ink3);
+  border: 1px solid var(--ink3);
+  border-radius: 0.25rem;
+  color: var(--parch);
+  cursor: pointer;
+  display: inline-flex;
+  font-family: 'Cinzel', serif;
+  font-size: 12px;
+  font-weight: 700;
+  height: 48px;
+  justify-content: center;
+  letter-spacing: 2px;
+  min-width: 220px;
+  padding: 0 1.5rem;
+  text-transform: uppercase;
+}
+
+.btn-primary:hover {
+  opacity: 0.9;
+}
+
+.btn-primary:disabled {
+  cursor: not-allowed;
+}
+
+.btn-block {
+  width: 100%;
 }

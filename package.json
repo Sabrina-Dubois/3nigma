@@ -10,6 +10,7 @@
     "format": "prettier --write --experimental-cli src/"
   },
   "dependencies": {
+    "@mdi/font": "^7.4.47",
     "@supabase/supabase-js": "^2.99.0",
     "pinia": "^3.0.4",
     "pinia-plugin-persistedstate": "^4.7.1",

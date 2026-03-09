@@ -3,11 +3,9 @@
 
     <!-- Logo -->
     <div class="text-center mb-10">
-      <!--<div class="text-5xl mb-3">🗝️</div>-->
       <h1
         style="font-family: 'Cinzel', serif; font-weight: 900; font-size: 38px; color: var(--ink3); letter-spacing: 2px;">
-        <span style="color: var(--gold)">🗝️ 3</span>NIGMA<span
-          style="color: var(--gold); font-size: 55px;">°</span>
+        <span style="color: var(--gold)">🗝️ 3</span>NIGMA<span style="color: var(--gold); font-size: 55px;">°</span>
       </h1>
       <p
         style="font-family: 'IM Fell English', serif; font-style: italic; color: var(--sepia); font-size: 18px; margin-top: 6px;">
@@ -15,101 +13,198 @@
       </p>
     </div>
 
-    <!-- Carte formulaire -->
+    <!-- Carte -->
     <div class="w-full max-w-sm rounded p-8 relative"
       style="background: var(--parch3); border: 1px solid var(--border); box-shadow: 0 4px 20px var(--shadow);">
 
-      <!-- Cadre intérieur décoratif -->
       <div class="absolute inset-2 rounded pointer-events-none" style="border: 1px solid rgba(30,14,4,0.07)"></div>
 
-      <h2
-        style="font-family: 'Cinzel', serif; font-size: 18px; font-weight: 600; letter-spacing: 3px; color: var(--ink); text-align: center; margin-bottom: 28px; text-transform: uppercase;">
-        Se connecter
-      </h2>
+      <!-- Toggle Login / Register -->
+      <div class="flex mb-8 rounded overflow-hidden" style="border: 1px solid var(--border);">
+        <button @click="switchMode('login')" class="flex-1 py-2 transition-all"
+          style="font-family: 'Cinzel', serif; font-size: 11px; letter-spacing: 2px; text-transform: uppercase; cursor: pointer;"
+          :style="mode === 'login'
+            ? 'background: var(--ink3); color: var(--parch);'
+            : 'background: transparent; color: var(--sepia);'">
+          Connexion
+        </button>
+        <button @click="switchMode('register')" class="flex-1 py-2 transition-all"
+          style="font-family: 'Cinzel', serif; font-size: 11px; letter-spacing: 2px; text-transform: uppercase; cursor: pointer;"
+          :style="mode === 'register'
+            ? 'background: var(--ink3); color: var(--parch);'
+            : 'background: transparent; color: var(--sepia);'">
+          Inscription
+        </button>
+      </div>
 
-      <!-- Message d'erreur -->
-      <div v-if="errorMsg" class="mb-4 px-4 py-3 rounded text-sm"
-        style="background: rgba(139,26,10,0.1); border: 1px solid rgba(139,26,10,0.3); color: var(--red); font-family: 'Crimson Pro', serif;">
+      <!-- Message succès -->
+      <div v-if="successMsg" class="mb-4 px-4 py-3 rounded"
+        style="background: rgba(42,90,26,0.1); border: 1px solid rgba(42,90,26,0.3); color: #2a5a1a; font-family: 'Crimson Pro', serif; font-size: 15px;">
+        {{ successMsg }}
+      </div>
+
+      <!-- Message erreur -->
+      <div v-if="errorMsg" class="mb-4 px-4 py-3 rounded"
+        style="background: rgba(139,26,10,0.1); border: 1px solid rgba(139,26,10,0.3); color: var(--red); font-family: 'Crimson Pro', serif; font-size: 15px;">
         {{ errorMsg }}
       </div>
 
-      <!-- Champ email -->
-      <div class="mb-4">
-        <label
-          style="font-family: 'Cinzel', serif; font-size: 10px; letter-spacing: 2px; color: var(--sepia); text-transform: uppercase; display: block; margin-bottom: 6px;">
-          Email
-        </label>
-        <input v-model="email" type="email" placeholder="votre@email.com" class="w-full px-4 py-3 rounded outline-none"
-          style="background: var(--parch); border: 1px solid var(--border); font-family: 'Crimson Pro', serif; font-size: 16px; color: var(--ink);" />
-      </div>
+      <template v-if="!successMsg">
 
-      <!-- Champ mot de passe -->
-      <div class="mb-6">
-        <label
-          style="font-family: 'Cinzel', serif; font-size: 10px; letter-spacing: 2px; color: var(--sepia); text-transform: uppercase; display: block; margin-bottom: 6px;">
-          Mot de passe
-        </label>
-        <input v-model="password" type="password" placeholder="••••••••" class="w-full px-4 py-3 rounded outline-none"
-          style="background: var(--parch); border: 1px solid var(--border); font-family: 'Crimson Pro', serif; font-size: 16px; color: var(--ink);"
-          @keyup.enter="handleLogin" />
-      </div>
+        <!-- Pseudo (register only) -->
+        <div v-if="mode === 'register'" class="mb-4">
+          <label
+            style="font-family: 'Cinzel', serif; font-size: 10px; letter-spacing: 2px; color: var(--sepia); text-transform: uppercase; display: block; margin-bottom: 6px;">
+            Pseudo
+          </label>
+          <input v-model="username" type="text" placeholder="VotreNom" class="w-full px-4 py-3 rounded outline-none"
+            style="background: var(--parch); border: 1px solid var(--border); font-family: 'Crimson Pro', serif; font-size: 16px; color: var(--ink);" />
+        </div>
 
-      <!-- Bouton connexion -->
-      <button @click="handleLogin" :disabled="loading" class="w-full py-3 rounded transition-opacity"
-        style="background: var(--ink3); color: var(--parch); font-family: 'Cinzel', serif; font-size: 12px; letter-spacing: 3px; text-transform: uppercase; cursor: pointer; opacity: 1;"
-        :style="{ opacity: loading ? 0.7 : 1 }">
-        {{ loading ? 'Connexion...' : 'Se connecter' }}
-      </button>
+        <!-- Email -->
+        <div class="mb-4">
+          <label
+            style="font-family: 'Cinzel', serif; font-size: 10px; letter-spacing: 2px; color: var(--sepia); text-transform: uppercase; display: block; margin-bottom: 6px;">
+            Email
+          </label>
+          <input v-model="email" type="email" placeholder="votre@email.com"
+            class="w-full px-4 py-3 rounded outline-none"
+            style="background: var(--parch); border: 1px solid var(--border); font-family: 'Crimson Pro', serif; font-size: 16px; color: var(--ink);" />
+        </div>
 
-      <!-- Liens -->
-      <div class="mt-6 text-center flex flex-col gap-2">
-        <router-link to="/forgot-password"
-          style="font-family: 'Crimson Pro', serif; font-style: italic; font-size: 14px; color: var(--sepia);">
-          Mot de passe oublié ?
-        </router-link>
-        <router-link to="/register"
-          style="font-family: 'Cinzel', serif; font-size: 11px; font-weight: 600; letter-spacing: 2px; color: var(--gold); text-transform: uppercase;">
-          Créer un compte
-        </router-link>
-      </div>
+        <!-- Mot de passe -->
+        <div class="mb-4">
+          <label
+            style="font-family: 'Cinzel', serif; font-size: 10px; letter-spacing: 2px; color: var(--sepia); text-transform: uppercase; display: block; margin-bottom: 6px;">
+            Mot de passe
+          </label>
+          <div class="relative">
+            <input v-model="password" :type="showPassword ? 'text' : 'password'" placeholder="••••••••"
+              class="w-full px-4 py-3 rounded outline-none pr-12"
+              style="background: var(--parch); border: 1px solid var(--border); font-family: 'Crimson Pro', serif; font-size: 16px; color: var(--ink);" />
+            <button type="button" @click="showPassword = !showPassword"
+              class="absolute right-3 top-1/2 -translate-y-1/2"
+              style="background: none; border: none; cursor: pointer; color: var(--sepia); font-size: 20px;">
+              <i :class="showPassword ? 'mdi mdi-eye-off' : 'mdi mdi-eye'"></i>
+            </button>
+          </div>
+        </div>
 
+        <!-- Confirmation (register only) -->
+        <div v-if="mode === 'register'" class="mb-6">
+          <label
+            style="font-family: 'Cinzel', serif; font-size: 10px; letter-spacing: 2px; color: var(--sepia); text-transform: uppercase; display: block; margin-bottom: 6px;">
+            Confirmer le mot de passe
+          </label>
+          <div class="relative">
+            <input v-model="passwordConfirm" :type="showPasswordConfirm ? 'text' : 'password'" placeholder="••••••••"
+              class="w-full px-4 py-3 rounded outline-none pr-12"
+              style="background: var(--parch); border: 1px solid var(--border); font-family: 'Crimson Pro', serif; font-size: 16px; color: var(--ink);"
+              @keyup.enter="handleSubmit" />
+            <button type="button" @click="showPasswordConfirm = !showPasswordConfirm"
+              class="absolute right-3 top-1/2 -translate-y-1/2"
+              style="background: none; border: none; cursor: pointer; color: var(--sepia); font-size: 20px;">
+              <i :class="showPasswordConfirm ? 'mdi mdi-eye-off' : 'mdi mdi-eye'"></i>
+            </button>
+          </div>
+        </div>
+
+        <!-- Mot de passe oublié (login only) -->
+        <div v-if="mode === 'login'" class="mb-6 text-right">
+          <router-link to="/forgot-password"
+            style="font-family: 'Crimson Pro', serif; font-style: italic; font-size: 13px; color: var(--sepia);">
+            Mot de passe oublié ?
+          </router-link>
+        </div>
+
+        <!-- Bouton -->
+        <button @click="handleSubmit" :disabled="loading" class="w-full py-3 rounded"
+          style="background: var(--ink3); color: var(--parch); font-family: 'Cinzel', serif; font-size: 12px; letter-spacing: 3px; text-transform: uppercase; cursor: pointer;"
+          :style="{ opacity: loading ? 0.7 : 1 }">
+          {{ loading ? '...' : mode === 'login' ? 'Se connecter' : 'Créer mon compte' }}
+        </button>
+
+      </template>
     </div>
   </div>
 </template>
+Dis-moi quand c'est fait 👇
 
 <script setup>
 import { ref } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 import { useAuthStore } from '@/stores/auth.store'
-import { useI18n } from 'vue-i18n'
 
 const router = useRouter()
 const route = useRoute()
 const authStore = useAuthStore()
-const { t } = useI18n()
 
-// ── STATE LOCAL ──
+// ── MODE : login ou register ──
+const mode = ref('login') // 'login' | 'register'
+const showPassword = ref(false)
+const showPasswordConfirm = ref(false)
+
+// ── STATE ──
+const username = ref('')
 const email = ref('')
 const password = ref('')
+const passwordConfirm = ref('')
 const loading = ref(false)
 const errorMsg = ref('')
+const successMsg = ref('')
 
-// ── CONNEXION ──
-async function handleLogin() {
+function switchMode(newMode) {
+  mode.value = newMode
   errorMsg.value = ''
-  loading.value = true
+  successMsg.value = ''
+}
 
+// ── VALIDATION ──
+function validate() {
+  if (mode.value === 'register') {
+    if (!username.value || username.value.length < 3) {
+      errorMsg.value = 'Le pseudo doit faire au moins 3 caractères.'
+      return false
+    }
+    if (password.value !== passwordConfirm.value) {
+      errorMsg.value = 'Les mots de passe ne correspondent pas.'
+      return false
+    }
+  }
+  if (!email.value.includes('@')) {
+    errorMsg.value = 'Email invalide.'
+    return false
+  }
+  if (password.value.length < 8) {
+    errorMsg.value = 'Le mot de passe doit faire au moins 8 caractères.'
+    return false
+  }
+  return true
+}
+
+// ── SUBMIT ──
+async function handleSubmit() {
+  errorMsg.value = ''
+  successMsg.value = ''
+  if (!validate()) return
+
+  loading.value = true
   try {
-    await authStore.signIn(email.value, password.value)
-    // Redirige vers la page demandée ou l'accueil
-    const redirect = route.query.redirect || '/'
-    router.push(redirect)
+    if (mode.value === 'login') {
+      await authStore.signIn(email.value, password.value)
+      const redirect = route.query.redirect || '/'
+      router.push(redirect)
+    } else {
+      await authStore.signUp(email.value, password.value, username.value)
+      successMsg.value = 'Compte créé ! Vérifiez votre email pour confirmer.'
+    }
   } catch (error) {
-    // Traduit les erreurs Supabase en français
     if (error.message.includes('Invalid login credentials')) {
       errorMsg.value = 'Email ou mot de passe incorrect.'
     } else if (error.message.includes('Email not confirmed')) {
       errorMsg.value = 'Veuillez confirmer votre email avant de vous connecter.'
+    } else if (error.message.includes('already registered')) {
+      errorMsg.value = 'Cet email est déjà utilisé.'
     } else {
       errorMsg.value = 'Une erreur est survenue. Réessayez.'
     }
