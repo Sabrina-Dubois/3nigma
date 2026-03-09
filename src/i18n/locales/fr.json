@@ -1,0 +1,26 @@
+{
+  "app": {
+    "name": "3NIGMA°",
+    "tagline": "Chaque jour, une clé. Chaque clé, une vérité."
+  },
+  "nav": {
+    "home": "Accueil",
+    "profile": "Profil",
+    "settings": "Réglages"
+  },
+  "auth": {
+    "login": "Se connecter",
+    "register": "Créer un compte",
+    "logout": "Se déconnecter",
+    "email": "Email",
+    "password": "Mot de passe",
+    "username": "Pseudo"
+  },
+  "common": {
+    "loading": "Chargement...",
+    "error": "Une erreur est survenue",
+    "back": "Retour",
+    "confirm": "Confirmer",
+    "cancel": "Annuler"
+  }
+}
