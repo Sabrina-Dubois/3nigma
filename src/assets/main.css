@@ -1,0 +1,33 @@
+/* ── FONTS ── */
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,400&family=IM+Fell+English:ital@0;1&family=JetBrains+Mono:wght@400;700&display=swap');
+
+@import 'tailwindcss';
+
+/* ── THÈME PARCHEMIN ── */
+:root {
+  --parch: #f2e8d0;
+  --parch2: #e8d8b4;
+  --parch3: #dcc898;
+  --ink: #1e0e04;
+  --ink2: #3a1e0a;
+  --ink3: #5a3818;
+  --sepia: #8a6030;
+  --sepia2: #b08040;
+  --gold: #c8900a;
+  --gold2: #e8b030;
+  --red: #8b1a0a;
+  --border: rgba(30, 14, 4, 0.15);
+  --shadow: rgba(30, 14, 4, 0.1);
+}
+
+/* ── BASE ── */
+* {
+  box-sizing: border-box;
+}
+
+body {
+  background-color: var(--parch);
+  color: var(--ink);
+  font-family: 'Crimson Pro', Georgia, serif;
+  min-height: 100vh;
+}
