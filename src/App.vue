@@ -7,7 +7,10 @@
   </div>
 
   <!-- App normale une fois chargée -->
-  <RouterView v-else />
+  <div v-else class="mx-auto relative min-h-screen" style="max-width: 430px; background: var(--parch);">
+    <RouterView />
+  </div>
+
 </template>
 
 
