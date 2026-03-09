@@ -7,10 +7,10 @@ import router from './router'
 import './assets/main.css'
 
 const app = createApp(App)
+
 const pinia = createPinia()
 pinia.use(piniaPluginPersistedstate)
 
-app.use(createPinia())
 app.use(router)
 app.use(pinia)
 
