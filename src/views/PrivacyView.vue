@@ -175,9 +175,9 @@
     </div>
 
     <footer class="page-footer">
-      <button class="footer-link" @click="router.push('/help')">Aide</button>
-      <button class="footer-link" @click="router.push('/terms')">Conditions</button>
-      <button class="footer-link" @click="router.push('/privacy')">Confidentialité</button>
+      <button class="btn-secondary" @click="router.push('/help')">Aide</button>
+      <button class="btn-secondary" @click="router.push('/terms')">Conditions</button>
+      <button class="btn-secondary" @click="router.push('/privacy')">Confidentialité</button>
     </footer>
   </div>
 </template>
@@ -407,21 +407,4 @@ const sections = computed(() => [
   flex-wrap: wrap;
 }
 
-.footer-link {
-  background: var(--parch2);
-  border: 1px solid var(--border);
-  color: var(--ink3);
-  padding: 8px 12px;
-  border-radius: 999px;
-  font-family: 'Cinzel', serif;
-  font-size: 10px;
-  letter-spacing: 1px;
-  text-transform: uppercase;
-  cursor: pointer;
-}
-
-.footer-link:hover {
-  background: var(--ink3);
-  color: var(--parch);
-}
 </style>

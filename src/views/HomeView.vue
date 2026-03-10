@@ -10,11 +10,8 @@
     <!-- Filtres durée -->
     <div class="flex gap-2 mb-6 overflow-x-auto pb-1">
       <button v-for="filter in filters" :key="filter.value" @click="activeFilter = filter.value"
-        class="px-3 py-1 rounded-full whitespace-nowrap transition-all"
-        style="font-family: 'Cinzel', serif; font-size: 10px; letter-spacing: 1px; text-transform: uppercase; border: 1px solid var(--border); cursor: pointer;"
-        :style="activeFilter === filter.value
-          ? 'background: var(--ink3); color: var(--parch); border-color: var(--ink3);'
-          : 'background: transparent; color: var(--sepia);'">
+        class="pill"
+        :class="{ 'pill-active': activeFilter === filter.value }">
         {{ filter.label }}
       </button>
     </div>
@@ -49,8 +46,7 @@
           </div>
 
           <!-- Badge premium -->
-          <span v-if="escape.is_premium"
-            style="font-family: 'Cinzel', serif; font-size: 9px; letter-spacing: 1px; color: var(--gold); border: 1px solid var(--gold); padding: 2px 8px; border-radius: 999px; text-transform: uppercase;">
+          <span v-if="escape.is_premium" class="badge badge-gold">
             Premium
           </span>
         </div>

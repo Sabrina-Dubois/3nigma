@@ -188,6 +188,66 @@ body {
   width: 100%;
 }
 
+/* ── BUTTON SECONDARY / LINK ── */
+.btn-secondary {
+  align-items: center;
+  background: var(--parch2);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  color: var(--ink3);
+  cursor: pointer;
+  display: inline-flex;
+  font-family: 'Cinzel', serif;
+  font-size: 10px;
+  letter-spacing: 2px;
+  padding: 8px 12px;
+  text-transform: uppercase;
+}
+
+.btn-secondary:hover {
+  background: var(--ink3);
+  color: var(--parch);
+}
+
+/* ── PILLS / FILTERS ── */
+.pill {
+  padding: 0.35rem 0.75rem;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--sepia);
+  font-family: 'Cinzel', serif;
+  font-size: 10px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.2s;
+  white-space: nowrap;
+}
+
+.pill-active {
+  background: var(--ink3);
+  color: var(--parch);
+  border-color: var(--ink3);
+}
+
+/* ── BADGES ── */
+.badge {
+  font-family: 'Cinzel', serif;
+  font-size: 9px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  padding: 2px 8px;
+  border-radius: 999px;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.badge-gold {
+  color: var(--gold);
+  border: 1px solid var(--gold);
+}
 
 .btn-primary {
   align-items: center;
