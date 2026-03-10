@@ -277,6 +277,25 @@ body {
   color: var(--sepia);
 }
 
+/* ── SECTION HEADERS ── */
+.section-title {
+  font-family: 'Cinzel', serif;
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  color: var(--ink);
+  text-transform: uppercase;
+}
+
+.section-title-sm {
+  font-family: 'Cinzel', serif;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  color: var(--sepia);
+  text-transform: uppercase;
+}
+
 /* ── TABS / TOGGLES ── */
 .tab-group {
   display: flex;

@@ -23,8 +23,8 @@
     <div v-else-if="escape" class="px-4 py-6 pb-24">
 
       <!-- Premium check -->
-      <div v-if="escape.is_premium && !authStore.user.is_premium" class="card p-6 rounded text-center">
-        <p style="font-family: 'Cinzel', serif; font-size: 14px; color: var(--ink); margin-bottom: 12px;">
+        <div v-if="escape.is_premium && !authStore.user.is_premium" class="card p-6 rounded text-center">
+        <p class="section-title-sm" style="color: var(--ink); margin-bottom: 12px;">
           Cette escape est réservée aux membres Premium 🗝️
         </p>
         <button @click="router.push('/upgrade')" class="py-3 px-6 rounded"
@@ -56,10 +56,7 @@
         <!-- Prologue -->
         <div class="card double-frame rounded p-6 mb-6 relative">
 
-          <p
-            style="font-family: 'Cinzel', serif; font-size: 10px; letter-spacing: 3px; color: var(--sepia); text-transform: uppercase; margin-bottom: 16px;">
-            Prologue
-          </p>
+          <p class="section-title-sm mb-4">Prologue</p>
 
           <div v-for="(paragraph, i) in prologueParagraphs" :key="i">
             <p

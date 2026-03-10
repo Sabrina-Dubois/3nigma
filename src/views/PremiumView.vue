@@ -31,7 +31,7 @@
 
       <!-- Avantages -->
       <section class="card double-frame rounded p-5 mb-4">
-        <p class="section-label mb-3">Avantages</p>
+        <p class="section-title-sm mb-3">Avantages</p>
 
         <div class="grid gap-3">
           <div class="flex gap-3">
@@ -63,7 +63,7 @@
 
       <!-- Offre -->
       <section class="card double-frame rounded p-5">
-        <p class="section-label mb-3">Offre</p>
+        <p class="section-title-sm mb-3">Offre</p>
 
         <div class="text-center">
           <div style="font-family: 'Cinzel', serif; font-size: 28px; font-weight: 900; color: var(--gold);">

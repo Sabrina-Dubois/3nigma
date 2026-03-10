@@ -12,7 +12,7 @@
       <!-- Compte -->
       <section class="card double-frame rounded p-5 mb-4 relative">
 
-        <p class="section-label mb-3">Compte</p>
+        <p class="section-title-sm mb-3">Compte</p>
 
         <div class="grid gap-3">
           <div>
@@ -46,7 +46,7 @@
 
       <!-- Sécurité -->
       <section class="card double-frame rounded p-5 mb-4">
-        <p class="section-label mb-3">Sécurité</p>
+        <p class="section-title-sm mb-3">Sécurité</p>
 
         <button @click="router.push('/forgot-password')" class="btn-primary btn-block">
           Changer mon mot de passe
@@ -55,7 +55,7 @@
 
       <!-- Notifications -->
       <section class="card double-frame rounded p-5 mb-4">
-        <p class="section-label mb-3">Notifications</p>
+        <p class="section-title-sm mb-3">Notifications</p>
 
         <div class="flex items-center justify-between">
           <div>
@@ -82,7 +82,7 @@
 
       <!-- Premium -->
       <section class="card double-frame rounded p-5 mb-4">
-        <p class="section-label mb-3">Premium</p>
+        <p class="section-title-sm mb-3">Premium</p>
 
         <div v-if="authStore.profile?.is_premium">
           <p style="font-family: 'Crimson Pro', serif; font-size: 16px; color: var(--ink);">
@@ -105,7 +105,7 @@
 
       <!-- À propos -->
       <section class="card double-frame rounded p-5 mb-4">
-        <p class="section-label mb-3">À propos</p>
+        <p class="section-title-sm mb-3">À propos</p>
 
         <div class="grid gap-3">
           <button class="w-full text-left py-3 px-4 rounded card-soft"
