@@ -16,21 +16,13 @@
 
         <div class="grid gap-3">
           <div>
-            <p style="font-family: 'Cinzel', serif; font-size: 10px; letter-spacing: 2px; color: var(--sepia);">
-              Pseudo
-            </p>
-            <p style="font-family: 'Crimson Pro', serif; font-size: 16px; color: var(--ink);">
-              {{ authStore.profile?.username ?? '—' }}
-            </p>
+            <label class="form-label">Pseudo</label>
+            <input v-model="username" type="text" class="input-field" placeholder="Votre pseudo" />
           </div>
 
           <div>
-            <p style="font-family: 'Cinzel', serif; font-size: 10px; letter-spacing: 2px; color: var(--sepia);">
-              Email
-            </p>
-            <p style="font-family: 'Crimson Pro', serif; font-size: 16px; color: var(--ink);">
-              {{ authStore.user?.email ?? '—' }}
-            </p>
+            <label class="form-label">Email</label>
+            <input v-model="email" type="email" class="input-field" placeholder="votre@email.com" />
           </div>
 
           <div>
@@ -41,6 +33,13 @@
               {{ authStore.profile?.is_premium ? 'Premium 🗝️' : 'Gratuit' }}
             </p>
           </div>
+        </div>
+
+        <div class="grid gap-2 mt-4">
+          <button class="btn-primary btn-block" :disabled="savingAll" @click="saveAll">
+            {{ savingAll ? '...' : 'Enregistrer' }}
+          </button>
+          <p class="caption">Si l’email change, un email de confirmation sera envoyé.</p>
         </div>
       </section>
 
@@ -138,21 +137,64 @@ import { ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { useAuthStore } from '@/stores/auth.store'
 import TopBar from '@/components/TopBar.vue'
+import { supabase } from '@/lib/supabase'
+import { useUiStore } from '@/stores/ui.store'
 
 const router = useRouter()
 const authStore = useAuthStore()
+const uiStore = useUiStore()
 const notificationsEnabled = ref(false)
+const username = ref('')
+const email = ref('')
+const savingAll = ref(false)
 
 const NOTIF_KEY = '3nigma.notifications.enabled'
 
 onMounted(() => {
   const saved = localStorage.getItem(NOTIF_KEY)
   notificationsEnabled.value = saved === 'true'
+  username.value = authStore.profile?.username ?? ''
+  email.value = authStore.user?.email ?? ''
 })
 
 function toggleNotifications() {
   notificationsEnabled.value = !notificationsEnabled.value
   localStorage.setItem(NOTIF_KEY, String(notificationsEnabled.value))
+}
+
+async function saveAll() {
+  if (!authStore.user?.id) return
+  if (!username.value.trim()) {
+    uiStore.showToast('Pseudo invalide.', 'error')
+    return
+  }
+  if (!email.value.includes('@')) {
+    uiStore.showToast('Email invalide.', 'error')
+    return
+  }
+
+  savingAll.value = true
+
+  const { error: profileError } = await supabase
+    .from('profiles')
+    .update({ username: username.value.trim() })
+    .eq('id', authStore.user.id)
+
+  let emailError = null
+  if (email.value.trim() !== (authStore.user?.email ?? '')) {
+    const { error } = await supabase.auth.updateUser({ email: email.value.trim() })
+    emailError = error
+  }
+
+  savingAll.value = false
+
+  if (profileError || emailError) {
+    uiStore.showToast('Erreur lors de la sauvegarde.', 'error')
+    return
+  }
+
+  await authStore.fetchProfile()
+  uiStore.showToast('Modifications enregistrées.', 'success')
 }
 
 async function onLogout() {

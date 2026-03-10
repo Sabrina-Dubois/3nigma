@@ -71,7 +71,7 @@ body {
   font-family: 'Cinzel', serif;
   font-size: 10px;
   letter-spacing: 2px;
-  color: var(--sepia);
+  color: var(--ink3);
   text-transform: uppercase;
   display: block;
   margin-bottom: 6px;
@@ -289,11 +289,12 @@ body {
 
 .section-title-sm {
   font-family: 'Cinzel', serif;
-  font-size: 12px;
+  font-size: 13px;
   font-weight: 700;
   letter-spacing: 2px;
-  color: var(--sepia);
+  color: var(--ink3);
   text-transform: uppercase;
+  text-align: center;
 }
 
 /* ── TABS / TOGGLES ── */
