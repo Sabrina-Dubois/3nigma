@@ -9,10 +9,15 @@
         style="font-family: 'Crimson Pro', serif; font-style: italic; font-size: 18px; color: var(--ink2); margin-top: 8px;">
         Vos aventures arrivent bientôt...
       </p>
+      
+
     </div>
   </AppLayout>
 </template>
 
 <script setup>
 import AppLayout from '@/components/AppLayout.vue'
+import { useUiStore } from '@/stores/ui.store'
+
+const uiStore = useUiStore()
 </script>
