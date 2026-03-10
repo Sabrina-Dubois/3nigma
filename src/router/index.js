@@ -34,6 +34,12 @@ const router = createRouter({
       meta: { requiresAuth: true },
     },
     {
+      path: '/escapes',
+      name: 'escapes',
+      component: () => import('@/views/EscapesView.vue'),
+      meta: { requiresAuth: true },
+    },
+    {
       path: '/escape/:id',
       name: 'escape-detail',
       component: () => import('@/views/EscapeDetailView.vue'),
