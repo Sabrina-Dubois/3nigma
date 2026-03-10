@@ -5,7 +5,7 @@
         <!-- Logo -->
         <router-link to="/" style="text-decoration: none;">
             <span
-                style="font-family: 'Cinzel', serif; font-weight: 900; font-size: 20px; color: var(--ink); letter-spacing: 1px;">
+                style="font-family: 'Cinzel', serif; font-weight: 900; font-size: 20px; color: var(--ink3); letter-spacing: 1px;">
                 <span style="color: var(--gold)">🗝️ 3</span>NIGMA<span
                     style="color: var(--gold); font-size: 28px;">°</span>
             </span>

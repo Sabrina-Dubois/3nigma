@@ -57,8 +57,7 @@
                 </div>
 
                 <!-- Bouton -->
-                <button @click="updatePassword" :disabled="loading" class="w-full py-3 rounded mt-2"
-                    style="background: var(--ink3); color: var(--parch); font-family: 'Cinzel', serif; font-size: 12px; letter-spacing: 3px; text-transform: uppercase; cursor: pointer; border: none;"
+                <button @click="updatePassword" :disabled="loading" class="btn-primary btn-block mt-2"
                     :style="{ opacity: loading ? 0.7 : 1 }">
                     {{ loading ? '...' : 'Confirmer' }}
                 </button>
@@ -70,8 +69,7 @@
                     style="font-family: 'Crimson Pro', serif; font-size: 15px; color: var(--sepia); margin-bottom: 16px;">
                     Ce lien est invalide ou a expiré.
                 </p>
-                <button @click="router.push('/forgot-password')" class="w-full py-3 rounded"
-                    style="background: var(--ink3); color: var(--parch); font-family: 'Cinzel', serif; font-size: 12px; letter-spacing: 3px; text-transform: uppercase; cursor: pointer; border: none;">
+                <button @click="router.push('/forgot-password')" class="btn-primary btn-block">
                     Renvoyer un lien
                 </button>
             </div>

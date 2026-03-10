@@ -106,9 +106,7 @@
         </div>
 
         <!-- Bouton -->
-        <button @click="handleSubmit" :disabled="loading" class="w-full py-3 rounded"
-          style="background: var(--ink3); color: var(--parch); font-family: 'Cinzel', serif; font-size: 12px; letter-spacing: 3px; text-transform: uppercase; cursor: pointer;"
-          :style="{ opacity: loading ? 0.7 : 1 }">
+        <button @click="handleSubmit" :disabled="loading" class="btn-primary btn-block">
           {{ loading ? '...' : mode === 'login' ? 'Se connecter' : 'Créer mon compte' }}
         </button>
 
