@@ -1,11 +1,13 @@
 <template>
-  <!-- Loader global pendant l'init -->
   <AppLoader v-if="uiStore.isLoading" />
 
-  <!-- App normale une fois chargée -->
-  <div v-else class="mx-auto relative min-h-screen" style="max-width: 430px; background: var(--parch);">
-    <AppToast />
-    <RouterView />
+  <div v-else class="app-wrapper">
+    <div class="app-container">
+      <AppToast />
+      <RouterView />
+    </div>
+
+    <BottomNav />
   </div>
 </template>
 

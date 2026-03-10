@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 80">
+  <!-- Ornements gauche -->
+  <text x="8" y="52" font-family="Cinzel, serif" font-size="28" fill="#C8900A" opacity="0.4">❧</text>
+
+  <!-- Clé emoji -->
+  <text x="42" y="52" font-size="32">🗝️</text>
+
+  <!-- 3 en or -->
+  <text x="82" y="54" font-family="Cinzel, serif" font-weight="900" font-size="38" fill="#C8900A">3</text>
+
+  <!-- NIGMA en encre -->
+  <text x="108" y="54" font-family="Cinzel, serif" font-weight="900" font-size="38" fill="#1E0E04">NIGMA</text>
+
+  <!-- ° en or petit exposant -->
+  <text x="273" y="28" font-family="Cinzel, serif" font-weight="900" font-size="22" fill="#C8900A">°</text>
+
+  <!-- Ornements droite -->
+  <text x="284" y="52" font-family="Cinzel, serif" font-size="28" fill="#C8900A" opacity="0.4">❧</text>
+
+  <!-- Ligne séparatrice -->
+  <line x1="42" y1="60" x2="292" y2="60" stroke="#C8900A" stroke-width="0.5" opacity="0.5"/>
+
+  <!-- Tagline -->
+  <text x="167" y="74" font-family="IM Fell English, serif" font-style="italic" font-size="9" fill="#6B4C2A" text-anchor="middle">
+    Chaque jour, une clé. Chaque clé, une vérité.
+  </text>
+</svg>
