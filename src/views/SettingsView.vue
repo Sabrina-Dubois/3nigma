@@ -5,25 +5,15 @@
     <main class="px-4 pt-6 pb-24 max-w-xl mx-auto">
       <!-- Titre -->
       <div class="mb-6">
-        <h1
-          style="font-family: 'Cinzel', serif; font-size: 20px; font-weight: 900; color: var(--ink); letter-spacing: 2px;">
-          Réglages
-        </h1>
-        <p
-          style="font-family: 'Crimson Pro', serif; font-style: italic; font-size: 15px; color: var(--sepia); margin-top: 4px;">
-          Gérez votre compte et vos préférences
-        </p>
+        <h1 class="page-title">Réglages</h1>
+        <p class="page-subtitle mt-1">Gérez votre compte et vos préférences</p>
       </div>
 
       <!-- Compte -->
-      <section class="rounded p-5 mb-4 relative"
-        style="background: var(--parch3); border: 1px solid var(--border); box-shadow: 0 2px 10px var(--shadow);">
+      <section class="card rounded p-5 mb-4 relative">
         <div class="absolute inset-2 rounded pointer-events-none" style="border: 1px solid rgba(30,14,4,0.07)"></div>
 
-        <p
-          style="font-family: 'Cinzel', serif; font-size: 10px; letter-spacing: 3px; color: var(--sepia); text-transform: uppercase; margin-bottom: 14px;">
-          Compte
-        </p>
+        <p class="section-label mb-3">Compte</p>
 
         <div class="grid gap-3">
           <div>
@@ -56,26 +46,17 @@
       </section>
 
       <!-- Sécurité -->
-      <section class="rounded p-5 mb-4"
-        style="background: var(--parch3); border: 1px solid var(--border); box-shadow: 0 2px 10px var(--shadow);">
-        <p
-          style="font-family: 'Cinzel', serif; font-size: 10px; letter-spacing: 3px; color: var(--sepia); text-transform: uppercase; margin-bottom: 14px;">
-          Sécurité
-        </p>
+      <section class="card rounded p-5 mb-4">
+        <p class="section-label mb-3">Sécurité</p>
 
-        <button @click="router.push('/forgot-password')" class="w-full py-3 rounded"
-          style="background: var(--ink3); color: var(--parch); font-family: 'Cinzel', serif; font-size: 12px; letter-spacing: 2px; text-transform: uppercase; cursor: pointer; border: none;">
+        <button @click="router.push('/forgot-password')" class="btn-primary btn-block">
           Changer mon mot de passe
         </button>
       </section>
 
       <!-- Notifications -->
-      <section class="rounded p-5 mb-4"
-        style="background: var(--parch3); border: 1px solid var(--border); box-shadow: 0 2px 10px var(--shadow);">
-        <p
-          style="font-family: 'Cinzel', serif; font-size: 10px; letter-spacing: 3px; color: var(--sepia); text-transform: uppercase; margin-bottom: 14px;">
-          Notifications
-        </p>
+      <section class="card rounded p-5 mb-4">
+        <p class="section-label mb-3">Notifications</p>
 
         <div class="flex items-center justify-between">
           <div>
@@ -105,12 +86,8 @@
       </section>
 
       <!-- Premium -->
-      <section class="rounded p-5 mb-4"
-        style="background: var(--parch3); border: 1px solid var(--border); box-shadow: 0 2px 10px var(--shadow);">
-        <p
-          style="font-family: 'Cinzel', serif; font-size: 10px; letter-spacing: 3px; color: var(--sepia); text-transform: uppercase; margin-bottom: 14px;">
-          Premium
-        </p>
+      <section class="card rounded p-5 mb-4">
+        <p class="section-label mb-3">Premium</p>
 
         <div v-if="authStore.profile?.is_premium">
           <p style="font-family: 'Crimson Pro', serif; font-size: 16px; color: var(--ink);">
@@ -125,36 +102,28 @@
           <p style="font-family: 'Crimson Pro', serif; font-size: 16px; color: var(--ink);">
             Débloquez toutes les enquêtes et avantages.
           </p>
-          <button @click="router.push('/premium')" class="w-full py-3 rounded mt-4"
-            style="background: var(--ink3); color: var(--parch); font-family: 'Cinzel', serif; font-size: 12px; letter-spacing: 2px; text-transform: uppercase; cursor: pointer; border: none;">
+          <button @click="router.push('/premium')" class="btn-primary btn-block mt-4">
             Passer au Premium
           </button>
         </div>
       </section>
 
       <!-- À propos -->
-      <section class="rounded p-5 mb-4"
-        style="background: var(--parch3); border: 1px solid var(--border); box-shadow: 0 2px 10px var(--shadow);">
-        <p
-          style="font-family: 'Cinzel', serif; font-size: 10px; letter-spacing: 3px; color: var(--sepia); text-transform: uppercase; margin-bottom: 14px;">
-          À propos
-        </p>
+      <section class="card rounded p-5 mb-4">
+        <p class="section-label mb-3">À propos</p>
 
         <div class="grid gap-3">
-          <button class="w-full text-left py-3 px-4 rounded"
-            style="background: var(--parch2); border: 1px solid var(--border); font-family: 'Crimson Pro', serif; font-size: 15px; color: var(--ink);"
+          <button class="w-full text-left py-3 px-4 rounded card-soft"
             @click="router.push('/help')">
             Centre d'aide
           </button>
 
-          <button class="w-full text-left py-3 px-4 rounded"
-            style="background: var(--parch2); border: 1px solid var(--border); font-family: 'Crimson Pro', serif; font-size: 15px; color: var(--ink);"
+          <button class="w-full text-left py-3 px-4 rounded card-soft"
             @click="router.push('/terms')">
             Conditions d'utilisation
           </button>
 
-          <button class="w-full text-left py-3 px-4 rounded"
-            style="background: var(--parch2); border: 1px solid var(--border); font-family: 'Crimson Pro', serif; font-size: 15px; color: var(--ink);"
+          <button class="w-full text-left py-3 px-4 rounded card-soft"
             @click="router.push('/privacy')">
             Politique de confidentialité
           </button>
@@ -162,18 +131,9 @@
       </section>
 
       <!-- Déconnexion -->
-      <section class="rounded p-5"
-        style="background: var(--parch3); border: 1px solid var(--border); box-shadow: 0 2px 10px var(--shadow);">
-        <p
-          style="font-family: 'Cinzel', serif; font-size: 10px; letter-spacing: 3px; color: var(--sepia); text-transform: uppercase; margin-bottom: 14px;">
-          Session
-        </p>
-
-        <button @click="onLogout" class="w-full py-3 rounded"
-          style="background: transparent; color: var(--red); font-family: 'Cinzel', serif; font-size: 12px; letter-spacing: 2px; text-transform: uppercase; cursor: pointer; border: 1px solid rgba(139,26,10,0.4);">
-          Se déconnecter
-        </button>
-      </section>
+      <button @click="onLogout" class="btn-danger btn-block py-3 rounded">
+        Se déconnecter
+      </button>
     </main>
   </div>
 </template>

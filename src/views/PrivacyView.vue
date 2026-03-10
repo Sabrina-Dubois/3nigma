@@ -9,7 +9,7 @@
     </div>
 
     <div class="page-actions">
-      <button class="back-button" @click="router.back()">← Retour</button>
+      <button class="btn-ghost" @click="router.back()">← Retour</button>
     </div>
 
     <!-- Navigation rapide -->
@@ -23,7 +23,7 @@
 
     <!-- Contenu -->
     <div class="card-wrapper">
-      <div class="content-card">
+      <div class="content-card card">
         <div class="card-content">
           <!-- 1. Introduction -->
           <div :id="'section-0'" class="section-block">
@@ -223,14 +223,6 @@ const sections = computed(() => [
   max-width: 560px;
 }
 
-.page-title {
-  font-family: 'Cinzel', serif;
-  font-weight: 900;
-  font-size: 20px;
-  letter-spacing: 2px;
-  color: var(--ink);
-}
-
 .last-updated {
   font-size: 12px;
   color: var(--sepia);
@@ -242,19 +234,6 @@ const sections = computed(() => [
   display: flex;
   justify-content: center;
   margin: 6px 0 16px;
-}
-
-.back-button {
-  background: transparent;
-  border: 1px solid var(--border);
-  color: var(--sepia);
-  border-radius: 999px;
-  padding: 8px 14px;
-  font-family: 'Cinzel', serif;
-  font-size: 10px;
-  letter-spacing: 2px;
-  text-transform: uppercase;
-  cursor: pointer;
 }
 
 .quick-nav {
@@ -296,10 +275,7 @@ const sections = computed(() => [
 }
 
 .content-card {
-  background: var(--parch3);
-  border: 1px solid var(--border);
   border-radius: 16px;
-  box-shadow: 0 4px 12px var(--shadow);
 }
 
 .card-content {

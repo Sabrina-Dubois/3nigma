@@ -5,19 +5,12 @@
     <main class="px-4 pt-6 pb-24 max-w-xl mx-auto">
       <!-- Header -->
       <div class="mb-6 text-center">
-        <h1
-          style="font-family: 'Cinzel', serif; font-size: 22px; font-weight: 900; color: var(--ink); letter-spacing: 2px;">
-          Premium 🗝️
-        </h1>
-        <p
-          style="font-family: 'Crimson Pro', serif; font-style: italic; font-size: 15px; color: var(--sepia); margin-top: 6px;">
-          L’expérience complète de 3NIGMA°
-        </p>
+        <h1 class="page-title">Premium 🗝️</h1>
+        <p class="page-subtitle mt-1">L’expérience complète de 3NIGMA°</p>
       </div>
 
       <!-- Statut -->
-      <section class="rounded p-5 mb-4"
-        style="background: var(--parch3); border: 1px solid var(--border); box-shadow: 0 2px 10px var(--shadow);">
+      <section class="card rounded p-5 mb-4">
         <div v-if="authStore.profile?.is_premium">
           <p style="font-family: 'Cinzel', serif; font-size: 12px; letter-spacing: 2px; color: var(--gold); text-transform: uppercase;">
             Statut actif
@@ -37,12 +30,8 @@
       </section>
 
       <!-- Avantages -->
-      <section class="rounded p-5 mb-4"
-        style="background: var(--parch3); border: 1px solid var(--border); box-shadow: 0 2px 10px var(--shadow);">
-        <p
-          style="font-family: 'Cinzel', serif; font-size: 10px; letter-spacing: 3px; color: var(--sepia); text-transform: uppercase; margin-bottom: 14px;">
-          Avantages
-        </p>
+      <section class="card rounded p-5 mb-4">
+        <p class="section-label mb-3">Avantages</p>
 
         <div class="grid gap-3">
           <div class="flex gap-3">
@@ -73,12 +62,8 @@
       </section>
 
       <!-- Offre -->
-      <section class="rounded p-5"
-        style="background: var(--parch3); border: 1px solid var(--border); box-shadow: 0 2px 10px var(--shadow);">
-        <p
-          style="font-family: 'Cinzel', serif; font-size: 10px; letter-spacing: 3px; color: var(--sepia); text-transform: uppercase; margin-bottom: 14px;">
-          Offre
-        </p>
+      <section class="card rounded p-5">
+        <p class="section-label mb-3">Offre</p>
 
         <div class="text-center">
           <div style="font-family: 'Cinzel', serif; font-size: 28px; font-weight: 900; color: var(--gold);">
@@ -88,9 +73,7 @@
             ou 29,99 € / an
           </div>
 
-          <button class="w-full py-3 rounded mt-4"
-            style="background: var(--ink3); color: var(--parch); font-family: 'Cinzel', serif; font-size: 12px; letter-spacing: 2px; text-transform: uppercase; cursor: not-allowed; border: none;"
-            disabled>
+          <button class="btn-primary btn-block mt-4" disabled>
             Paiement bientôt disponible
           </button>
         </div>

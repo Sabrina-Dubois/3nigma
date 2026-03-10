@@ -8,10 +8,10 @@
     </div>
 
     <div class="page-actions">
-      <button class="back-button" @click="router.back()">← Retour</button>
+      <button class="btn-ghost" @click="router.back()">← Retour</button>
     </div>
 
-    <section class="micro-card mb-6">
+    <section class="card micro-card mb-6">
       <h2 class="section-title">{{ t('help.search.title') }}</h2>
       <input
         v-model="searchQuery"
@@ -21,7 +21,7 @@
       />
     </section>
 
-    <section class="micro-card mb-6">
+    <section class="card micro-card mb-6">
       <h2 class="section-title">{{ t('help.faq_title') }}</h2>
 
       <div v-if="filteredFaqs.length" class="faq-list">
@@ -37,7 +37,7 @@
       </div>
     </section>
 
-    <section class="micro-card">
+    <section class="card micro-card">
       <h2 class="section-title">{{ t('help.support.title') }}</h2>
       <p class="support-subtitle">{{ t('help.support.subtitle') }}</p>
       <button class="email-button" @click="copyEmail">
@@ -98,14 +98,6 @@ function copyEmail() {
   padding: 16px 0 8px;
 }
 
-.page-title {
-  font-family: 'Cinzel', serif;
-  font-weight: 900;
-  font-size: 20px;
-  letter-spacing: 2px;
-  color: var(--ink);
-}
-
 .last-updated {
   font-size: 12px;
   color: var(--sepia);
@@ -119,24 +111,9 @@ function copyEmail() {
   margin: 6px 0 16px;
 }
 
-.back-button {
-  background: transparent;
-  border: 1px solid var(--border);
-  color: var(--sepia);
-  border-radius: 999px;
-  padding: 8px 14px;
-  font-family: 'Cinzel', serif;
-  font-size: 10px;
-  letter-spacing: 2px;
-  text-transform: uppercase;
-  cursor: pointer;
-}
-
 .micro-card {
   padding: 24px;
   border-radius: 12px;
-  background: var(--parch3);
-  border: 1px solid var(--border);
   box-shadow: 0 4px 12px var(--shadow);
 }
 

@@ -3,14 +3,8 @@
 
     <!-- Titre -->
     <div class="mb-6">
-      <h1
-        style="font-family: 'Cinzel', serif; font-size: 22px; font-weight: 900; color: var(--ink); letter-spacing: 2px;">
-        Les Enquêtes
-      </h1>
-      <p
-        style="font-family: 'Crimson Pro', serif; font-style: italic; font-size: 15px; color: var(--sepia); margin-top: 4px;">
-        Choisissez votre prochaine aventure
-      </p>
+      <h1 class="page-title">Les Enquêtes</h1>
+      <p class="page-subtitle mt-1">Choisissez votre prochaine aventure</p>
     </div>
 
     <!-- Filtres durée -->
