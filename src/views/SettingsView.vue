@@ -62,7 +62,7 @@
             <p style="font-family: 'Crimson Pro', serif; font-size: 16px; color: var(--ink);">
               Rappel quotidien
             </p>
-            <p style="font-family: 'Crimson Pro', serif; font-size: 13px; color: var(--sepia);">
+            <p class="caption">
               Activez un rappel local pour ne pas rater un jour
             </p>
           </div>
@@ -75,8 +75,7 @@
           </button>
         </div>
 
-        <p class="mt-3"
-          style="font-family: 'Crimson Pro', serif; font-size: 13px; color: var(--sepia);">
+        <p class="caption mt-3">
           Fonctionne sur cet appareil uniquement.
         </p>
       </section>
@@ -89,7 +88,7 @@
           <p style="font-family: 'Crimson Pro', serif; font-size: 16px; color: var(--ink);">
             Vous êtes membre Premium 🗝️
           </p>
-          <p class="mt-1" style="font-family: 'Crimson Pro', serif; font-size: 13px; color: var(--sepia);">
+          <p class="caption mt-1">
             Merci pour votre soutien.
           </p>
         </div>

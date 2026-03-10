@@ -9,7 +9,7 @@
       </div>
 
       <div class="card p-5 text-center">
-        <p style="font-family: 'Crimson Pro', serif; color: var(--sepia);">
+        <p class="text-muted">
           Bientôt disponible
         </p>
       </div>

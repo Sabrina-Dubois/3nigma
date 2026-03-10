@@ -18,9 +18,7 @@
 
     <!-- Liste des escapes -->
     <div v-if="loading" class="text-center py-12">
-      <p style="font-family: 'Cinzel', serif; font-size: 12px; letter-spacing: 2px; color: var(--sepia);">
-        Chargement...
-      </p>
+      <p class="label-sm">Chargement...</p>
     </div>
 
     <div v-else class="flex flex-col gap-4">
@@ -38,10 +36,7 @@
               <h3 style="font-family: 'Cinzel', serif; font-size: 15px; font-weight: 700; color: var(--ink);">
                 {{ escape.title }}
               </h3>
-              <p
-                style="font-family: 'Cinzel', serif; font-size: 10px; letter-spacing: 1px; color: var(--sepia); text-transform: uppercase; margin-top: 2px;">
-                {{ escape.duration_days }} jours
-              </p>
+              <p class="label-xs mt-1">{{ escape.duration_days }} jours</p>
             </div>
           </div>
 

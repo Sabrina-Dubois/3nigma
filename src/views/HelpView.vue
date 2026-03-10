@@ -39,7 +39,7 @@
 
     <section class="card double-frame micro-card">
       <h2 class="section-title">{{ t('help.support.title') }}</h2>
-      <p class="support-subtitle">{{ t('help.support.subtitle') }}</p>
+      <p class="caption">{{ t('help.support.subtitle') }}</p>
       <button class="email-button" @click="copyEmail">
         support@3nigma.app
       </button>
@@ -183,12 +183,6 @@ function copyEmail() {
   margin-bottom: 6px;
 }
 
-.support-subtitle {
-  font-family: 'Crimson Pro', serif;
-  font-size: 14px;
-  color: var(--sepia);
-  margin: 0 0 12px;
-}
 
 .email-button {
   width: 100%;

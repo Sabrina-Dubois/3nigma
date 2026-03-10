@@ -12,7 +12,7 @@
       <!-- Statut -->
       <section class="card double-frame rounded p-5 mb-4">
         <div v-if="authStore.profile?.is_premium">
-          <p style="font-family: 'Cinzel', serif; font-size: 12px; letter-spacing: 2px; color: var(--gold); text-transform: uppercase;">
+          <p class="label-sm" style="color: var(--gold);">
             Statut actif
           </p>
           <p class="mt-2" style="font-family: 'Crimson Pro', serif; font-size: 16px; color: var(--ink);">
@@ -20,7 +20,7 @@
           </p>
         </div>
         <div v-else>
-          <p style="font-family: 'Cinzel', serif; font-size: 12px; letter-spacing: 2px; color: var(--sepia); text-transform: uppercase;">
+          <p class="label-sm">
             Statut gratuit
           </p>
           <p class="mt-2" style="font-family: 'Crimson Pro', serif; font-size: 16px; color: var(--ink);">

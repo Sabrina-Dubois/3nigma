@@ -249,6 +249,34 @@ body {
   border: 1px solid var(--gold);
 }
 
+/* ── TEXT HELPERS ── */
+.text-muted {
+  font-family: 'Crimson Pro', serif;
+  color: var(--sepia);
+}
+
+.label-sm {
+  font-family: 'Cinzel', serif;
+  font-size: 11px;
+  letter-spacing: 2px;
+  color: var(--sepia);
+  text-transform: uppercase;
+}
+
+.label-xs {
+  font-family: 'Cinzel', serif;
+  font-size: 10px;
+  letter-spacing: 2px;
+  color: var(--sepia);
+  text-transform: uppercase;
+}
+
+.caption {
+  font-family: 'Crimson Pro', serif;
+  font-size: 13px;
+  color: var(--sepia);
+}
+
 /* ── TABS / TOGGLES ── */
 .tab-group {
   display: flex;
