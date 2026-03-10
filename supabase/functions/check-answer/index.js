@@ -146,12 +146,7 @@ Deno.serve(async (req) => {
       p_xp: xpEarned,
     })
 
-    // ── 12. Mettre à jour le streak ──
-    await supabaseAdmin.rpc('update_streak', {
-      p_user_id: user.id,
-    })
-
-    // ── 13. Retourner le succès (sans la réponse correcte) ──
+    // ── 12. Retourner le succès (sans la réponse correcte) ──
     return new Response(
       JSON.stringify({
         correct: true,

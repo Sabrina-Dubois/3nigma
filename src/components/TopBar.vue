@@ -38,7 +38,7 @@
 </template>
 
 <script setup>
-import { onMounted, ref } from 'vue'
+import { onMounted, ref, watch } from 'vue'
 import { useAuthStore } from '@/stores/auth.store'
 import { supabase } from '@/lib/supabase'
 
@@ -71,7 +71,10 @@ async function loadCounts() {
     }
 }
 
-onMounted(async () => {
-    await loadCounts()
+onMounted(loadCounts)
+
+// Se rafraîchit automatiquement quand le profil est rechargé (ex: après une énigme résolue)
+watch(() => authStore.profile?.total_xp, (newXp, oldXp) => {
+    if (newXp !== oldXp) loadCounts()
 })
 </script>

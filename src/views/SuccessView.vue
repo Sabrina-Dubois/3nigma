@@ -71,12 +71,14 @@
 import { ref, computed, onMounted } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 import { useAuthStore } from '@/stores/auth.store'
+import { useXpStore } from '@/stores/xp.store'
 import { supabase } from '@/lib/supabase'
 import StarField from '@/components/StarField.vue'
 
 const router    = useRouter()
 const route     = useRoute()
 const authStore = useAuthStore()
+const xpStore   = useXpStore()
 
 const enigma  = ref(null)
 const escape  = ref(null)
@@ -122,6 +124,12 @@ onMounted(async () => {
   }
 
   loading.value = false
+
+  // Rafraîchit le profil et sync le xp.store pour que niveau/barre XP soient à jour
+  await authStore.fetchProfile()
+  if (authStore.profile?.total_xp != null) {
+    xpStore.totalXp = authStore.profile.total_xp
+  }
 })
 
 function goNextDay() {
