@@ -88,12 +88,13 @@
 </template>
 
 <script setup>
-import { computed } from 'vue'
+import { computed, onMounted, ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { useAuthStore } from '@/stores/auth.store'
 import { useXpStore } from '@/stores/xp.store'
 import { useUiStore } from '@/stores/ui.store'
 import TopBar from '@/components/TopBar.vue'
+import { supabase } from '@/lib/supabase'
 
 const router = useRouter()
 const authStore = useAuthStore()
@@ -104,7 +105,7 @@ const displayName = computed(() => authStore.profile?.username || 'Profil')
 const isPremium = computed(() => authStore.profile?.is_premium ?? false)
 
 const totalXp = computed(() => authStore.profile?.total_xp ?? xpStore.totalXp ?? 0)
-const escapesCompleted = computed(() => authStore.profile?.escapes_completed ?? 0)
+const escapesCompleted = ref(0)
 
 const level = computed(() => authStore.profile?.level ?? xpStore.level ?? 1)
 
@@ -130,6 +131,19 @@ function changeAvatar() {
   uiStore.showToast('Changement d\'avatar bientôt disponible', 'info')
 }
 
+async function loadEscapesCompleted() {
+  const userId = authStore.user?.id
+  if (!userId) return
+  const { count, error } = await supabase
+    .from('user_escapes')
+    .select('id', { count: 'exact', head: true })
+    .eq('user_id', userId)
+    .not('completed_at', 'is', null)
+  if (!error && typeof count === 'number') {
+    escapesCompleted.value = count
+  }
+}
+
 const badges = computed(() => [
   { id: 1, label: 'Premier Pas', icon: '🔑', description: 'Valider 1 énigme', unlocked: totalCompleted.value >= 1, premiumOnly: false },
   { id: 2, label: 'Détective', icon: '🕵️', description: '10 énigmes validées', unlocked: totalCompleted.value >= 10, premiumOnly: false },
@@ -142,6 +156,9 @@ const badges = computed(() => [
 const unlockedBadges = computed(() => badges.value.filter((b) => b.unlocked).length)
 const totalBadges = computed(() => badges.value.length)
 
+onMounted(async () => {
+  await loadEscapesCompleted()
+})
 </script>
 
 <style scoped>
