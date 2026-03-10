@@ -70,6 +70,30 @@ const router = createRouter({
       meta: { requiresAuth: true },
     },
     {
+      path: '/premium',
+      name: 'premium',
+      component: () => import('@/views/PremiumView.vue'),
+      meta: { requiresAuth: true },
+    },
+    {
+      path: '/help',
+      name: 'help',
+      component: () => import('@/views/HelpView.vue'),
+      meta: { requiresAuth: true },
+    },
+    {
+      path: '/terms',
+      name: 'terms',
+      component: () => import('@/views/TermsView.vue'),
+      meta: { requiresAuth: true },
+    },
+    {
+      path: '/privacy',
+      name: 'privacy',
+      component: () => import('@/views/PrivacyView.vue'),
+      meta: { requiresAuth: true },
+    },
+    {
       path: '/not-found',
       name: 'notFound',
       component: () => import('@/views/NotFoundView.vue'),

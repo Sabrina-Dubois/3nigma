@@ -22,5 +22,153 @@
     "back": "Retour",
     "confirm": "Confirmer",
     "cancel": "Annuler"
+  },
+  "help": {
+    "title": "Centre d'aide",
+    "search": {
+      "title": "Recherche",
+      "placeholder": "Rechercher une question..."
+    },
+    "faq_title": "Questions fréquentes",
+    "support": {
+      "title": "Support",
+      "subtitle": "Réponse sous 24 à 48h"
+    },
+    "faqs": [
+      {
+        "question": "Comment fonctionne 3NIGMA° ?",
+        "answer": "Vous recevez une énigme quotidienne, vous la résolvez, puis vous validez pour avancer dans l’enquête."
+      },
+      {
+        "question": "Comment changer mes préférences ?",
+        "answer": "Rendez-vous dans Réglages pour gérer vos préférences et votre compte."
+      },
+      {
+        "question": "Comment activer les notifications ?",
+        "answer": "Activez le rappel quotidien dans Réglages."
+      },
+      {
+        "question": "Je ne reçois pas de notification, que faire ?",
+        "answer": "Vérifiez les autorisations dans le navigateur et dans les réglages système de votre appareil."
+      },
+      {
+        "question": "Comment partager ma progression ?",
+        "answer": "Depuis la page de succès, vous pouvez continuer l’enquête et suivre votre progression."
+      }
+    ]
+  },
+  "terms": {
+    "title": "Conditions d’utilisation",
+    "nav": {
+      "intro": "Introduction",
+      "account": "Compte",
+      "usage": "Utilisation",
+      "forbidden": "Interdictions",
+      "ip": "Propriété",
+      "data": "Données",
+      "liability": "Responsabilité",
+      "termination": "Résiliation",
+      "changes": "Modifications",
+      "law": "Loi",
+      "contact": "Contact"
+    },
+    "intro": {
+      "title": "1. Introduction",
+      "content": "3NIGMA° est une application proposant des énigmes quotidiennes. En utilisant l’application, vous acceptez les présentes conditions."
+    },
+    "account": {
+      "title": "2. Compte utilisateur",
+      "content": "Certaines fonctionnalités nécessitent la création d’un compte. Vous êtes responsable des informations fournies et de la sécurité de votre compte."
+    },
+    "usage": {
+      "title": "3. Utilisation du service",
+      "content": "L’application doit être utilisée dans un cadre personnel et non commercial."
+    },
+    "forbidden": {
+      "title": "4. Comportements interdits",
+      "content": "Il est interdit d’utiliser l’application à des fins illégales, de perturber son fonctionnement ou de tenter d’accéder aux données d’autres utilisateurs."
+    },
+    "ip": {
+      "title": "5. Propriété intellectuelle",
+      "content": "Tous les contenus de l’application, y compris les textes, visuels et fonctionnalités, sont protégés par le droit d’auteur."
+    },
+    "data": {
+      "title": "6. Données personnelles",
+      "content": "Vos données sont traitées conformément à la réglementation en vigueur.",
+      "content1": "Pour plus d’informations, consultez la ",
+      "content2": "politique de confidentialité",
+      "content3": ".",
+      "content4": "Vous pouvez exercer vos droits à tout moment."
+    },
+    "liability": {
+      "title": "7. Responsabilité",
+      "content": "L’application est fournie “en l’état”. L’éditeur ne peut être tenu responsable des dommages indirects liés à son utilisation."
+    },
+    "termination": {
+      "title": "8. Résiliation",
+      "content": "Vous pouvez supprimer votre compte à tout moment. L’éditeur se réserve le droit de suspendre un compte en cas de non-respect des conditions."
+    },
+    "changes": {
+      "title": "9. Modifications",
+      "content": "Les présentes conditions peuvent être modifiées à tout moment. La date de mise à jour sera indiquée dans l’application."
+    },
+    "law": {
+      "title": "10. Loi applicable",
+      "content": "Les présentes conditions sont régies par le droit français."
+    },
+    "contact": {
+      "title": "11. Contact",
+      "content": "Pour toute question, vous pouvez nous contacter à l’adresse suivante :"
+    }
+  },
+  "privacy": {
+    "title": "Politique de confidentialité",
+    "nav": {
+      "intro": "Introduction",
+      "data": "Données",
+      "legal": "Bases légales",
+      "share": "Partage",
+      "retention": "Conservation",
+      "security": "Sécurité",
+      "cookies": "Cookies",
+      "rights": "Droits",
+      "transfer": "Transferts",
+      "changes": "Modifications",
+      "contact": "Contact"
+    },
+    "intro_title": "1. Introduction",
+    "intro_text1": "Cette politique explique comment vos données personnelles sont collectées et utilisées.",
+    "intro_text2": "Nous nous engageons à respecter le Règlement Général sur la Protection des Données (RGPD).",
+    "data_title": "2. Données collectées",
+    "data_intro": "Nous collectons uniquement les données nécessaires au fonctionnement du service :",
+    "data_identity": "Adresse email et informations de compte.",
+    "data_technical": "Données techniques de connexion.",
+    "data_usage": "Statistiques d’utilisation des enquêtes.",
+    "data_sensitive": "Aucune donnée sensible n’est collectée.",
+    "legal_title": "3. Bases légales",
+    "legal_intro": "Le traitement des données repose sur :",
+    "legal_consent": "Votre consentement.",
+    "legal_contract": "L’exécution du service.",
+    "legal_interest": "L’intérêt légitime de fonctionnement.",
+    "legal_usage": "Ces données sont utilisées uniquement pour fournir et améliorer le service.",
+    "share_title": "4. Partage des données",
+    "share_intro": "Certaines données peuvent être traitées par des prestataires techniques :",
+    "share_host": "Hébergement et base de données sécurisés.",
+    "share_analytics": "Outils d’analyse anonymisés.",
+    "share_legal": "Autorités légales si nécessaire.",
+    "retention_title": "5. Durée de conservation",
+    "retention_text": "Les données sont conservées tant que votre compte est actif.",
+    "security_title": "6. Sécurité",
+    "security_text": "Des mesures techniques et organisationnelles sont mises en place pour protéger vos données.",
+    "cookies_title": "7. Cookies",
+    "cookies_text": "Des cookies techniques peuvent être utilisés pour le fonctionnement de l’application.",
+    "rights_title": "8. Vos droits",
+    "rights_text": "Vous pouvez demander l’accès, la modification ou la suppression de vos données.",
+    "transfer_title": "9. Transferts internationaux",
+    "transfer_text": "Certaines données peuvent être traitées hors de l’Union européenne avec des garanties appropriées.",
+    "changes_title": "10. Modifications",
+    "changes_text": "Cette politique peut être mise à jour à tout moment.",
+    "contact_title": "11. Contact",
+    "contact_text": "Pour toute question relative à vos données :"
   }
 }

@@ -8,12 +8,9 @@
             <slot />
         </main>
 
-        <BottomNav />
-
     </div>
 </template>
 
 <script setup>
 import TopBar from '@/components/TopBar.vue'
-import BottomNav from '@/components/BottomNav.vue'
 </script>

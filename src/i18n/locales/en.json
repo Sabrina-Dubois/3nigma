@@ -22,5 +22,153 @@
     "back": "Back",
     "confirm": "Confirm",
     "cancel": "Cancel"
+  },
+  "help": {
+    "title": "Help Center",
+    "search": {
+      "title": "Search",
+      "placeholder": "Search a question..."
+    },
+    "faq_title": "FAQ",
+    "support": {
+      "title": "Support",
+      "subtitle": "Replies within 24 to 48h"
+    },
+    "faqs": [
+      {
+        "question": "How does 3NIGMA° work?",
+        "answer": "You receive a daily enigma, solve it, then validate to move forward in the story."
+      },
+      {
+        "question": "How can I change my preferences?",
+        "answer": "Go to Settings to manage your preferences and account."
+      },
+      {
+        "question": "How do I enable notifications?",
+        "answer": "Enable the daily reminder in Settings."
+      },
+      {
+        "question": "I don't receive notifications, what can I do?",
+        "answer": "Check notification permissions in your browser and device settings."
+      },
+      {
+        "question": "How can I share my progress?",
+        "answer": "From the success screen, you can continue the investigation and follow your progress."
+      }
+    ]
+  },
+  "terms": {
+    "title": "Terms of Use",
+    "nav": {
+      "intro": "Introduction",
+      "account": "Account",
+      "usage": "Usage",
+      "forbidden": "Prohibited",
+      "ip": "Intellectual Property",
+      "data": "Data",
+      "liability": "Liability",
+      "termination": "Termination",
+      "changes": "Changes",
+      "law": "Law",
+      "contact": "Contact"
+    },
+    "intro": {
+      "title": "1. Introduction",
+      "content": "3NIGMA° provides daily enigmas. By using the app, you accept these terms."
+    },
+    "account": {
+      "title": "2. User account",
+      "content": "Some features require an account. You are responsible for your information and account security."
+    },
+    "usage": {
+      "title": "3. Service usage",
+      "content": "The app must be used for personal, non-commercial purposes."
+    },
+    "forbidden": {
+      "title": "4. Prohibited behavior",
+      "content": "It is forbidden to use the app for illegal purposes, disrupt it, or access other users' data."
+    },
+    "ip": {
+      "title": "5. Intellectual property",
+      "content": "All content in the app, including texts, visuals, and features, is protected by copyright."
+    },
+    "data": {
+      "title": "6. Personal data",
+      "content": "Your data is processed in accordance with applicable regulations.",
+      "content1": "For more information, see the ",
+      "content2": "privacy policy",
+      "content3": ".",
+      "content4": "You can exercise your rights at any time."
+    },
+    "liability": {
+      "title": "7. Liability",
+      "content": "The app is provided “as is”. The publisher is not liable for indirect damages related to use."
+    },
+    "termination": {
+      "title": "8. Termination",
+      "content": "You can delete your account at any time. The publisher may suspend accounts for violations."
+    },
+    "changes": {
+      "title": "9. Changes",
+      "content": "These terms can be updated at any time. The update date will be shown in the app."
+    },
+    "law": {
+      "title": "10. Governing law",
+      "content": "These terms are governed by French law."
+    },
+    "contact": {
+      "title": "11. Contact",
+      "content": "For any questions, contact us at:"
+    }
+  },
+  "privacy": {
+    "title": "Privacy Policy",
+    "nav": {
+      "intro": "Introduction",
+      "data": "Data",
+      "legal": "Legal basis",
+      "share": "Sharing",
+      "retention": "Retention",
+      "security": "Security",
+      "cookies": "Cookies",
+      "rights": "Rights",
+      "transfer": "Transfers",
+      "changes": "Changes",
+      "contact": "Contact"
+    },
+    "intro_title": "1. Introduction",
+    "intro_text1": "This policy explains how your personal data is collected and used.",
+    "intro_text2": "We comply with the GDPR.",
+    "data_title": "2. Collected data",
+    "data_intro": "We only collect data required to operate the service:",
+    "data_identity": "Email address and account information.",
+    "data_technical": "Technical connection data.",
+    "data_usage": "Usage statistics for investigations.",
+    "data_sensitive": "No sensitive data is collected.",
+    "legal_title": "3. Legal basis",
+    "legal_intro": "Data processing relies on:",
+    "legal_consent": "Your consent.",
+    "legal_contract": "Service delivery.",
+    "legal_interest": "Legitimate interest in operations.",
+    "legal_usage": "Data is only used to provide and improve the service.",
+    "share_title": "4. Data sharing",
+    "share_intro": "Some data may be processed by technical providers:",
+    "share_host": "Secure hosting and databases.",
+    "share_analytics": "Anonymized analytics tools.",
+    "share_legal": "Legal authorities if required.",
+    "retention_title": "5. Retention period",
+    "retention_text": "Data is kept as long as your account is active.",
+    "security_title": "6. Security",
+    "security_text": "Technical and organizational measures protect your data.",
+    "cookies_title": "7. Cookies",
+    "cookies_text": "Technical cookies may be used to run the app.",
+    "rights_title": "8. Your rights",
+    "rights_text": "You can request access, modification, or deletion of your data.",
+    "transfer_title": "9. International transfers",
+    "transfer_text": "Some data may be processed outside the EU with appropriate safeguards.",
+    "changes_title": "10. Changes",
+    "changes_text": "This policy may be updated at any time.",
+    "contact_title": "11. Contact",
+    "contact_text": "For any questions about your data:"
   }
 }
