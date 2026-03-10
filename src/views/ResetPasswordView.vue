@@ -1,0 +1,106 @@
+<template>
+    <div class="min-h-screen flex flex-col items-center justify-start px-4 pt-6 pb-12" style="background: var(--parch)">
+
+        <!-- Logo -->
+        <div class="text-center mb-10">
+            <h1
+                style="font-family: 'Cinzel', serif; font-weight: 900; font-size: 38px; color: var(--ink3); letter-spacing: 2px;">
+                <span style="color: var(--gold)">🗝️ 3</span>NIGMA<span
+                    style="color: var(--gold); font-size: 55px;">°</span>
+            </h1>
+        </div>
+
+        <!-- Carte -->
+        <div class="w-full max-w-sm rounded p-8 relative"
+            style="background: var(--parch3); border: 1px solid var(--border); box-shadow: 0 4px 20px var(--shadow);">
+
+            <div class="absolute inset-2 rounded pointer-events-none" style="border: 1px solid rgba(30,14,4,0.07)">
+            </div>
+
+            <h2
+                style="font-family: 'Cinzel', serif; font-size: 16px; font-weight: 600; letter-spacing: 3px; color: var(--ink); text-align: center; margin-bottom: 28px; text-transform: uppercase;">
+                Nouveau mot de passe
+            </h2>
+
+            <!-- Erreur -->
+            <div v-if="error" class="mb-4 px-4 py-3 rounded"
+                style="background: rgba(139,26,10,0.1); border: 1px solid rgba(139,26,10,0.3); color: var(--red); font-family: 'Crimson Pro', serif; font-size: 15px;">
+                {{ error }}
+            </div>
+
+            <!-- Succès -->
+            <div v-if="success" class="mb-4 px-4 py-3 rounded"
+                style="background: rgba(42,90,26,0.1); border: 1px solid rgba(42,90,26,0.3); color: #2a5a1a; font-family: 'Crimson Pro', serif; font-size: 15px;">
+                Mot de passe mis à jour ! Redirection...
+            </div>
+
+            <template v-if="!success">
+                <!-- Nouveau mot de passe -->
+                <div class="mb-4">
+                    <label
+                        style="font-family: 'Cinzel', serif; font-size: 10px; letter-spacing: 2px; color: var(--sepia); text-transform: uppercase; display: block; margin-bottom: 6px;">
+                        Nouveau mot de passe
+                    </label>
+                    <div class="relative">
+                        <input v-model="newPassword" :type="showPassword ? 'text' : 'password'" placeholder="••••••••"
+                            class="w-full px-4 py-3 rounded outline-none pr-12"
+                            style="background: var(--parch); border: 1px solid var(--border); font-family: 'Crimson Pro', serif; font-size: 16px; color: var(--ink);" />
+                        <button type="button" @click="showPassword = !showPassword"
+                            class="absolute right-3 top-1/2 -translate-y-1/2"
+                            style="background: none; border: none; cursor: pointer; color: var(--sepia);">
+                            <i :class="showPassword ? 'mdi mdi-eye-off' : 'mdi mdi-eye'" style="font-size: 20px;"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Bouton -->
+                <button @click="updatePassword" :disabled="loading" class="w-full py-3 rounded mt-2"
+                    style="background: var(--ink3); color: var(--parch); font-family: 'Cinzel', serif; font-size: 12px; letter-spacing: 3px; text-transform: uppercase; cursor: pointer; border: none;"
+                    :style="{ opacity: loading ? 0.7 : 1 }">
+                    {{ loading ? '...' : 'Confirmer' }}
+                </button>
+            </template>
+
+        </div>
+    </div>
+</template>
+
+<script setup>
+import { ref } from 'vue'
+import { useRouter } from 'vue-router'
+import { supabase } from '@/lib/supabase'
+
+const router = useRouter()
+
+const newPassword = ref('')
+const showPassword = ref(false)
+const error = ref('')
+const success = ref(false)
+const loading = ref(false)
+
+async function updatePassword() {
+    if (newPassword.value.length < 8) {
+        error.value = 'Le mot de passe doit faire au moins 8 caractères.'
+        return
+    }
+
+    loading.value = true
+    error.value = ''
+
+    const { error: updateError } = await supabase.auth.updateUser({
+        password: newPassword.value,
+    })
+
+    loading.value = false
+
+    if (updateError) {
+        error.value = updateError.message
+    } else {
+        success.value = true
+        setTimeout(async () => {
+            await supabase.auth.signOut()
+            router.push('/login')
+        }, 2000)
+    }
+}
+</script>
