@@ -25,7 +25,7 @@
       <div class="stats-grid mt-4">
         <div class="card double-frame stat-card">
           <div class="stat-icon">🔍</div>
-          <div class="stat-value">{{ totalCompleted }}</div>
+        <div class="stat-value">{{ enigmasCompleted }}</div>
           <div class="stat-label">Énigmes validées</div>
         </div>
         <div class="card double-frame stat-card">
@@ -113,7 +113,7 @@ const xpNext = computed(() => xpStore.xpForNextLevel ?? 0)
 const xpProgress = computed(() => xpStore.progressPercent ?? 0)
 const xpRemaining = computed(() => Math.max(0, xpNext.value - totalXp.value))
 
-const totalCompleted = computed(() => Math.max(0, Math.floor(totalXp.value / 150)))
+const enigmasCompleted = ref(0)
 
 const memberSince = computed(() => {
   const raw = authStore.profile?.created_at
@@ -144,11 +144,24 @@ async function loadEscapesCompleted() {
   }
 }
 
+async function loadEnigmasCompleted() {
+  const userId = authStore.user?.id
+  if (!userId) return
+  const { count, error } = await supabase
+    .from('user_enigma_attempts')
+    .select('id', { count: 'exact', head: true })
+    .eq('user_id', userId)
+    .not('solved_at', 'is', null)
+  if (!error && typeof count === 'number') {
+    enigmasCompleted.value = count
+  }
+}
+
 const badges = computed(() => [
-  { id: 1, label: 'Premier Pas', icon: '🔑', description: 'Valider 1 énigme', unlocked: totalCompleted.value >= 1, premiumOnly: false },
-  { id: 2, label: 'Détective', icon: '🕵️', description: '10 énigmes validées', unlocked: totalCompleted.value >= 10, premiumOnly: false },
+  { id: 1, label: 'Premier Pas', icon: '🔑', description: 'Valider 1 énigme', unlocked: enigmasCompleted.value >= 1, premiumOnly: false },
+  { id: 2, label: 'Détective', icon: '🕵️', description: '10 énigmes validées', unlocked: enigmasCompleted.value >= 10, premiumOnly: false },
   { id: 3, label: 'Archiviste', icon: '📚', description: '1 escape terminé', unlocked: escapesCompleted.value >= 1, premiumOnly: false },
-  { id: 4, label: 'Maître', icon: '🧠', description: '50 énigmes validées', unlocked: totalCompleted.value >= 50, premiumOnly: false },
+  { id: 4, label: 'Maître', icon: '🧠', description: '50 énigmes validées', unlocked: enigmasCompleted.value >= 50, premiumOnly: false },
   { id: 5, label: 'Collectionneur', icon: '🗂️', description: '3 escapes terminés', unlocked: escapesCompleted.value >= 3, premiumOnly: false },
   { id: 6, label: 'Légende', icon: '👑', description: 'Premium actif', unlocked: isPremium.value, premiumOnly: true },
 ])
@@ -158,6 +171,7 @@ const totalBadges = computed(() => badges.value.length)
 
 onMounted(async () => {
   await loadEscapesCompleted()
+  await loadEnigmasCompleted()
 })
 </script>
 
