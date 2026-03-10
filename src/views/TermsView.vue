@@ -8,6 +8,10 @@
       <div class="last-updated">Mis à jour en mars 2026</div>
     </div>
 
+    <div class="page-actions">
+      <button class="back-button" @click="router.back()">← Retour</button>
+    </div>
+
     <!-- Navigation rapide -->
     <div class="quick-nav">
       <div class="nav-pills">
@@ -148,15 +152,23 @@
         </div>
       </div>
     </div>
+
+    <footer class="page-footer">
+      <button class="footer-link" @click="router.push('/help')">Aide</button>
+      <button class="footer-link" @click="router.push('/terms')">Conditions</button>
+      <button class="footer-link" @click="router.push('/privacy')">Confidentialité</button>
+    </footer>
   </div>
 </template>
 
 <script setup>
 import { computed } from 'vue'
 import { useI18n } from 'vue-i18n'
+import { useRouter } from 'vue-router'
 import TopBar from '@/components/TopBar.vue'
 
 const { t } = useI18n()
+const router = useRouter()
 
 const sections = computed(() => [
   { short: t('terms.nav.intro') },
@@ -203,6 +215,25 @@ const sections = computed(() => [
   color: var(--sepia);
   margin-top: 4px;
   font-family: 'Crimson Pro', serif;
+}
+
+.page-actions {
+  display: flex;
+  justify-content: center;
+  margin: 6px 0 16px;
+}
+
+.back-button {
+  background: transparent;
+  border: 1px solid var(--border);
+  color: var(--sepia);
+  border-radius: 999px;
+  padding: 8px 14px;
+  font-family: 'Cinzel', serif;
+  font-size: 10px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  cursor: pointer;
 }
 
 .quick-nav {
@@ -362,5 +393,31 @@ const sections = computed(() => [
   height: 1px;
   background: linear-gradient(to right, transparent, rgba(30, 14, 4, 0.2), transparent);
   margin: 0 20px;
+}
+
+.page-footer {
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.footer-link {
+  background: var(--parch2);
+  border: 1px solid var(--border);
+  color: var(--ink3);
+  padding: 8px 12px;
+  border-radius: 999px;
+  font-family: 'Cinzel', serif;
+  font-size: 10px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+.footer-link:hover {
+  background: var(--ink3);
+  color: var(--parch);
 }
 </style>
