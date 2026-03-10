@@ -10,7 +10,9 @@ export const useAuthStore = defineStore(
     const user = ref(null) // l'objet user de Supabase (email, id...)
     const profile = ref(null) // les données de notre table profiles (username, xp, level...)
     const loading = ref(false) // true pendant qu'une requête est en cours
-
+    const notificationsEnabled = ref(false)
+    const darkMode = ref(false)
+    
     // ── GETTERS ──
     // Des valeurs calculées automatiquement depuis le state
     const isLoggedIn = computed(() => !!user.value) // true si user n'est pas null
