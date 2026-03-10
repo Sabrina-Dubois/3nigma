@@ -42,10 +42,7 @@
             <template v-if="!success">
                 <!-- Email -->
                 <div class="mb-6">
-                    <label
-                        style="font-family: 'Cinzel', serif; font-size: 10px; letter-spacing: 2px; color: var(--sepia); text-transform: uppercase; display: block; margin-bottom: 6px;">
-                        Email
-                    </label>
+                    <label class="form-label">Email</label>
                     <input v-model="email" type="email" placeholder="votre@email.com"
                         class="w-full px-4 py-3 rounded outline-none"
                         style="background: var(--parch); border: 1px solid var(--border); font-family: 'Crimson Pro', serif; font-size: 16px; color: var(--ink);"

@@ -22,6 +22,12 @@
                 Nouveau mot de passe
             </h2>
 
+            <!-- Chargement initial -->
+            <div v-if="initializing"
+                style="text-align: center; color: var(--sepia); font-family: 'Crimson Pro', serif; font-size: 15px;">
+                Vérification du lien...
+            </div>
+
             <!-- Erreur -->
             <div v-if="error" class="mb-4 px-4 py-3 rounded"
                 style="background: rgba(139,26,10,0.1); border: 1px solid rgba(139,26,10,0.3); color: var(--red); font-family: 'Crimson Pro', serif; font-size: 15px;">
@@ -34,13 +40,10 @@
                 Mot de passe mis à jour ! Redirection...
             </div>
 
-            <template v-if="!success">
+            <template v-if="!initializing && !success && !linkError">
                 <!-- Nouveau mot de passe -->
                 <div class="mb-4">
-                    <label
-                        style="font-family: 'Cinzel', serif; font-size: 10px; letter-spacing: 2px; color: var(--sepia); text-transform: uppercase; display: block; margin-bottom: 6px;">
-                        Nouveau mot de passe
-                    </label>
+                    <label class="form-label">Nouveau mot de passe</label>
                     <div class="relative">
                         <input v-model="newPassword" :type="showPassword ? 'text' : 'password'" placeholder="••••••••"
                             class="w-full px-4 py-3 rounded outline-none pr-12"
@@ -61,22 +64,62 @@
                 </button>
             </template>
 
+            <!-- Lien invalide/expiré -->
+            <div v-if="linkError" style="text-align: center;">
+                <p
+                    style="font-family: 'Crimson Pro', serif; font-size: 15px; color: var(--sepia); margin-bottom: 16px;">
+                    Ce lien est invalide ou a expiré.
+                </p>
+                <button @click="router.push('/forgot-password')" class="w-full py-3 rounded"
+                    style="background: var(--ink3); color: var(--parch); font-family: 'Cinzel', serif; font-size: 12px; letter-spacing: 3px; text-transform: uppercase; cursor: pointer; border: none;">
+                    Renvoyer un lien
+                </button>
+            </div>
+
         </div>
     </div>
 </template>
 
 <script setup>
-import { ref } from 'vue'
-import { useRouter } from 'vue-router'
+import { ref, onMounted } from 'vue'
+import { useRouter, useRoute } from 'vue-router'
 import { supabase } from '@/lib/supabase'
 
 const router = useRouter()
+const route = useRoute()
 
 const newPassword = ref('')
 const showPassword = ref(false)
 const error = ref('')
 const success = ref(false)
 const loading = ref(false)
+const initializing = ref(true)
+const linkError = ref(false)
+
+onMounted(async () => {
+    const token_hash = route.query.token_hash
+    const type = route.query.type
+
+    if (!token_hash || type !== 'recovery') {
+        initializing.value = false
+        linkError.value = true
+        return
+    }
+
+    const { error: verifyError } = await supabase.auth.verifyOtp({
+        token_hash,
+        type: 'recovery',
+    })
+
+    if (verifyError) {
+        initializing.value = false
+        linkError.value = true
+        return
+    }
+
+    initializing.value = false
+})
+
 
 async function updatePassword() {
     if (newPassword.value.length < 8) {

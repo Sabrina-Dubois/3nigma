@@ -61,6 +61,17 @@ body {
   text-align: center;
 }
 
+/* ── FORM LABELS ── */
+.form-label {
+  font-family: 'Cinzel', serif;
+  font-size: 10px;
+  letter-spacing: 2px;
+  color: var(--sepia);
+  text-transform: uppercase;
+  display: block;
+  margin-bottom: 6px;
+}
+
 /* ── CARTES ── */
 .card {
   background: var(--parch3);
