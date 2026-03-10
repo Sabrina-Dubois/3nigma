@@ -40,9 +40,7 @@
                 <div class="mb-6">
                     <label class="form-label">Email</label>
                     <input v-model="email" type="email" placeholder="votre@email.com"
-                        class="w-full px-4 py-3 rounded outline-none"
-                        style="background: var(--parch); border: 1px solid var(--border); font-family: 'Crimson Pro', serif; font-size: 16px; color: var(--ink);"
-                        @keyup.enter="sendReset" />
+                        class="input-field" @keyup.enter="sendReset" />
                 </div>
 
                 <!-- Bouton -->

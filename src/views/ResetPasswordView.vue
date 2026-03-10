@@ -42,8 +42,7 @@
                     <label class="form-label">Nouveau mot de passe</label>
                     <div class="relative">
                         <input v-model="newPassword" :type="showPassword ? 'text' : 'password'" placeholder="••••••••"
-                            class="w-full px-4 py-3 rounded outline-none pr-12"
-                            style="background: var(--parch); border: 1px solid var(--border); font-family: 'Crimson Pro', serif; font-size: 16px; color: var(--ink);" />
+                            class="input-field pr-12" />
                         <button type="button" @click="showPassword = !showPassword"
                             class="absolute right-3 top-1/2 -translate-y-1/2"
                             style="background: none; border: none; cursor: pointer; color: var(--sepia);">

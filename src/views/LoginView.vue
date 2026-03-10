@@ -51,16 +51,13 @@
         <!-- Pseudo (register only) -->
         <div v-if="mode === 'register'" class="mb-4">
           <label class="form-label">Pseudo</label>
-          <input v-model="username" type="text" placeholder="VotreNom" class="w-full px-4 py-3 rounded outline-none"
-            style="background: var(--parch); border: 1px solid var(--border); font-family: 'Crimson Pro', serif; font-size: 16px; color: var(--ink);" />
+          <input v-model="username" type="text" placeholder="VotreNom" class="input-field" />
         </div>
 
         <!-- Email -->
         <div class="mb-4">
           <label class="form-label">Email</label>
-          <input v-model="email" type="email" placeholder="votre@email.com"
-            class="w-full px-4 py-3 rounded outline-none"
-            style="background: var(--parch); border: 1px solid var(--border); font-family: 'Crimson Pro', serif; font-size: 16px; color: var(--ink);" />
+          <input v-model="email" type="email" placeholder="votre@email.com" class="input-field" />
         </div>
 
         <!-- Mot de passe -->
@@ -68,8 +65,7 @@
           <label class="form-label">Mot de passe</label>
           <div class="relative">
             <input v-model="password" :type="showPassword ? 'text' : 'password'" placeholder="••••••••"
-              class="w-full px-4 py-3 rounded outline-none pr-12"
-              style="background: var(--parch); border: 1px solid var(--border); font-family: 'Crimson Pro', serif; font-size: 16px; color: var(--ink);" />
+              class="input-field pr-12" />
             <button type="button" @click="showPassword = !showPassword"
               class="absolute right-3 top-1/2 -translate-y-1/2"
               style="background: none; border: none; cursor: pointer; color: var(--sepia); font-size: 20px;">
@@ -83,9 +79,7 @@
           <label class="form-label">Confirmer le mot de passe</label>
           <div class="relative">
             <input v-model="passwordConfirm" :type="showPasswordConfirm ? 'text' : 'password'" placeholder="••••••••"
-              class="w-full px-4 py-3 rounded outline-none pr-12"
-              style="background: var(--parch); border: 1px solid var(--border); font-family: 'Crimson Pro', serif; font-size: 16px; color: var(--ink);"
-              @keyup.enter="handleSubmit" />
+              class="input-field pr-12" @keyup.enter="handleSubmit" />
             <button type="button" @click="showPasswordConfirm = !showPasswordConfirm"
               class="absolute right-3 top-1/2 -translate-y-1/2"
               style="background: none; border: none; cursor: pointer; color: var(--sepia); font-size: 20px;">
