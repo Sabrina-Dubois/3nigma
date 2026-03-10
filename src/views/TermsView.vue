@@ -1,5 +1,5 @@
 <template>
-  <div class="terms-page" style="background: var(--parch)">
+  <div class="terms-page parch-bg">
     <TopBar />
 
     <!-- Header -->
@@ -23,7 +23,7 @@
 
     <!-- Contenu -->
     <div class="card-wrapper">
-      <div class="content-card card">
+      <div class="content-card card double-frame">
         <div class="card-content">
           <div :id="'section-0'" class="section-block">
             <div class="section-header">

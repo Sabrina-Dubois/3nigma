@@ -28,8 +28,7 @@
 
     <div v-else class="flex flex-col gap-4">
       <div v-for="escape in filteredEscapes" :key="escape.id" @click="router.push(`/escape/${escape.id}`)"
-        class="rounded p-5 relative cursor-pointer transition-all"
-        style="background: var(--parch3); border: 1px solid var(--border); box-shadow: 0 2px 8px var(--shadow);">
+        class="card rounded p-5 relative cursor-pointer transition-all">
 
         <!-- Bande colorée à gauche -->
         <div class="absolute left-0 top-0 bottom-0 w-1 rounded-l" :style="`background: ${escape.accent_color}`"></div>

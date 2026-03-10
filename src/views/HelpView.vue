@@ -1,5 +1,5 @@
 <template>
-  <div class="help-page" style="background: var(--parch)">
+  <div class="help-page parch-bg">
     <TopBar />
 
     <div class="page-header">
@@ -11,7 +11,7 @@
       <button class="btn-ghost" @click="router.back()">← Retour</button>
     </div>
 
-    <section class="card micro-card mb-6">
+    <section class="card double-frame micro-card mb-6">
       <h2 class="section-title">{{ t('help.search.title') }}</h2>
       <input
         v-model="searchQuery"
@@ -21,7 +21,7 @@
       />
     </section>
 
-    <section class="card micro-card mb-6">
+    <section class="card double-frame micro-card mb-6">
       <h2 class="section-title">{{ t('help.faq_title') }}</h2>
 
       <div v-if="filteredFaqs.length" class="faq-list">
@@ -37,7 +37,7 @@
       </div>
     </section>
 
-    <section class="card micro-card">
+    <section class="card double-frame micro-card">
       <h2 class="section-title">{{ t('help.support.title') }}</h2>
       <p class="support-subtitle">{{ t('help.support.subtitle') }}</p>
       <button class="email-button" @click="copyEmail">

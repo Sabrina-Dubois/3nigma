@@ -1,7 +1,7 @@
 <template>
   <AppLoader v-if="uiStore.isLoading" />
 
-  <div v-else class="app-wrapper">
+  <div v-else class="app-wrapper parch-bg">
     <div class="app-container">
       <AppToast />
       <RouterView />

@@ -1,5 +1,5 @@
 <template>
-  <div class="min-h-screen" style="background: var(--parch)">
+  <div class="min-h-screen parch-bg">
     <TopBar />
 
     <main class="px-4 pt-6 pb-24 max-w-xl mx-auto">
@@ -10,8 +10,7 @@
       </div>
 
       <!-- Compte -->
-      <section class="card rounded p-5 mb-4 relative">
-        <div class="absolute inset-2 rounded pointer-events-none" style="border: 1px solid rgba(30,14,4,0.07)"></div>
+      <section class="card double-frame rounded p-5 mb-4 relative">
 
         <p class="section-label mb-3">Compte</p>
 
@@ -46,7 +45,7 @@
       </section>
 
       <!-- Sécurité -->
-      <section class="card rounded p-5 mb-4">
+      <section class="card double-frame rounded p-5 mb-4">
         <p class="section-label mb-3">Sécurité</p>
 
         <button @click="router.push('/forgot-password')" class="btn-primary btn-block">
@@ -55,7 +54,7 @@
       </section>
 
       <!-- Notifications -->
-      <section class="card rounded p-5 mb-4">
+      <section class="card double-frame rounded p-5 mb-4">
         <p class="section-label mb-3">Notifications</p>
 
         <div class="flex items-center justify-between">
@@ -86,7 +85,7 @@
       </section>
 
       <!-- Premium -->
-      <section class="card rounded p-5 mb-4">
+      <section class="card double-frame rounded p-5 mb-4">
         <p class="section-label mb-3">Premium</p>
 
         <div v-if="authStore.profile?.is_premium">
@@ -109,7 +108,7 @@
       </section>
 
       <!-- À propos -->
-      <section class="card rounded p-5 mb-4">
+      <section class="card double-frame rounded p-5 mb-4">
         <p class="section-label mb-3">À propos</p>
 
         <div class="grid gap-3">

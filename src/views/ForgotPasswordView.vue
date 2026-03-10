@@ -1,5 +1,5 @@
 <template>
-    <div class="min-h-screen flex flex-col items-center justify-start px-4 pt-6 pb-12" style="background: var(--parch)">
+    <div class="min-h-screen flex flex-col items-center justify-start px-4 pt-6 pb-12 parch-bg">
 
         <!-- Logo -->
         <div class="text-center mb-10">
@@ -11,11 +11,7 @@
         </div>
 
         <!-- Carte -->
-        <div class="w-full max-w-sm rounded p-8 relative"
-            style="background: var(--parch3); border: 1px solid var(--border); box-shadow: 0 4px 20px var(--shadow);">
-
-            <div class="absolute inset-2 rounded pointer-events-none" style="border: 1px solid rgba(30,14,4,0.07)">
-            </div>
+        <div class="w-full max-w-sm rounded p-8 relative card double-frame">
 
             <h2
                 style="font-family: 'Cinzel', serif; font-size: 16px; font-weight: 600; letter-spacing: 3px; color: var(--ink); text-align: center; margin-bottom: 12px; text-transform: uppercase;">

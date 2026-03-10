@@ -1,5 +1,5 @@
 <template>
-    <div class="flex flex-col min-h-screen" style="background: var(--parch);">
+    <div class="flex flex-col min-h-screen parch-bg">
 
         <TopBar />
 

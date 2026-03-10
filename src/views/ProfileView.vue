@@ -1,5 +1,5 @@
 <template>
-  <div class="min-h-screen" style="background: var(--parch)">
+  <div class="min-h-screen parch-bg">
     <TopBar />
 
     <main class="px-4 pt-6 pb-24 max-w-xl mx-auto">

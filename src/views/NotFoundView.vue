@@ -12,9 +12,7 @@
       </p>
     </div>
 
-    <div class="w-full max-w-3xl rounded p-8 relative"
-      style="background: var(--parch2); border: 1px solid var(--border); box-shadow: 0 4px 20px var(--shadow);">
-      <div class="absolute inset-2 rounded pointer-events-none" style="border: 1px solid var(--border)"></div>
+    <div class="w-full max-w-3xl rounded p-8 relative card double-frame">
 
       <p
         style="font-family: 'Cinzel', serif; font-size: 12px; letter-spacing: 3px; color: var(--sepia); text-transform: uppercase; text-align: center;">
@@ -26,7 +24,7 @@
       </h2>
 
       <div class="mt-8 grid gap-4">
-        <article class="rounded p-5" style="background: var(--parch); border: 1px solid var(--border);">
+        <article class="rounded p-5 card-soft">
           <h3 style="font-family: 'Cinzel', serif; font-size: 18px; font-weight: 700; color: var(--ink);">
             Cette piste ne mène nulle part…
           </h3>
@@ -38,7 +36,7 @@
           </p>
         </article>
 
-        <article class="rounded p-5" style="background: var(--parch); border: 1px solid var(--border);">
+        <article class="rounded p-5 card-soft">
           <h3 style="font-family: 'Cinzel', serif; font-size: 18px; font-weight: 700; color: var(--ink);">
             404 — Mauvaise piste
           </h3>
@@ -52,7 +50,7 @@
           </p>
         </article>
 
-        <article class="rounded p-5" style="background: var(--parch); border: 1px solid var(--border);">
+        <article class="rounded p-5 card-soft">
           <h3 style="font-family: 'Cinzel', serif; font-size: 18px; font-weight: 700; color: var(--ink);">
             404 — Page disparue
           </h3>
@@ -66,7 +64,7 @@
           </p>
         </article>
 
-        <article class="rounded p-5" style="background: var(--parch); border: 1px solid var(--border);">
+        <article class="rounded p-5 card-soft">
           <h3 style="font-family: 'Cinzel', serif; font-size: 18px; font-weight: 700; color: var(--ink);">
             404 — Dossier manquant
           </h3>

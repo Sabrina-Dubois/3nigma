@@ -1,5 +1,5 @@
 <template>
-  <div class="min-h-screen" style="background: var(--parch)">
+  <div class="min-h-screen parch-bg">
     <TopBar />
 
     <main class="px-4 pt-6 pb-24 max-w-xl mx-auto">
@@ -10,7 +10,7 @@
       </div>
 
       <!-- Statut -->
-      <section class="card rounded p-5 mb-4">
+      <section class="card double-frame rounded p-5 mb-4">
         <div v-if="authStore.profile?.is_premium">
           <p style="font-family: 'Cinzel', serif; font-size: 12px; letter-spacing: 2px; color: var(--gold); text-transform: uppercase;">
             Statut actif
@@ -30,7 +30,7 @@
       </section>
 
       <!-- Avantages -->
-      <section class="card rounded p-5 mb-4">
+      <section class="card double-frame rounded p-5 mb-4">
         <p class="section-label mb-3">Avantages</p>
 
         <div class="grid gap-3">
@@ -62,7 +62,7 @@
       </section>
 
       <!-- Offre -->
-      <section class="card rounded p-5">
+      <section class="card double-frame rounded p-5">
         <p class="section-label mb-3">Offre</p>
 
         <div class="text-center">
