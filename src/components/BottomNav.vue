@@ -15,7 +15,7 @@
 
                 <span style="
             font-family: 'Cinzel', serif;
-            font-size: 10px;
+            font-size: 11px;
             letter-spacing: 1px;
             text-transform: uppercase;
           ">

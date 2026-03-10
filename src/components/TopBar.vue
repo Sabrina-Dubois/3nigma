@@ -5,25 +5,30 @@
         <!-- Logo -->
         <router-link to="/" style="text-decoration: none;">
             <span
-                style="font-family: 'Cinzel', serif; font-weight: 900; font-size: 20px; color: var(--ink3); letter-spacing: 1px;">
+                style="font-family: 'Cinzel', serif; font-weight: 900; font-size: 22px; color: var(--ink3); letter-spacing: 1px;">
                 <span style="color: var(--gold)">🗝️ 3</span>NIGMA<span
-                    style="color: var(--gold); font-size: 28px;">°</span>
+                    style="color: var(--gold); font-size: 30px;">°</span>
             </span>
         </router-link>
 
-        <!-- XP + Streak -->
+        <!-- Enigmes + Escapes + XP -->
         <div class="flex items-center gap-3">
-            <!-- Streak -->
             <div class="flex items-center gap-1">
-                <span style="font-size: 16px;">🔥</span>
-                <span style="font-family: 'Cinzel', serif; font-size: 12px; color: var(--ink2);">
-                    {{ authStore.profile?.current_streak ?? 0 }}
+                <span style="font-size: 16px;">🔍</span>
+                <span style="font-family: 'Cinzel', serif; font-size: 13px; color: var(--ink2);">
+                    {{ enigmasCompleted }}
                 </span>
             </div>
 
-            <!-- XP -->
             <div class="flex items-center gap-1">
-                <span style="font-family: 'Cinzel', serif; font-size: 12px; color: var(--gold);">
+                <span style="font-size: 16px;">🗂️</span>
+                <span style="font-family: 'Cinzel', serif; font-size: 13px; color: var(--ink2);">
+                    {{ escapesCompleted }}
+                </span>
+            </div>
+
+            <div class="flex items-center gap-1">
+                <span style="font-family: 'Cinzel', serif; font-size: 13px; color: var(--ink2);">
                     {{ authStore.profile?.total_xp ?? 0 }} XP
                 </span>
             </div>
@@ -33,7 +38,40 @@
 </template>
 
 <script setup>
+import { onMounted, ref } from 'vue'
 import { useAuthStore } from '@/stores/auth.store'
+import { supabase } from '@/lib/supabase'
 
 const authStore = useAuthStore()
+const enigmasCompleted = ref(0)
+const escapesCompleted = ref(0)
+
+async function loadCounts() {
+    const userId = authStore.user?.id
+    if (!userId) return
+
+    const [enigmasRes, escapesRes] = await Promise.all([
+        supabase
+            .from('user_enigma_attempts')
+            .select('id', { count: 'exact', head: true })
+            .eq('user_id', userId)
+            .not('solved_at', 'is', null),
+        supabase
+            .from('user_escapes')
+            .select('id', { count: 'exact', head: true })
+            .eq('user_id', userId)
+            .not('completed_at', 'is', null),
+    ])
+
+    if (!enigmasRes.error && typeof enigmasRes.count === 'number') {
+        enigmasCompleted.value = enigmasRes.count
+    }
+    if (!escapesRes.error && typeof escapesRes.count === 'number') {
+        escapesCompleted.value = escapesRes.count
+    }
+}
+
+onMounted(async () => {
+    await loadCounts()
+})
 </script>
