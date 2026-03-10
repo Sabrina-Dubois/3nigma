@@ -69,11 +69,8 @@
 
           <button
             @click="toggleNotifications"
-            class="px-3 py-2 rounded"
-            :style="notificationsEnabled
-              ? 'border: 1px solid var(--gold); background: rgba(200,144,10,0.12); color: var(--gold);'
-              : 'border: 1px solid var(--border); background: rgba(0,0,0,0.05); color: var(--sepia);'"
-            style="font-family: 'Cinzel', serif; font-size: 10px; letter-spacing: 1px; text-transform: uppercase; cursor: pointer;">
+            class="toggle-pill"
+            :class="{ active: notificationsEnabled }">
             {{ notificationsEnabled ? 'Activé' : 'Désactivé' }}
           </button>
         </div>

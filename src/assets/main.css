@@ -249,6 +249,54 @@ body {
   border: 1px solid var(--gold);
 }
 
+/* ── TABS / TOGGLES ── */
+.tab-group {
+  display: flex;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  overflow: hidden;
+  background: var(--parch2);
+}
+
+.tab-btn {
+  flex: 1;
+  padding: 0.6rem 0.8rem;
+  font-family: 'Cinzel', serif;
+  font-size: 11px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  cursor: pointer;
+  background: transparent;
+  border: none;
+  color: var(--sepia);
+  transition: all 0.2s;
+}
+
+.tab-btn.active {
+  background: var(--ink3);
+  color: var(--parch);
+}
+
+/* ── TOGGLE SMALL ── */
+.toggle-pill {
+  padding: 0.4rem 0.7rem;
+  border-radius: 999px;
+  font-family: 'Cinzel', serif;
+  font-size: 10px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  cursor: pointer;
+  border: 1px solid var(--border);
+  background: rgba(0, 0, 0, 0.05);
+  color: var(--sepia);
+}
+
+.toggle-pill.active {
+  border-color: var(--gold);
+  background: rgba(200, 144, 10, 0.12);
+  color: var(--gold);
+}
+
 .btn-primary {
   align-items: center;
   background: var(--ink3);

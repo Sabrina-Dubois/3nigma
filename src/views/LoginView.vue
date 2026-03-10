@@ -17,19 +17,11 @@
     <div class="w-full max-w-sm rounded p-8 relative card double-frame">
 
       <!-- Toggle Login / Register -->
-      <div class="flex mb-8 rounded overflow-hidden" style="border: 1px solid var(--border);">
-        <button @click="switchMode('login')" class="flex-1 py-2 transition-all"
-          style="font-family: 'Cinzel', serif; font-size: 11px; letter-spacing: 2px; text-transform: uppercase; cursor: pointer;"
-          :style="mode === 'login'
-            ? 'background: var(--ink3); color: var(--parch);'
-            : 'background: transparent; color: var(--sepia);'">
+      <div class="tab-group mb-8">
+        <button @click="switchMode('login')" class="tab-btn" :class="{ active: mode === 'login' }">
           Connexion
         </button>
-        <button @click="switchMode('register')" class="flex-1 py-2 transition-all"
-          style="font-family: 'Cinzel', serif; font-size: 11px; letter-spacing: 2px; text-transform: uppercase; cursor: pointer;"
-          :style="mode === 'register'
-            ? 'background: var(--ink3); color: var(--parch);'
-            : 'background: transparent; color: var(--sepia);'">
+        <button @click="switchMode('register')" class="tab-btn" :class="{ active: mode === 'register' }">
           Inscription
         </button>
       </div>
