@@ -58,6 +58,7 @@
         v-if="!isSolved"
         :enigma="enigma"
         :answer-error="answerError"
+        :use-star-bg="isEclipse"
         @submit="submitAnswer"
       />
 
@@ -138,6 +139,7 @@ const {
 
 const showStory = ref(false)
 const confirmingHint = ref(false)
+const isEclipse = computed(() => (escape.value?.id ?? escapesStore.currentEscapeId) === 'eclipse')
 
 function onHintClick() {
   if (hintUsed.value) {
@@ -154,7 +156,11 @@ function confirmHint() {
 
 const storyParagraphs = computed(() => {
   if (!enigma.value?.story_before) return []
-  return enigma.value.story_before.split('\n').filter(p => p.trim() !== '')
+
+  return enigma.value.story_before
+    .split('\n')
+    .map(p => p.trim())
+    .filter(p => p.length > 0)
 })
 
 onMounted(async () => {
@@ -378,9 +384,9 @@ function handleBack() {
 .enigma-view__story-para {
   font-family: 'IM Fell English', serif;
   font-size: 1.1rem;
-  line-height: 1.75;
+  line-height: 1.4;
   color: #e8d8b8;
-  margin-bottom: 1.2rem;
+  margin-bottom: 0.7rem;
 }
 
 .enigma-view__story-cta {

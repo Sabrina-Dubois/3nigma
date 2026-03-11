@@ -1,5 +1,5 @@
 <template>
-    <div class="enigma-screen">
+    <div class="enigma-screen" :class="{ 'enigma-screen--star': useStarBg }">
 
         <!-- fond animé -->
         <div class="enigma-bg"></div>
@@ -21,6 +21,9 @@
                 @submit="emit('submit', $event)" />
 
             <EnigmaCipher v-else-if="enigma?.type === 'cipher'" :enigma="enigma" :answer-error="answerError"
+                @submit="emit('submit', $event)" />
+
+            <EnigmaAudio v-else-if="enigma?.type === 'audio'" :enigma="enigma" :answer-error="answerError"
                 @submit="emit('submit', $event)" />
 
             <div v-else class="enigma-card" :class="{ 'enigma-card--error': answerError }">
@@ -49,10 +52,12 @@ import EnigmaScratch from "@/components/EnigmaScratch.vue"
 import EnigmaTuner from "@/components/EnigmaTuner.vue"
 import EnigmaSuperposition from "@/components/EnigmaSuperposition.vue"
 import EnigmaCipher from "@/components/EnigmaCipher.vue"
+import EnigmaAudio from "@/components/EnigmaAudio.vue"
 
 const props = defineProps({
     enigma: { type: Object, required: true },
     answerError: { type: Boolean, default: false },
+    useStarBg: { type: Boolean, default: false },
 })
 
 const emit = defineEmits(["submit"])
@@ -101,7 +106,6 @@ watch(
 .enigma-bg {
     position: absolute;
     inset: 0;
-
     background:
         radial-gradient(circle at center, #111 0%, #000 80%);
 
@@ -122,6 +126,11 @@ watch(
     }
 }
 
+.enigma-screen--star .enigma-bg {
+    background: transparent;
+    animation: none;
+}
+
 /* overlay */
 
 .enigma-overlay {
@@ -129,7 +138,7 @@ watch(
     inset: 0;
     background: radial-gradient(circle,
             rgba(0, 0, 0, 0.2) 0%,
-            rgba(0, 0, 0, 0.8) 90%);
+            rgba(0, 0, 0, 0.55) 85%);
 }
 
 /* contenu */
