@@ -75,12 +75,13 @@ watch(
 <style scoped>
 .enigma-screen {
     position: relative;
-    height: 100vh;
+    min-height: 100vh;
     width: 100%;
     overflow: hidden;
     display: flex;
     align-items: center;
     justify-content: center;
+    padding-bottom: 96px; /* évite la BottomNav */
 }
 
 /* fond animé */

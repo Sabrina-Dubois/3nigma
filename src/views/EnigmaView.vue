@@ -438,6 +438,7 @@ function handleBack() {
   border-radius: 20px 20px 0 0;
   padding: 1.5rem 1.5rem 2.5rem;
   animation: slideFromBottom 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+  margin-bottom: 4.5rem; /* évite la BottomNav */
 }
 
 @keyframes slideFromBottom {
@@ -497,7 +498,7 @@ function handleBack() {
 /* ── INDICE ── */
 .enigma-view__hint {
   position: fixed;
-  bottom: 5rem;
+  bottom: 7rem;
   left: 1rem;
   right: 1rem;
   z-index: 50;
