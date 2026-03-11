@@ -14,8 +14,11 @@ const props = defineProps({
   },
 })
 
-const formatted = ref('00:00:00')
+const emit = defineEmits(['expired'])
+
+const formatted = ref('--:--:--')
 let timerId = null
+let emitted = false
 
 function formatMs(ms) {
   const total = Math.max(0, Math.floor(ms / 1000))
@@ -27,8 +30,12 @@ function formatMs(ms) {
 
 function update() {
   if (!props.target) { formatted.value = '--:--:--'; return }
-  const targetDate = new Date(props.target)
-  const diff = targetDate.getTime() - Date.now()
+  const diff = new Date(props.target).getTime() - Date.now()
+  if (diff <= 0) {
+    formatted.value = '00:00:00'
+    if (!emitted) { emitted = true; emit('expired') }
+    return
+  }
   formatted.value = formatMs(diff)
 }
 
