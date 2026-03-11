@@ -1,10 +1,6 @@
 <template>
   <div class="enigma-view">
 
-    <!-- ── FOND ÉTOILÉ PERMANENT ── -->
-    <div class="enigma-view__base-bg"></div>
-    <StarField :count="120" />
-
     <!-- ── LOADING ── -->
     <div v-if="loading" class="enigma-view__center">
       <p class="enigma-view__label">Chargement...</p>
@@ -28,9 +24,6 @@
 
     <!-- ── PHASE NARRATIVE ── -->
     <div v-else-if="showStory" class="enigma-view__story">
-      <div class="enigma-view__story-bg"></div>
-      <div class="enigma-view__story-overlay"></div>
-
       <div class="enigma-view__story-content">
 
         <!-- Header -->
@@ -125,15 +118,16 @@
 </template>
 
 <script setup>
-import { ref, computed, onMounted } from 'vue'
+import { ref, computed, onMounted, onUnmounted } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 import { useEnigma } from '@/composables/useEnigma'
+import { useEscapesStore } from '@/stores/escapes.store'
 import EnigmaRenderer from '@/components/EnigmaRenderer.vue'
 import CountdownTimer from '@/components/CountdownTimer.vue'
-import StarField from '@/components/StarField.vue'
 
 const router = useRouter()
 const route = useRoute()
+const escapesStore = useEscapesStore()
 
 const {
   enigma, escape, loading, error,
@@ -164,10 +158,15 @@ const storyParagraphs = computed(() => {
 })
 
 onMounted(async () => {
+  escapesStore.currentEscapeId = route.params.id
   await loadEnigma(route.params.id, Number(route.params.n))
   if (enigma.value?.story_before && !isSolved.value) {
     showStory.value = true
   }
+})
+
+onUnmounted(() => {
+  escapesStore.currentEscapeId = null
 })
 
 function handleBack() {
@@ -184,17 +183,8 @@ function handleBack() {
 .enigma-view {
   position: relative;
   min-height: 100vh;
-  background: #04020a;
+  background: transparent;
   color: #f2e8d0;
-}
-
-.enigma-view__base-bg {
-  position: fixed;
-  inset: -4%;
-  background: radial-gradient(ellipse at 50% 40%, #1a0d08 0%, #04020a 60%, #000 100%);
-  animation: storyBgDrift 50s ease-in-out infinite;
-  will-change: transform;
-  z-index: 0;
 }
 
 /* Les éléments centrés passent au-dessus du fond */
@@ -353,7 +343,7 @@ function handleBack() {
   width: 100%;
   max-width: 480px;
   margin: 0 auto;
-  padding: 1.25rem 1.5rem 2.5rem;
+  padding: 1.25rem 1.5rem 6rem;
   display: flex;
   flex-direction: column;
   min-height: 100vh;
@@ -370,8 +360,8 @@ function handleBack() {
   flex: 1;
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  padding: 2rem 0;
+  justify-content: flex-start;
+  padding: 0.5rem 0 1rem;
 }
 
 .enigma-view__story-label {
@@ -405,6 +395,7 @@ function handleBack() {
   width: 100%;
   backdrop-filter: blur(4px);
   transition: opacity 0.2s;
+  margin-top: 0.75rem;
 }
 
 .enigma-view__story-cta:hover {
