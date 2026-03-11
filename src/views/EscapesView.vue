@@ -39,8 +39,11 @@
             </div>
           </div>
 
-          <!-- Badge premium -->
-          <span v-if="escape.is_premium" class="badge badge-gold">Premium</span>
+          <!-- Badges -->
+          <div class="flex flex-col items-end gap-1">
+            <span v-if="completedEscapeIds.has(escape.id)" class="badge badge-gold">✦ Terminé</span>
+            <span v-else-if="escape.is_premium" class="badge badge-gold">Premium</span>
+          </div>
         </div>
 
         <!-- Tagline -->
@@ -65,11 +68,14 @@ import { ref, computed, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import AppLayout from '@/components/AppLayout.vue'
 import { supabase } from '@/lib/supabase'
+import { useAuthStore } from '@/stores/auth.store'
 
 const router = useRouter()
+const authStore = useAuthStore()
 
 // ── STATE ──
 const escapes = ref([])
+const completedEscapeIds = ref(new Set())
 const loading = ref(true)
 const activeFilter = ref('all')
 
@@ -91,13 +97,17 @@ const filteredEscapes = computed(() => {
 
 // ── CHARGEMENT ──
 onMounted(async () => {
-  const { data, error } = await supabase
-    .from('escapes')
-    .select('*')
-    .eq('is_active', true)
-    .order('duration_days')
+  const [{ data: escapesData }, { data: userEscapesData }] = await Promise.all([
+    supabase.from('escapes').select('*').eq('is_active', true).order('duration_days'),
+    supabase.from('user_escapes').select('escape_id, completed_at').eq('user_id', authStore.user?.id ?? ''),
+  ])
 
-  if (!error) escapes.value = data
+  if (escapesData) escapes.value = escapesData
+  if (userEscapesData) {
+    completedEscapeIds.value = new Set(
+      userEscapesData.filter(ue => ue.completed_at).map(ue => ue.escape_id)
+    )
+  }
   loading.value = false
 })
 </script>
