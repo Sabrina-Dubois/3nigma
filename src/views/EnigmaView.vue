@@ -67,7 +67,7 @@
         :enigma="enigma"
         :answer-error="answerError"
         :use-star-bg="isEclipse"
-        @submit="submitAnswer"
+        @submit="(answer) => submitAnswer(answer, isReplay)"
       />
 
       <!-- Overlay header (au-dessus du renderer) -->

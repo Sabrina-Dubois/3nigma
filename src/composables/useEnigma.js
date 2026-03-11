@@ -181,7 +181,7 @@ export function useEnigma() {
    * @param {string} answer - réponse saisie par l'utilisateur
    * @returns {{ correct: boolean, xp_earned?: number, next_unlocked_at?: string }}
    */
-  async function submitAnswer(answer) {
+  async function submitAnswer(answer, isReplay = false) {
     if (!enigma.value || submitting.value) return
     submitting.value = true
     answerError.value = false
@@ -202,6 +202,7 @@ export function useEnigma() {
           enigma_id: enigma.value.id,
           answer,
           hint_used: hintUsed.value,
+          is_replay: isReplay,
         }),
       },
     )
