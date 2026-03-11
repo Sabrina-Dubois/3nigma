@@ -24,9 +24,15 @@
       <!-- Divider -->
       <div class="sv__divider"></div>
 
+      <!-- Titre fin (dernier jour) -->
+      <div v-if="enigma?.day_number >= escape?.duration_days" class="sv__complete-header">
+        <p class="sv__complete-title">Escape terminé !</p>
+        <p class="sv__complete-sub">Tu as résolu "{{ escape?.title }}".</p>
+      </div>
+
       <!-- Story after -->
       <div v-if="storyParagraphs.length" class="sv__story">
-        <p class="sv__story-label">— Suite de l'enquête —</p>
+        <p class="sv__story-label">{{ enigma?.day_number >= escape?.duration_days ? '— Épilogue —' : '— Suite de l\'enquête —' }}</p>
         <div v-for="(p, i) in storyParagraphs" :key="i">
           <p class="sv__story-para">{{ p }}</p>
         </div>
@@ -44,16 +50,20 @@
           Jour {{ enigma.day_number + 1 }} →
         </button>
 
-        <!-- Escape terminé (dernier jour) -->
-        <div v-else class="sv__complete">
-          <p class="sv__complete-title">Escape terminé !</p>
-          <p class="sv__complete-sub">Tu as résolu tous les jours de {{ escape?.title }}.</p>
-          <button class="sv__btn sv__btn--primary" @click="router.push('/')">
-            Découvrir d'autres escapes
-          </button>
-        </div>
+        <!-- Dernier jour : juste le bouton -->
+        <button
+          v-else
+          class="sv__btn sv__btn--primary"
+          @click="router.push('/')"
+        >
+          Découvrir d'autres escapes
+        </button>
 
-        <button class="sv__btn sv__btn--ghost" @click="router.push(`/escape/${route.params.id}`)">
+        <button
+          v-if="enigma?.day_number < escape?.duration_days"
+          class="sv__btn sv__btn--ghost"
+          @click="router.push(`/escape/${route.params.id}`)"
+        >
           ← Retour à l'enquête
         </button>
 
@@ -86,7 +96,28 @@ const xpEarned = computed(() => attempt.value?.xp_earned ?? enigma.value?.xp_rew
 
 const storyParagraphs = computed(() => {
   if (!enigma.value?.story_after) return []
-  return enigma.value.story_after.split('\n').filter(p => p.trim() !== '')
+  const lines = enigma.value.story_after.split('\n').filter(p => p.trim() !== '')
+
+  const choice = sessionStorage.getItem('enigmaChoice')
+  if (!choice) return lines
+
+  // Détecte les sections "SOLEIL :" / "ÉVEILLÉ :" et filtre selon le choix
+  const markers = { soleil: /^SOLEIL\s*:/i, eveille: /^ÉVEILLÉ\s*:|^EVEILLE\s*:/i }
+  const activeMarker = markers[choice]
+  if (!activeMarker) return lines
+
+  let inSection = false
+  const filtered = []
+  for (const line of lines) {
+    const isSoleil  = /^SOLEIL\s*:/i.test(line)
+    const isEveille = /^ÉVEILLÉ\s*:|^EVEILLE\s*:/i.test(line)
+    if (isSoleil || isEveille) {
+      inSection = activeMarker.test(line)
+    } else if (inSection) {
+      filtered.push(line)
+    }
+  }
+  return filtered.length > 0 ? filtered : lines
 })
 
 onMounted(async () => {
@@ -314,6 +345,13 @@ function goNextDay() {
 }
 
 /* ── ESCAPE COMPLET ── */
+.sv__complete-header {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
 .sv__complete {
   width: 100%;
   text-align: center;
