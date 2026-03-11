@@ -23,11 +23,11 @@
     <div v-else-if="escape" class="px-4 py-6 pb-24">
 
       <!-- Premium check -->
-        <div v-if="escape.is_premium && !authStore.user.is_premium" class="card p-6 rounded text-center">
+        <div v-if="escape.is_premium && !authStore.isPremium" class="card p-6 rounded text-center">
         <p class="section-title-sm" style="color: var(--ink); margin-bottom: 12px;">
           Cette escape est réservée aux membres Premium 🗝️
         </p>
-        <button @click="router.push('/upgrade')" class="py-3 px-6 rounded"
+        <button @click="router.push('/premium')" class="py-3 px-6 rounded"
           style="background: var(--ink3); color: var(--parch); font-family: 'Cinzel', serif; text-transform: uppercase; letter-spacing: 2px; border: none; cursor: pointer;">
           Devenir Premium
         </button>
@@ -87,14 +87,16 @@
 </template>
 
 <script setup>
-import { ref, computed, onMounted } from 'vue'
+import { ref, computed, onMounted, onUnmounted } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 import { useAuthStore } from '@/stores/auth.store'
+import { useEscapesStore } from '@/stores/escapes.store'
 import { supabase } from '@/lib/supabase'
 
 const router = useRouter()
 const route = useRoute()
 const authStore = useAuthStore()
+const escapesStore = useEscapesStore()
 
 const escape = ref(null)
 const userEscape = ref(null)
@@ -107,6 +109,7 @@ const prologueParagraphs = computed(() => {
 
 onMounted(async () => {
   const id = route.params.id
+  escapesStore.currentEscapeId = id
 
   // Charger l'escape
   const { data: escapeData, error: escapeError } = await supabase
@@ -133,6 +136,10 @@ onMounted(async () => {
   loading.value = false
 })
 
+onUnmounted(() => {
+  escapesStore.currentEscapeId = null
+})
+
 async function startEscape() {
   starting.value = true
 
@@ -154,7 +161,7 @@ async function startEscape() {
     userEscape.value = data
     router.push(`/escape/${escape.value.id}/day/1`)
   } else {
-    alert('Impossible de démarrer l’aventure. Réessaye.')
+    alert("Impossible de démarrer l’aventure. Réessaye.")
   }
 }
 </script>

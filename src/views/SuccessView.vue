@@ -1,10 +1,6 @@
 <template>
   <div class="sv">
 
-    <!-- Fond étoilé -->
-    <div class="sv__bg"></div>
-    <StarField :count="140" />
-    <div class="sv__overlay"></div>
 
     <!-- Loader -->
     <div v-if="loading" class="sv__center">
@@ -68,17 +64,18 @@
 </template>
 
 <script setup>
-import { ref, computed, onMounted } from 'vue'
+import { ref, computed, onMounted, onUnmounted } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 import { useAuthStore } from '@/stores/auth.store'
 import { useXpStore } from '@/stores/xp.store'
+import { useEscapesStore } from '@/stores/escapes.store'
 import { supabase } from '@/lib/supabase'
-import StarField from '@/components/StarField.vue'
 
 const router    = useRouter()
 const route     = useRoute()
 const authStore = useAuthStore()
 const xpStore   = useXpStore()
+const escapesStore = useEscapesStore()
 
 const enigma  = ref(null)
 const escape  = ref(null)
@@ -94,42 +91,53 @@ const storyParagraphs = computed(() => {
 
 onMounted(async () => {
   const escapeId  = route.params.id
+  escapesStore.currentEscapeId = escapeId
   const dayNumber = Number(route.params.n)
 
-  const [{ data: enigmaData }, { data: escapeData }] = await Promise.all([
-    supabase
-      .from('enigmas')
-      .select('id, escape_id, day_number, title, story_after, xp_reward')
-      .eq('escape_id', escapeId)
-      .eq('day_number', dayNumber)
-      .single(),
-    supabase
-      .from('escapes')
-      .select('id, title, duration_days')
-      .eq('id', escapeId)
-      .single(),
-  ])
+  try {
+    const [{ data: enigmaData }, { data: escapeData }] = await Promise.all([
+      supabase
+        .from('enigmas')
+        .select('id, escape_id, day_number, title, story_after, xp_reward')
+        .eq('escape_id', escapeId)
+        .eq('day_number', dayNumber)
+        .single(),
+      supabase
+        .from('escapes')
+        .select('id, title, duration_days')
+        .eq('id', escapeId)
+        .single(),
+    ])
 
-  enigma.value = enigmaData
-  escape.value = escapeData
+    enigma.value = enigmaData
+    escape.value = escapeData
 
-  if (enigmaData?.id) {
-    const { data: attemptData } = await supabase
-      .from('user_enigma_attempts')
-      .select('xp_earned, hint_used')
-      .eq('user_id', authStore.user.id)
-      .eq('enigma_id', enigmaData.id)
-      .maybeSingle()
-    attempt.value = attemptData
+    if (enigmaData?.id) {
+      const { data: attemptData } = await supabase
+        .from('user_enigma_attempts')
+        .select('xp_earned, hint_used')
+        .eq('user_id', authStore.user.id)
+        .eq('enigma_id', enigmaData.id)
+        .maybeSingle()
+      attempt.value = attemptData
+    }
+  } catch (e) {
+    console.error('[SuccessView] load error:', e)
+  } finally {
+    loading.value = false
   }
-
-  loading.value = false
 
   // Rafraîchit le profil et sync le xp.store pour que niveau/barre XP soient à jour
-  await authStore.fetchProfile()
-  if (authStore.profile?.total_xp != null) {
-    xpStore.totalXp = authStore.profile.total_xp
-  }
+  try {
+    await authStore.fetchProfile()
+    if (authStore.profile?.total_xp != null) {
+      xpStore.totalXp = authStore.profile.total_xp
+    }
+  } catch { /* non bloquant */ }
+})
+
+onUnmounted(() => {
+  escapesStore.currentEscapeId = null
 })
 
 function goNextDay() {
@@ -145,29 +153,6 @@ function goNextDay() {
   color: #f2e8d0;
 }
 
-/* ── FOND ── */
-.sv__bg {
-  position: fixed;
-  inset: -4%;
-  background: radial-gradient(ellipse at 50% 30%, #1a1008 0%, #04020a 60%, #000 100%);
-  animation: bgDrift 50s ease-in-out infinite;
-  will-change: transform;
-  z-index: 0;
-}
-
-@keyframes bgDrift {
-  0%   { transform: translate(0, 0)      scale(1); }
-  33%  { transform: translate(-1%, 1%)   scale(1.02); }
-  66%  { transform: translate(1%, -0.5%) scale(1.01); }
-  100% { transform: translate(0, 0)      scale(1); }
-}
-
-.sv__overlay {
-  position: fixed;
-  inset: 0;
-  background: radial-gradient(circle, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.65) 100%);
-  z-index: 0;
-}
 
 /* ── LAYOUT ── */
 .sv__center {

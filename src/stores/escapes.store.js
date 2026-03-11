@@ -28,11 +28,15 @@ export const useEscapesStore = defineStore('escapes', () => {
     })
   })
 
+  // ID de l'escape en cours de jeu (utilisé par App.vue pour le fond)
+  const currentEscapeId = ref(null)
+
   return {
     escapes,
     userEscapes,
     activeFilter,
     filteredEscapes,
     escapesWithProgress,
+    currentEscapeId,
   }
 })

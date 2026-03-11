@@ -14,6 +14,9 @@
             <EnigmaScratch v-else-if="enigma?.type === 'scratch'" :enigma="enigma" :answer-error="answerError"
                 @submit="emit('submit', $event)" />
 
+            <EnigmaTuner v-else-if="enigma?.type === 'tuner'" :enigma="enigma" :answer-error="answerError"
+                @submit="emit('submit', $event)" />
+
             <div v-else class="enigma-card" :class="{ 'enigma-card--error': answerError }">
                 <div v-if="enigma?.question" class="enigma-question">
                     {{ enigma.question }}
@@ -37,6 +40,7 @@
 import { ref, onMounted, watch } from "vue"
 import EnigmaSlider from "@/components/EnigmaSlider.vue"
 import EnigmaScratch from "@/components/EnigmaScratch.vue"
+import EnigmaTuner from "@/components/EnigmaTuner.vue"
 
 const props = defineProps({
     enigma: { type: Object, required: true },

@@ -50,6 +50,7 @@ export function useEnigma() {
     loading.value = true
     error.value = null
     escape.value = null
+    userAttempt.value = null
     previousEnigma.value = null
     previousAttempt.value = null
 
@@ -68,6 +69,10 @@ export function useEnigma() {
       return
     }
 
+    // Parser la config si c'est une chaîne JSON
+    if (data && typeof data.config === 'string') {
+      try { data.config = JSON.parse(data.config) } catch { data.config = {} }
+    }
     enigma.value = data
 
     // Charger la tentative existante si déjà résolue
