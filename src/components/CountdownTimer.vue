@@ -10,7 +10,7 @@ import { ref, onMounted, onBeforeUnmount, watch } from 'vue'
 const props = defineProps({
   target: {
     type: [String, Date],
-    required: true,
+    default: null,
   },
 })
 
@@ -26,6 +26,7 @@ function formatMs(ms) {
 }
 
 function update() {
+  if (!props.target) { formatted.value = '--:--:--'; return }
   const targetDate = new Date(props.target)
   const diff = targetDate.getTime() - Date.now()
   formatted.value = formatMs(diff)
