@@ -26,6 +26,9 @@
             <EnigmaAudio v-else-if="enigma?.type === 'audio'" :enigma="enigma" :answer-error="answerError"
                 @submit="emit('submit', $event)" />
 
+            <EnigmaChoice v-else-if="enigma?.type === 'choice'" :enigma="enigma" :answer-error="answerError"
+                @submit="emit('submit', $event)" />
+
             <div v-else class="enigma-card" :class="{ 'enigma-card--error': answerError }">
                 <div v-if="enigma?.question" class="enigma-question">
                     {{ enigma.question }}
@@ -53,6 +56,7 @@ import EnigmaTuner from "@/components/EnigmaTuner.vue"
 import EnigmaSuperposition from "@/components/EnigmaSuperposition.vue"
 import EnigmaCipher from "@/components/EnigmaCipher.vue"
 import EnigmaAudio from "@/components/EnigmaAudio.vue"
+import EnigmaChoice from "@/components/EnigmaChoice.vue"
 
 const props = defineProps({
     enigma: { type: Object, required: true },
