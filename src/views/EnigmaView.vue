@@ -15,8 +15,13 @@
     <!-- ── PAS ENCORE DISPONIBLE ── -->
     <div v-else-if="!isAvailable" class="enigma-view__center enigma-view__center--col gap-6 px-6 text-center">
       <p class="enigma-view__heading">Jour {{ enigma?.day_number }}</p>
-      <p class="enigma-view__label">Disponible dans</p>
-      <CountdownTimer :target="unlockedNextAt" class="enigma-view__countdown" />
+      <template v-if="unlockedNextAt">
+        <p class="enigma-view__label">Disponible dans</p>
+        <CountdownTimer :target="unlockedNextAt" class="enigma-view__countdown" />
+      </template>
+      <template v-else>
+        <p class="enigma-view__label">Résous d'abord le jour précédent</p>
+      </template>
       <button class="enigma-view__btn" @click="router.push(`/escape/${route.params.id}`)">
         ← Retour à l'enquête
       </button>
