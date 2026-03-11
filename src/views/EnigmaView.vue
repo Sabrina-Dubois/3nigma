@@ -150,7 +150,7 @@ const storyParagraphs = computed(() => {
 onMounted(async () => {
   escapesStore.currentEscapeId = route.params.id
   await loadEnigma(route.params.id, Number(route.params.n))
-  if (enigma.value?.story_before && !isSolved.value) {
+  if (enigma.value?.story_before) {
     showStory.value = true
   }
 })
