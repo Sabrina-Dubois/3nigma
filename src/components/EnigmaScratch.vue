@@ -43,7 +43,7 @@
 
     <!-- Input + submit (apparaît quand message révélé) -->
     <transition name="sc-slide">
-      <div v-if="isComplete" class="sc__submit-panel">
+      <div v-if="isComplete && !autoAnswer" class="sc__submit-panel">
         <p class="sc__submit-label">Message révélé — Quelle est la réponse ?</p>
         <form class="sc__submit-form" @submit.prevent="onSubmit">
           <input
@@ -78,6 +78,7 @@ const revealColor = computed(() => props.enigma?.config?.reveal_color  ?? '#1a1a
 const scratchColor= computed(() => props.enigma?.config?.scratch_color ?? '#8B7355')
 const messageLines= computed(() => props.enigma?.config?.message_lines ?? [])
 const threshold   = computed(() => props.enigma?.config?.completion_threshold ?? 85)
+const autoAnswer  = computed(() => props.enigma?.config?.auto_answer ?? null)
 
 // ── REFS DOM ──
 const containerRef  = ref(null)
@@ -98,7 +99,6 @@ let checkHandle = null
 // ── STYLES ──
 const bgStyle = computed(() => ({
   backgroundImage: imageUrl.value ? `url(${imageUrl.value})` : 'none',
-  backgroundColor: '#0d0d1a',
 }))
 
 const revealStyle = computed(() => ({
@@ -178,9 +178,13 @@ function checkProgress() {
   if (progress.value >= threshold.value) {
     isComplete.value = true
     progress.value   = 100
-    // Efface le reste de la poussière
     ctx.clearRect(0, 0, width, height)
-    nextTick(() => answerInputRef.value?.focus())
+    // Auto-submit si la réponse est dans la config
+    if (autoAnswer.value) {
+      nextTick(() => emit('submit', autoAnswer.value))
+    } else {
+      nextTick(() => answerInputRef.value?.focus())
+    }
   }
 }
 
@@ -267,7 +271,7 @@ onUnmounted(() => {
 .sc__veil {
   position: absolute;
   inset: 0;
-  background: rgba(5, 3, 15, 0.55);
+  background: rgba(5, 3, 15, 0.25);
 }
 
 /* ── COUCHE RÉVÉLÉE ── */
@@ -348,7 +352,7 @@ onUnmounted(() => {
 /* ── PANNEAU SUBMIT ── */
 .sc__submit-panel {
   position: absolute;
-  bottom: 0;
+  bottom: 4.5rem;
   left: 0;
   right: 0;
   background: rgba(10, 8, 20, 0.96);

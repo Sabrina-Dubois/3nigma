@@ -334,7 +334,7 @@ function onUp() {
 /* ── INSTRUCTION ── */
 .ms__instruction {
   position: absolute;
-  bottom: 6%;
+  bottom: 10%;
   left: 0;
   right: 0;
   text-align: center;
