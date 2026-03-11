@@ -69,7 +69,7 @@
         <span class="enigma-view__day-badge">
           Jour {{ enigma.day_number }} / {{ escape?.duration_days }}
         </span>
-        <button v-if="enigma.hint && !isSolved" class="enigma-view__hint-btn" @click="onHintClick"
+        <button v-if="enigma.hint" class="enigma-view__hint-btn" @click="onHintClick"
           :class="{ 'enigma-view__hint-btn--used': hintUsed }">
           <i class="mdi mdi-lightbulb-outline"></i>
           <span>Indice</span>
@@ -117,7 +117,7 @@ const escapesStore = useEscapesStore()
 const {
   enigma, escape, loading, error,
   hintVisible, hintUsed, answerError,
-  isSolved, isAvailable, unlockedNextAt,
+  isAvailable, unlockedNextAt,
   loadEnigma, toggleHint, submitAnswer,
 } = useEnigma()
 
