@@ -53,48 +53,32 @@
     <!-- ── PHASE ÉNIGME ── -->
     <div v-else class="enigma-view__game">
 
-      <!-- EnigmaRenderer (full screen) -->
+      <!-- EnigmaRenderer (full screen) — toujours jouable, même si déjà résolue -->
       <EnigmaRenderer
-        v-if="!isSolved"
         :enigma="enigma"
         :answer-error="answerError"
         :use-star-bg="isEclipse"
         @submit="submitAnswer"
       />
 
-      <!-- Déjà résolue -->
-      <div v-else class="enigma-view__center enigma-view__center--col gap-6 px-6 text-center">
-        <span class="enigma-view__solved-icon">✓</span>
-        <p class="enigma-view__heading">Jour {{ enigma.day_number }} résolu</p>
-        <p class="enigma-view__label">Tu as déjà résolu cette énigme.</p>
-        <button v-if="enigma.day_number < escape?.duration_days" class="enigma-view__btn"
-          @click="router.push(`/escape/${route.params.id}/day/${enigma.day_number + 1}`)">
-          Jour {{ enigma.day_number + 1 }} →
-        </button>
-        <button class="enigma-view__btn enigma-view__btn--ghost"
-          @click="router.push(`/escape/${route.params.id}`)">
-          ← Retour à l'enquête
-        </button>
-      </div>
-
       <!-- Overlay header (au-dessus du renderer) -->
-      <div v-if="!isSolved" class="enigma-view__overlay-header">
+      <div class="enigma-view__overlay-header">
         <button class="enigma-view__icon-btn" @click="handleBack">
           <i class="mdi mdi-arrow-left"></i>
         </button>
         <span class="enigma-view__day-badge">
           Jour {{ enigma.day_number }} / {{ escape?.duration_days }}
         </span>
-        <button v-if="enigma.hint" class="enigma-view__hint-btn" @click="onHintClick"
+        <button v-if="enigma.hint && !isSolved" class="enigma-view__hint-btn" @click="onHintClick"
           :class="{ 'enigma-view__hint-btn--used': hintUsed }">
           <i class="mdi mdi-lightbulb-outline"></i>
-          <span>{{ hintUsed ? 'Indice' : 'Indice' }}</span>
+          <span>Indice</span>
         </button>
         <div v-else style="width: 36px;"></div>
       </div>
 
       <!-- Confirmation avant premier usage -->
-      <div v-if="!isSolved && confirmingHint" class="enigma-view__confirm-backdrop" @click.self="confirmingHint = false">
+      <div v-if="confirmingHint" class="enigma-view__confirm-backdrop" @click.self="confirmingHint = false">
         <div class="enigma-view__confirm">
           <p class="enigma-view__confirm-title">Utiliser l'indice ?</p>
           <p class="enigma-view__confirm-body">
@@ -108,7 +92,7 @@
       </div>
 
       <!-- Overlay indice -->
-      <div v-if="!isSolved && hintVisible" class="enigma-view__hint">
+      <div v-if="hintVisible" class="enigma-view__hint">
         <p class="enigma-view__hint-label">Indice</p>
         <p class="enigma-view__hint-text">{{ enigma.hint }}</p>
       </div>
