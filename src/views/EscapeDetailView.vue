@@ -79,7 +79,7 @@
             style="background: rgba(201,169,110,0.12); border: 1px solid rgba(201,169,110,0.35); font-family: 'Cinzel', serif; font-size: 11px; letter-spacing: 2px; text-transform: uppercase; color: #c9a96e;">
             ✦ Escape terminé
           </div>
-          <button @click="router.push(`/escape/${escape.id}/day/1`)"
+          <button @click="() => { sessionStorage.setItem('replayEscape', escape.id); router.push(`/escape/${escape.id}/day/1`) }"
             class="w-full py-4 rounded"
             style="background: var(--ink3); color: var(--parch); font-family: 'Cinzel', serif; font-size: 13px; letter-spacing: 3px; text-transform: uppercase; cursor: pointer; border: none; opacity: 0.75;">
             ↺ Rejouer depuis le début

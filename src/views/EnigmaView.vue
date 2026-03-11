@@ -12,13 +12,22 @@
       <button class="enigma-view__btn" @click="router.back()">← Retour</button>
     </div>
 
-    <!-- ── PAS ENCORE DISPONIBLE ── -->
-    <div v-else-if="!isAvailable" class="enigma-view__center enigma-view__center--col gap-6 px-6 text-center">
+    <!-- ── PAS ENCORE DISPONIBLE (première partie) ── -->
+    <div v-else-if="!isAvailable && !isReplay" class="enigma-view__center enigma-view__center--col gap-6 px-6 text-center">
       <p class="enigma-view__heading">Jour {{ enigma?.day_number }}</p>
       <p class="enigma-view__label">Disponible dans</p>
       <CountdownTimer :target="unlockedNextAt" class="enigma-view__countdown" @expired="router.go(0)" />
       <button class="enigma-view__btn" @click="router.push(`/escape/${route.params.id}`)">
         ← Retour à l'enquête
+      </button>
+    </div>
+
+    <!-- ── PAS ENCORE DISPONIBLE (mode replay) ── -->
+    <div v-else-if="!isAvailable && isReplay" class="enigma-view__center enigma-view__center--col gap-6 px-6 text-center">
+      <p class="enigma-view__heading">Jour {{ enigma?.day_number }}</p>
+      <button class="enigma-view__btn"
+        @click="router.push(`/escape/${route.params.id}/day/${Number(route.params.n) + 1}`)">
+        Jour {{ Number(route.params.n) + 1 }} →
       </button>
     </div>
 
@@ -123,6 +132,7 @@ const {
 
 const showStory = ref(false)
 const confirmingHint = ref(false)
+const isReplay = ref(false)
 const isEclipse = computed(() => (escape.value?.id ?? escapesStore.currentEscapeId) === 'eclipse')
 
 function onHintClick() {
@@ -150,6 +160,10 @@ const storyParagraphs = computed(() => {
 onMounted(async () => {
   escapesStore.currentEscapeId = route.params.id
   await loadEnigma(route.params.id, Number(route.params.n))
+
+  // Détecter le mode replay via sessionStorage (posé au clic "Rejouer depuis le début")
+  isReplay.value = sessionStorage.getItem('replayEscape') === route.params.id
+
   if (enigma.value?.story_before) {
     showStory.value = true
   }
