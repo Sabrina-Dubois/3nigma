@@ -1,5 +1,5 @@
 <template>
-  <div class="min-h-screen flex flex-col items-center justify-start px-4 pt-6 pb-12" style="background: var(--parch)">
+  <div class="min-h-screen flex flex-col items-center justify-start px-4 pt-6 pb-24 parch-bg">
     <div class="text-center mb-10">
       <h1
         style="font-family: 'Cinzel', serif; font-weight: 900; font-size: 38px; color: var(--ink); letter-spacing: 2px;">
