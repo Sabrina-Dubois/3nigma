@@ -20,6 +20,9 @@
             <EnigmaSuperposition v-else-if="enigma?.type === 'superposition'" :enigma="enigma" :answer-error="answerError"
                 @submit="emit('submit', $event)" />
 
+            <EnigmaCipher v-else-if="enigma?.type === 'cipher'" :enigma="enigma" :answer-error="answerError"
+                @submit="emit('submit', $event)" />
+
             <div v-else class="enigma-card" :class="{ 'enigma-card--error': answerError }">
                 <div v-if="enigma?.question" class="enigma-question">
                     {{ enigma.question }}
@@ -45,6 +48,7 @@ import EnigmaSlider from "@/components/EnigmaSlider.vue"
 import EnigmaScratch from "@/components/EnigmaScratch.vue"
 import EnigmaTuner from "@/components/EnigmaTuner.vue"
 import EnigmaSuperposition from "@/components/EnigmaSuperposition.vue"
+import EnigmaCipher from "@/components/EnigmaCipher.vue"
 
 const props = defineProps({
     enigma: { type: Object, required: true },
