@@ -31,6 +31,15 @@ body {
   color: var(--ink);
   font-family: 'Crimson Pro', Georgia, serif;
   min-height: 100vh;
+  overflow-x: hidden;
+}
+
+#app {
+  overflow-x: hidden;
+}
+
+.app-wrapper {
+  overflow-x: hidden;
 }
 
 /* ── PARCHMENT BACKGROUND ── */

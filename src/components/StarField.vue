@@ -39,7 +39,7 @@ const stars = Array.from({ length: 140 }, (_, i) => ({
 <style scoped>
 .starfield {
   position: absolute;
-  inset: -6%;
+  inset: 0;
   overflow: hidden;
   pointer-events: none;
   animation: starDrift 60s ease-in-out infinite;
@@ -47,11 +47,11 @@ const stars = Array.from({ length: 140 }, (_, i) => ({
 }
 
 @keyframes starDrift {
-  0%   { transform: translate(0,     0); }
-  25%  { transform: translate(1.5%,  1%); }
-  50%  { transform: translate(0,     2%); }
-  75%  { transform: translate(-1.5%, 1%); }
-  100% { transform: translate(0,     0); }
+  0%   { transform: translate(0,     0) scale(1.04); }
+  25%  { transform: translate(1.5%,  1%) scale(1.05); }
+  50%  { transform: translate(0,     2%) scale(1.04); }
+  75%  { transform: translate(-1.5%, 1%) scale(1.05); }
+  100% { transform: translate(0,     0) scale(1.04); }
 }
 
 .starfield__star {

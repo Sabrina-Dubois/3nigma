@@ -49,6 +49,7 @@ onMounted(async () => {
 <style>
 .escape-bg {
   background: #04020a;
+  overflow: hidden;
 }
 
 .escape-bg .app-container {
@@ -58,7 +59,7 @@ onMounted(async () => {
 
 .escape-base-bg {
   position: fixed;
-  inset: -4%;
+  inset: 0;
   background: radial-gradient(ellipse at 50% 35%, #1a0d08 0%, #04020a 60%, #000 100%);
   animation: escapeBgDrift 50s ease-in-out infinite;
   will-change: transform;
@@ -66,10 +67,10 @@ onMounted(async () => {
 }
 
 @keyframes escapeBgDrift {
-  0%   { transform: translate(0, 0)      scale(1); }
-  33%  { transform: translate(-1%, 1%)   scale(1.02); }
-  66%  { transform: translate(1%, -0.5%) scale(1.01); }
-  100% { transform: translate(0, 0)      scale(1); }
+  0%   { transform: translate(0, 0)      scale(1.04); }
+  33%  { transform: translate(-1%, 1%)   scale(1.06); }
+  66%  { transform: translate(1%, -0.5%) scale(1.05); }
+  100% { transform: translate(0, 0)      scale(1.04); }
 }
 
 .escape-stars-wrapper {

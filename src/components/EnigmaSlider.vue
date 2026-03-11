@@ -185,7 +185,7 @@ function onUp() {
 /* ── FOND ── */
 .ms__bg {
   position: absolute;
-  inset: -4%;     /* marge pour que le drift ne montre pas les bords */
+  inset: 0;
   background-size: cover;
   background-position: center bottom;
   background-repeat: no-repeat;
@@ -196,11 +196,11 @@ function onUp() {
 
 /* Dérive inverse et légèrement plus rapide → effet parallax avec les étoiles */
 @keyframes bgDrift {
-  0%   { transform: translate(0,    0); }
-  25%  { transform: translate(-1%, -0.8%); }
-  50%  { transform: translate(0,   -1.5%); }
-  75%  { transform: translate(1%,  -0.8%); }
-  100% { transform: translate(0,    0); }
+  0%   { transform: translate(0,    0) scale(1.04); }
+  25%  { transform: translate(-1%, -0.8%) scale(1.05); }
+  50%  { transform: translate(0,   -1.5%) scale(1.04); }
+  75%  { transform: translate(1%,  -0.8%) scale(1.05); }
+  100% { transform: translate(0,    0) scale(1.04); }
 }
 
 /* Voile sombre pour assombrir l'image de base */

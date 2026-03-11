@@ -314,21 +314,22 @@ function handleBack() {
   min-height: 100vh;
   display: flex;
   align-items: stretch;
+  overflow: hidden;
 }
 
 .enigma-view__story-bg {
   position: absolute;
-  inset: -4%;
+  inset: 0;
   background: radial-gradient(ellipse at 50% 40%, #1a0d08 0%, #04020a 60%, #000 100%);
   animation: storyBgDrift 50s ease-in-out infinite;
   will-change: transform;
 }
 
 @keyframes storyBgDrift {
-  0%   { transform: translate(0,    0)    scale(1); }
-  33%  { transform: translate(-1%,  1%)   scale(1.02); }
-  66%  { transform: translate(1%,  -0.5%) scale(1.01); }
-  100% { transform: translate(0,    0)    scale(1); }
+  0%   { transform: translate(0,    0)    scale(1.04); }
+  33%  { transform: translate(-1%,  1%)   scale(1.06); }
+  66%  { transform: translate(1%,  -0.5%) scale(1.05); }
+  100% { transform: translate(0,    0)    scale(1.04); }
 }
 
 .enigma-view__story-overlay {
