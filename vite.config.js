@@ -26,8 +26,8 @@ export default defineConfig({
         start_url: '/?source=pwa',
         scope: '/',
         icons: [
-          { src: '/images/3nigma-logo-192.png', sizes: '192x192', type: 'image/png' },
-          { src: '/images/3nigma-logo-512.png', sizes: '512x512', type: 'image/png' },
+          { src: '/images/3nigma-logo-192.png', sizes: '192x192', type: 'image/png', purpose: 'any' },
+          { src: '/images/3nigma-logo-512.png', sizes: '512x512', type: 'image/png', purpose: 'any maskable' },
         ],
       },
       workbox: {
