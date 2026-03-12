@@ -62,6 +62,7 @@ const props = defineProps({
     enigma: { type: Object, required: true },
     answerError: { type: Boolean, default: false },
     useStarBg: { type: Boolean, default: false },
+    solved: { type: Boolean, default: false },
 })
 
 const emit = defineEmits(["submit"])

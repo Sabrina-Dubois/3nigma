@@ -1,5 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import { useAuthStore } from '@/stores/auth.store'
+import { supabase } from '@/lib/supabase'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -112,13 +113,21 @@ const router = createRouter({
 })
 
 // ── GUARD AUTH ──
-router.beforeEach((to) => {
+router.beforeEach(async (to) => {
   const authStore = useAuthStore()
 
   // Si la route nécessite d'être connecté et qu'on ne l'est pas
   // on redirige vers /login en gardant la route demandée en paramètre
-  if (to.meta.requiresAuth && !authStore.isLoggedIn) {
-    return { name: 'login', query: { redirect: to.fullPath } }
+  if (to.meta.requiresAuth) {
+    const { data: { session } } = await supabase.auth.getSession()
+    if (!session) {
+      authStore.user = null
+      authStore.profile = null
+      return { name: 'login', query: { redirect: to.fullPath } }
+    }
+    if (!authStore.user) {
+      authStore.user = session.user
+    }
   }
 })
 

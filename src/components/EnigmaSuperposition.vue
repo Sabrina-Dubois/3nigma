@@ -3,7 +3,8 @@
 
     <!-- ── PHASE GRILLE : examiner les photos ── -->
     <div v-if="phase === 'grid'" class="sp__grid-wrap">
-      <p class="sp__instruction">{{ enigma?.question }}</p>
+      <p class="sp__instruction">
+        Ces clichés ont été pris au même moment.En les examinanteu, vous pourriez découvrir des détails cachés… </p>
 
       <div class="sp__grid">
         <div
@@ -30,7 +31,7 @@
       </div>
 
       <button class="sp__btn" @click="phase = 'drag'">
-        Superposer les photos →
+        Suivant →
       </button>
     </div>
 

@@ -58,7 +58,7 @@
         >
           Découvrir d'autres escapes
         </button>
-
+p
         <button
           v-if="enigma?.day_number < escape?.duration_days"
           class="sv__btn sv__btn--ghost"

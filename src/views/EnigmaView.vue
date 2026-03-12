@@ -126,7 +126,7 @@ const escapesStore = useEscapesStore()
 const {
   enigma, escape, loading, error,
   hintVisible, hintUsed, answerError,
-  isAvailable, unlockedNextAt,
+  isAvailable, unlockedNextAt, isSolved,
   loadEnigma, toggleHint, submitAnswer,
 } = useEnigma()
 

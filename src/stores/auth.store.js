@@ -29,6 +29,9 @@ export const useAuthStore = defineStore(
       if (data.session) {
         user.value = data.session.user
         await fetchProfile() // on récupère aussi les données du profil
+      } else {
+        user.value = null
+        profile.value = null
       }
 
       // Écoute les changements de session (login, logout, token refresh)

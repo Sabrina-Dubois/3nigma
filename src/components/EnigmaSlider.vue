@@ -45,6 +45,7 @@ import StarField from '@/components/StarField.vue'
 const props = defineProps({
   enigma: { type: Object, required: true },
   answerError: { type: Boolean, default: false },
+  solved: { type: Boolean, default: false },
 })
 
 const emit = defineEmits(['submit'])
@@ -85,7 +86,8 @@ const lightIntensity = computed(() => {
 })
 
 // Une fois révélé, ça reste — même si la lune s'éloigne
-const isRevealed = ref(false)
+// Si déjà résolu (replay), le bouton est visible d'entrée
+const isRevealed = ref(props.solved)
 watch(lightIntensity, (val) => {
   if (val > 0.74) isRevealed.value = true
 })

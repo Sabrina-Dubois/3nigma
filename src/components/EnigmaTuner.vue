@@ -25,7 +25,6 @@
       </div>
 
       <!-- Antenne -->
-      <div class="rt__antenna"></div>
 
       <!-- Grille haut-parleur -->
       <div class="rt__speaker">
@@ -425,22 +424,6 @@ onUnmounted(() => {
   position: relative;
   overflow: hidden;
   transition: border-color 0.4s ease, box-shadow 0.4s ease;
-}
-
-/* ── ANTENNE ── */
-.rt__antenna {
-  position: absolute;
-  top: 8px;
-  right: 10px;
-  width: clamp(60px, 22vw, 90px);
-  height: 2px;
-  background: linear-gradient(90deg, rgba(255, 220, 140, 0.2), rgba(255, 220, 140, 0.95));
-  box-shadow: 0 0 8px rgba(255, 220, 140, 0.45);
-  transform-origin: right center;
-  transform: rotate(-18deg);
-  border-radius: 999px;
-  pointer-events: none;
-  z-index: 3;
 }
 
 .rt__body--locked {

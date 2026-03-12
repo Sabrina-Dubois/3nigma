@@ -5,11 +5,13 @@
 import { ref, computed } from 'vue'
 import { useRouter } from 'vue-router'
 import { useAuthStore } from '@/stores/auth.store'
+import { useUiStore } from '@/stores/ui.store'
 import { supabase } from '@/lib/supabase'
 
 export function useEnigma() {
   const router = useRouter()
   const authStore = useAuthStore()
+  const uiStore = useUiStore()
 
   // ── STATE ──
   const enigma = ref(null) // énigme du jour (sans answer)
@@ -186,46 +188,68 @@ export function useEnigma() {
     submitting.value = true
     answerError.value = false
 
-    const { data: { session } } = await supabase.auth.getSession()
-    console.log('[check-answer] session token:', session?.access_token ?? 'NULL')
+    try {
+      let { data: { session } } = await supabase.auth.getSession()
+      if (!session?.access_token) {
+        const refreshed = await supabase.auth.refreshSession()
+        session = refreshed.data?.session ?? null
+      }
+      if (!session?.access_token) {
+        uiStore.showToast('Session expirée. Reconnecte-toi.', 'error')
+        await supabase.auth.signOut()
+        router.push('/login')
+        return { correct: false }
+      }
 
-    const res = await fetch(
-      `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/check-answer`,
-      {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${session?.access_token}`,
-          'apikey': import.meta.env.VITE_SUPABASE_ANON_KEY,
-        },
-        body: JSON.stringify({
+      // Vérifie que le JWT est réellement valide
+      let { error: userError } = await supabase.auth.getUser()
+      if (userError) {
+        const refreshed = await supabase.auth.refreshSession()
+        session = refreshed.data?.session ?? null
+        userError = (await supabase.auth.getUser()).error
+      }
+      if (userError) {
+        uiStore.showToast('Session invalide. Reconnecte-toi.', 'error')
+        await supabase.auth.signOut()
+        router.push('/login')
+        return { correct: false }
+      }
+
+      const { data, error } = await supabase.functions.invoke('check-answer', {
+        body: {
           enigma_id: enigma.value.id,
           answer,
           hint_used: hintUsed.value,
           is_replay: isReplay,
-        }),
-      },
-    )
-    const data = res.ok ? await res.json() : null
-    const err  = res.ok ? null : { message: `HTTP ${res.status}` }
+          access_token: session.access_token,
+        },
+        headers: {
+          Authorization: `Bearer ${session.access_token}`,
+          apikey: import.meta.env.VITE_SUPABASE_ANON_KEY,
+        },
+      })
 
-    submitting.value = false
+      if (error) {
+        uiStore.showToast('Erreur de vérification. Réessaie.', 'error')
+        console.error('[useEnigma] submitAnswer error:', error.message || error)
+        return { correct: false }
+      }
 
-    if (err) {
-      console.error('[useEnigma] submitAnswer error:', err.message)
+      if (!data.correct) {
+        answerError.value = true
+        setTimeout(() => (answerError.value = false), 600)
+        return { correct: false }
+      }
+      router.push(`/escape/${enigma.value.escape_id}/day/${enigma.value.day_number}/success`)
+      return { correct: true, xp_earned: data.xp_earned }
+
+    } catch (e) {
+      console.error('[submitAnswer] exception:', e)
+      uiStore.showToast('Erreur inattendue. Réessaie.', 'error')
       return { correct: false }
+    } finally {
+      submitting.value = false
     }
-
-    if (!data.correct) {
-      // Mauvaise réponse → déclenche animation shake
-      answerError.value = true
-      setTimeout(() => (answerError.value = false), 600)
-      return { correct: false }
-    }
-
-    // Bonne réponse → on navigue vers SuccessView
-    router.push(`/escape/${enigma.value.escape_id}/day/${enigma.value.day_number}/success`)
-    return { correct: true, xp_earned: data.xp_earned }
   }
 
   return {

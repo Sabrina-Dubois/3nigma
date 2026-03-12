@@ -17,13 +17,7 @@ Deno.serve(async (req) => {
 
   try {
     // ── 1. Vérifier le JWT ──
-    const authHeader = req.headers.get('Authorization')
-    if (!authHeader) {
-      return new Response(JSON.stringify({ error: 'Missing authorization header' }), {
-        status: 401,
-        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-      })
-    }
+    let authHeader = req.headers.get('Authorization')
 
     // Client avec le JWT de l'utilisateur (pour vérifier l'identité)
     const supabaseUser = createClient(
@@ -51,7 +45,16 @@ Deno.serve(async (req) => {
     }
 
     // ── 2. Lire le body ──
-    const { enigma_id, answer, hint_used, is_replay } = await req.json()
+    const { enigma_id, answer, hint_used, is_replay, access_token } = await req.json()
+    if (!authHeader && access_token) {
+      authHeader = `Bearer ${access_token}`
+    }
+    if (!authHeader) {
+      return new Response(JSON.stringify({ error: 'Missing authorization header' }), {
+        status: 401,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      })
+    }
 
     if (!enigma_id || !answer) {
       return new Response(JSON.stringify({ error: 'Missing enigma_id or answer' }), {
