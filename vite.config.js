@@ -31,9 +31,9 @@ export default defineConfig({
         ],
       },
       workbox: {
-        maximumFileSizeToCacheInBytes: 4 * 1024 * 1024,
         navigateFallback: '/index.html',
         globPatterns: ['**/*.{js,css,html,ico,png,svg,woff2}'],
+        globIgnores: ['**/images/favicon.png', '**/images/3nigma-logo.png'],
         runtimeCaching: [
           {
             urlPattern: ({ request }) => request.destination === 'document',
