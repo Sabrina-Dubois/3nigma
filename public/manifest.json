@@ -1,0 +1,13 @@
+{
+  "name": "3NIGMA",
+  "short_name": "3NIGMA",
+  "description": "Escape game quotidien — 3NIGMA",
+  "icons": [
+    { "src": "/pwa-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "/pwa-512.png", "sizes": "512x512", "type": "image/png" }
+  ],
+  "start_url": "/?source=pwa",
+  "display": "standalone",
+  "theme_color": "#e8d8b4",
+  "background_color": "#f2e8d0"
+}
