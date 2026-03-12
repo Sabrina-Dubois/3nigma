@@ -178,7 +178,7 @@ async function startEscape() {
     userEscape.value = data
     router.push(`/escape/${escape.value.id}/day/1`)
   } else {
-    alert("Impossible de démarrer l’aventure. Réessaye.")
+    // fallback silencieux (toast global gère déjà les erreurs)
   }
 }
 </script>

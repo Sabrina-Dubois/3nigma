@@ -240,8 +240,9 @@ export function useEnigma() {
         setTimeout(() => (answerError.value = false), 600)
         return { correct: false }
       }
-      router.push(`/escape/${enigma.value.escape_id}/day/${enigma.value.day_number}/success`)
-      return { correct: true, xp_earned: data.xp_earned }
+      const replayFlag = data.already_solved || isReplay ? '?replay=1' : ''
+      router.push(`/escape/${enigma.value.escape_id}/day/${enigma.value.day_number}/success${replayFlag}`)
+      return { correct: true, xp_earned: data.xp_earned, already_solved: data.already_solved }
 
     } catch (e) {
       console.error('[submitAnswer] exception:', e)

@@ -1,7 +1,6 @@
 <template>
   <div class="sv">
 
-
     <!-- Loader -->
     <div v-if="loading" class="sv__center">
       <p class="sv__label">Chargement...</p>
@@ -58,7 +57,7 @@
         >
           Découvrir d'autres escapes
         </button>
-p
+
         <button
           v-if="enigma?.day_number < escape?.duration_days"
           class="sv__btn sv__btn--ghost"
@@ -92,7 +91,8 @@ const escape  = ref(null)
 const attempt = ref(null)
 const loading = ref(true)
 
-const xpEarned = computed(() => attempt.value?.xp_earned ?? enigma.value?.xp_reward ?? 0)
+const isReplay = computed(() => route.query.replay === '1')
+const xpEarned = computed(() => (isReplay.value ? 0 : (attempt.value?.xp_earned ?? enigma.value?.xp_reward ?? 0)))
 
 const storyParagraphs = computed(() => {
   if (!enigma.value?.story_after) return []
