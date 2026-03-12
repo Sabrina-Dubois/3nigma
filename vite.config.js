@@ -15,7 +15,7 @@ export default defineConfig({
     tailwindcss(),
     VitePWA({
       registerType: 'autoUpdate',
-      includeAssets: ['favicon.ico', 'pwa-192.png', 'pwa-512.png'],
+      includeAssets: ['images/favicon.png', 'images/3nigma-logo-192.png', 'images/3nigma-logo-512.png'],
       manifest: {
         name: '3NIGMA',
         short_name: '3NIGMA',
@@ -23,15 +23,15 @@ export default defineConfig({
         theme_color: '#e8d8b4',
         background_color: '#f2e8d0',
         display: 'standalone',
-        start_url: '/',
+        start_url: '/?source=pwa',
         scope: '/',
         icons: [
-          { src: 'pwa-192.png', sizes: '192x192', type: 'image/png' },
-          { src: 'pwa-512.png', sizes: '512x512', type: 'image/png' },
+          { src: '/images/3nigma-logo-192.png', sizes: '192x192', type: 'image/png' },
+          { src: '/images/3nigma-logo-512.png', sizes: '512x512', type: 'image/png' },
         ],
       },
       workbox: {
-        navigateFallback: '/',
+        navigateFallback: '/index.html',
         globPatterns: ['**/*.{js,css,html,ico,png,svg,woff2}'],
         runtimeCaching: [
           {
