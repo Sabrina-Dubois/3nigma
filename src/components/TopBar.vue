@@ -14,18 +14,20 @@
         <!-- Enigmes + Escapes + XP -->
         <div class="flex items-center gap-3">
             <div class="flex items-center gap-1">
+                <span style="font-size: 16px;">🗂️</span>
+                <span style="font-family: 'Cinzel', serif; font-size: 13px; color: var(--ink2);">
+                    {{ escapesCompleted }}
+                </span>
+            </div>
+            
+            <div class="flex items-center gap-1">
                 <span style="font-size: 16px;">🔍</span>
                 <span style="font-family: 'Cinzel', serif; font-size: 13px; color: var(--ink2);">
                     {{ enigmasCompleted }}
                 </span>
             </div>
 
-            <div class="flex items-center gap-1">
-                <span style="font-size: 16px;">🗂️</span>
-                <span style="font-family: 'Cinzel', serif; font-size: 13px; color: var(--ink2);">
-                    {{ escapesCompleted }}
-                </span>
-            </div>
+           
 
             <div class="flex items-center gap-1">
                 <span style="font-family: 'Cinzel', serif; font-size: 13px; color: var(--ink2);">
