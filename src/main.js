@@ -6,6 +6,7 @@ import i18n from './i18n'
 import App from './App.vue'
 import router from './router'
 import './assets/main.css'
+import { registerSW } from 'virtual:pwa-register'
 
 const app = createApp(App)
 
@@ -17,3 +18,5 @@ app.use(pinia)
 app.use(i18n)
 
 app.mount('#app')
+
+registerSW({ immediate: true })
