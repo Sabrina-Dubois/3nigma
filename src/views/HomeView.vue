@@ -8,7 +8,7 @@
     </div>
 
     <!-- Enquêtes en cours -->
-    <div v-if="inProgressEscapes.length" class="mb-6">
+    <div v-if="inProgressEscapes.length || replayInProgress" class="mb-6">
       <p class="section-title-sm mb-3">Enquêtes en cours</p>
       <div class="grid gap-3">
         <div v-for="escape in inProgressEscapes" :key="escape.id" class="card double-frame p-4 cursor-pointer"
@@ -21,6 +21,21 @@
                   {{ escape.title }}
                 </p>
                 <p class="caption">Jour {{ escape.userEscape.current_day }} / {{ escape.duration_days }}</p>
+              </div>
+            </div>
+            <span class="pill pill-active">Reprendre</span>
+          </div>
+        </div>
+        <div v-if="replayInProgress" class="card double-frame p-4 cursor-pointer"
+          @click="router.push(`/escape/${replayInProgress.id}/day/${replayInProgress.replayDay}`)">
+          <div class="flex items-center justify-between">
+            <div class="flex items-center gap-2">
+              <span style="font-size: 26px;">{{ replayInProgress.theme_emoji }}</span>
+              <div>
+                <p style="font-family: 'Cinzel', serif; font-size: 16px; color: var(--ink);">
+                  {{ replayInProgress.title }}
+                </p>
+                <p class="caption">Relecture · Jour {{ replayInProgress.replayDay }} / {{ replayInProgress.duration_days }}</p>
               </div>
             </div>
             <span class="pill pill-active">Reprendre</span>
@@ -66,6 +81,17 @@ const inProgressEscapes = computed(() => {
     .filter(Boolean)
 })
 
+const activeReplay = ref(null) // { id, day } depuis localStorage
+
+const replayInProgress = computed(() => {
+  if (!activeReplay.value) return null
+  const ue = userEscapes.value.find((ue) => ue.escape_id === activeReplay.value.id && ue.completed_at)
+  if (!ue) return null
+  const escape = escapes.value.find((e) => e.id === activeReplay.value.id)
+  if (!escape) return null
+  return { ...escape, userEscape: ue, replayDay: activeReplay.value.day }
+})
+
 
 
 // ── CHARGEMENT ──
@@ -87,11 +113,14 @@ onMounted(async () => {
   if (userEscapesData) userEscapes.value = userEscapesData
   loading.value = false
 
-  // Reprendre un replay en cours uniquement au démarrage PWA
+  // Charger le replay actif depuis localStorage
   const replayRaw = localStorage.getItem('replayEscape')
-  if (replayRaw && route.query.source === 'pwa') {
-    const { id, day } = JSON.parse(replayRaw)
-    router.push(`/escape/${id}/day/${day}`)
+  if (replayRaw) {
+    activeReplay.value = JSON.parse(replayRaw)
+    // Rediriger automatiquement uniquement au démarrage PWA
+    if (route.query.source === 'pwa') {
+      router.push(`/escape/${activeReplay.value.id}/day/${activeReplay.value.day}`)
+    }
   }
 })
 </script>
