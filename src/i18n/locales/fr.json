@@ -170,5 +170,25 @@
     "changes_text": "Cette politique peut être mise à jour à tout moment.",
     "contact_title": "11. Contact",
     "contact_text": "Pour toute question relative à vos données :"
+  },
+  "pwa": {
+    "button": "App mobile",
+    "dialog": {
+      "title": "📱 Installer l'app",
+      "android": {
+        "title": "📱 Android (Chrome)",
+        "step1": "1. Cliquez ⋮ (3 points)",
+        "step2": "2. \"Ajouter à l'écran d'accueil\"",
+        "step3": "3. Ouvrez comme app !"
+      },
+      "ios": {
+        "title": "🍎 iPhone (Safari)",
+        "step1": "1. Haut écran → icône ⏵️ (carré + flèche) ⏵️",
+        "step2": "2. \"Ajouter à l'écran d'accueil\"",
+        "step3": "3. Nom app → \"Ajouter\"",
+        "step4": "4. ✅ Icône sur écran d'accueil !"
+      },
+      "install_button": "J'installe 👍"
+    }
   }
 }

@@ -33,6 +33,8 @@
         Voir toutes les enquêtes
       </button>
     </div>
+
+    <PwaButton />
   </AppLayout>
 </template>
 
@@ -40,6 +42,7 @@
 import { ref, computed, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import AppLayout from '@/components/AppLayout.vue'
+import PwaButton from '@/components/PwaButton.vue'
 import { supabase } from '@/lib/supabase'
 import { useAuthStore } from '@/stores/auth.store'
 

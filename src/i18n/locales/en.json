@@ -170,5 +170,25 @@
     "changes_text": "This policy may be updated at any time.",
     "contact_title": "11. Contact",
     "contact_text": "For any questions about your data:"
+  },
+  "pwa": {
+    "button": "Mobile App",
+    "dialog": {
+      "title": "📱 Install the App",
+      "android": {
+        "title": "📱 Android (Chrome)",
+        "step1": "1. Click ⋮ (3 dots)",
+        "step2": "2. 'Add to Home Screen'",
+        "step3": "3. Open as an app!"
+      },
+      "ios": {
+        "title": "🍎 iPhone (Safari)",
+        "step1": "1. Top screen → icon ⏵️ (square + arrow) ⏵️",
+        "step2": "2. 'Add to Home Screen'",
+        "step3": "3. App name → 'Add'",
+        "step4": "4. ✅ Icon on home screen!"
+      },
+      "install_button": "Install 👍"
+    }
   }
 }
