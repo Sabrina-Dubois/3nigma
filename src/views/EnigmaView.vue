@@ -161,8 +161,13 @@ onMounted(async () => {
   escapesStore.currentEscapeId = route.params.id
   await loadEnigma(route.params.id, Number(route.params.n))
 
-  // Détecter le mode replay via sessionStorage (posé au clic "Rejouer depuis le début")
-  isReplay.value = sessionStorage.getItem('replayEscape') === route.params.id
+  // Détecter le mode replay via localStorage
+  const replayRaw = localStorage.getItem('replayEscape')
+  const replayData = replayRaw ? JSON.parse(replayRaw) : null
+  isReplay.value = replayData?.id === route.params.id
+  if (isReplay.value) {
+    localStorage.setItem('replayEscape', JSON.stringify({ id: route.params.id, day: Number(route.params.n) }))
+  }
 
   if (enigma.value?.story_before) {
     showStory.value = true

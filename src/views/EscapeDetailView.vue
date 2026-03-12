@@ -153,7 +153,7 @@ onUnmounted(() => {
 })
 
 function startReplay() {
-  sessionStorage.setItem('replayEscape', escape.value.id)
+  localStorage.setItem('replayEscape', JSON.stringify({ id: escape.value.id, day: 1 }))
   router.push(`/escape/${escape.value.id}/day/1`)
 }
 

@@ -40,13 +40,14 @@
 
 <script setup>
 import { ref, computed, onMounted } from 'vue'
-import { useRouter } from 'vue-router'
+import { useRouter, useRoute } from 'vue-router'
 import AppLayout from '@/components/AppLayout.vue'
 import PwaButton from '@/components/PwaButton.vue'
 import { supabase } from '@/lib/supabase'
 import { useAuthStore } from '@/stores/auth.store'
 
 const router = useRouter()
+const route = useRoute()
 const authStore = useAuthStore()
 
 // ── STATE ──
@@ -85,5 +86,12 @@ onMounted(async () => {
   if (escapesData) escapes.value = escapesData
   if (userEscapesData) userEscapes.value = userEscapesData
   loading.value = false
+
+  // Reprendre un replay en cours uniquement au démarrage PWA
+  const replayRaw = localStorage.getItem('replayEscape')
+  if (replayRaw && route.query.source === 'pwa') {
+    const { id, day } = JSON.parse(replayRaw)
+    router.push(`/escape/${id}/day/${day}`)
+  }
 })
 </script>
