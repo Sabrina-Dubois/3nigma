@@ -358,6 +358,7 @@ function handleBack() {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  padding-top: env(safe-area-inset-top, 0px);
   padding-bottom: 1rem;
 }
 
@@ -421,7 +422,7 @@ function handleBack() {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0.75rem 1rem;
+  padding: calc(0.75rem + env(safe-area-inset-top, 0px)) 1rem 0.75rem;
   background: linear-gradient(to bottom, rgba(0,0,0,0.6) 0%, transparent 100%);
 }
 

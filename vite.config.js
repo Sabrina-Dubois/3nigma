@@ -36,7 +36,7 @@ export default defineConfig({
         globIgnores: ['**/images/favicon.png', '**/images/3nigma-logo.png'],
         runtimeCaching: [
           {
-            urlPattern: ({ request }) => request.destination === 'document',
+            urlPattern: ({ url, request }) => url.protocol.startsWith('http') && request.destination === 'document',
             handler: 'NetworkFirst',
             options: {
               cacheName: 'pages',
@@ -44,17 +44,19 @@ export default defineConfig({
             },
           },
           {
-            urlPattern: ({ request }) =>
-              request.destination === 'script' ||
-              request.destination === 'style' ||
-              request.destination === 'worker',
+            urlPattern: ({ url, request }) =>
+              url.protocol.startsWith('http') && (
+                request.destination === 'script' ||
+                request.destination === 'style' ||
+                request.destination === 'worker'
+              ),
             handler: 'StaleWhileRevalidate',
             options: {
               cacheName: 'assets',
             },
           },
           {
-            urlPattern: ({ request }) => request.destination === 'image',
+            urlPattern: ({ url, request }) => url.protocol.startsWith('http') && request.destination === 'image',
             handler: 'CacheFirst',
             options: {
               cacheName: 'images',
@@ -65,7 +67,7 @@ export default defineConfig({
             },
           },
           {
-            urlPattern: ({ request }) => request.destination === 'font',
+            urlPattern: ({ url, request }) => url.protocol.startsWith('http') && request.destination === 'font',
             handler: 'CacheFirst',
             options: {
               cacheName: 'fonts',
