@@ -18,11 +18,11 @@ import { useRoute } from 'vue-router'
 const route = useRoute()
 
 const tabs = [
-    { name: 'home', icon: 'mdi-home-variant', label: 'Accueil', to: '/' },
-    { name: 'escapes', icon: 'mdi-compass', label: 'Enquêtes', to: '/escapes' },
-    { name: 'leaderboard', icon: 'mdi-trophy', label: 'Classement', to: '/leaderboard' },
-    { name: 'profile', icon: 'mdi-account', label: 'Profil', to: '/profile' },
-    { name: 'settings', icon: 'mdi-cog', label: 'Réglages', to: '/settings' },
+    { name: 'home', icon: 'mdi-home-variant', to: '/' },
+    { name: 'escapes', icon: 'mdi-compass', to: '/escapes' },
+    { name: 'leaderboard', icon: 'mdi-trophy', to: '/leaderboard' },
+    { name: 'profile', icon: 'mdi-account', to: '/profile' },
+    { name: 'settings', icon: 'mdi-cog', to: '/settings' },
 ]
 
 function isActive(tab) {
