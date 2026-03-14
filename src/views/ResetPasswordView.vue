@@ -123,20 +123,28 @@ async function updatePassword() {
     loading.value = true
     error.value = ''
 
-    const { error: updateError } = await supabase.auth.updateUser({
-        password: newPassword.value,
-    })
+    try {
+        const { error: updateError } = await supabase.auth.updateUser({
+            password: newPassword.value,
+        })
 
-    loading.value = false
-
-    if (updateError) {
-        error.value = updateError.message
-    } else {
-        success.value = true
-        setTimeout(async () => {
-            await supabase.auth.signOut()
-            router.push('/login')
-        }, 2000)
+        if (updateError) {
+            if (updateError.status === 422) {
+                error.value = 'Le mot de passe doit être différent du précédent et suffisamment complexe.'
+            } else {
+                error.value = updateError.message
+            }
+        } else {
+            success.value = true
+            setTimeout(async () => {
+                await supabase.auth.signOut()
+                router.push('/login')
+            }, 2000)
+        }
+    } catch (e) {
+        error.value = 'Une erreur est survenue. Réessayez.'
+    } finally {
+        loading.value = false
     }
 }
 </script>

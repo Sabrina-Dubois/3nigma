@@ -10,8 +10,6 @@ export const useAuthStore = defineStore(
     const user = ref(null) // l'objet user de Supabase (email, id...)
     const profile = ref(null) // les données de notre table profiles (username, xp, level...)
     const loading = ref(false) // true pendant qu'une requête est en cours
-    const notificationsEnabled = ref(false)
-    const darkMode = ref(false)
     
     // ── GETTERS ──
     // Des valeurs calculées automatiquement depuis le state
@@ -36,6 +34,7 @@ export const useAuthStore = defineStore(
 
       // Écoute les changements de session (login, logout, token refresh)
       supabase.auth.onAuthStateChange(async (event, session) => {
+        if (event === 'PASSWORD_RECOVERY') return
         if (session) {
           user.value = session.user
           await fetchProfile()

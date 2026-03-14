@@ -42,6 +42,7 @@
           <!-- Badges -->
           <div class="flex flex-col items-end gap-1">
             <span v-if="completedEscapeIds.has(escape.id)" class="badge badge-gold">✦ Terminé</span>
+            <span v-else-if="inProgressMap[escape.id]" class="badge badge-active">✦ En cours</span>
             <span v-else-if="escape.is_premium" class="badge badge-gold">Premium</span>
           </div>
         </div>
@@ -51,6 +52,17 @@
           style="font-family: 'Crimson Pro', serif; font-size: 15px; color: var(--ink2); line-height: 1.4;">
           {{ escape.tagline }}
         </p>
+
+        <!-- Progression si en cours -->
+        <div v-if="inProgressMap[escape.id]" class="pl-2 mt-3">
+          <div class="flex items-center justify-between mb-1">
+            <span class="progress-label">Jour {{ inProgressMap[escape.id] }} / {{ escape.duration_days }}</span>
+            <span class="progress-label">{{ Math.round((inProgressMap[escape.id] - 1) / escape.duration_days * 100) }}%</span>
+          </div>
+          <div class="progress-bar">
+            <div class="progress-bar__fill" :style="`width: ${(inProgressMap[escape.id] - 1) / escape.duration_days * 100}%`"></div>
+          </div>
+        </div>
 
         <!-- Flèche -->
         <div class="flex justify-end mt-3">
@@ -76,6 +88,7 @@ const authStore = useAuthStore()
 // ── STATE ──
 const escapes = ref([])
 const completedEscapeIds = ref(new Set())
+const inProgressMap = ref({}) // escapeId → { current_day }
 const loading = ref(true)
 const activeFilter = ref('all')
 
@@ -99,7 +112,7 @@ const filteredEscapes = computed(() => {
 onMounted(async () => {
   const [{ data: escapesData }, { data: userEscapesData }] = await Promise.all([
     supabase.from('escapes').select('*').eq('is_active', true).order('duration_days'),
-    supabase.from('user_escapes').select('escape_id, completed_at').eq('user_id', authStore.user?.id ?? ''),
+    supabase.from('user_escapes').select('escape_id, completed_at, current_day').eq('user_id', authStore.user?.id ?? ''),
   ])
 
   if (escapesData) escapes.value = escapesData
@@ -107,7 +120,36 @@ onMounted(async () => {
     completedEscapeIds.value = new Set(
       userEscapesData.filter(ue => ue.completed_at).map(ue => ue.escape_id)
     )
+    const map = {}
+    for (const ue of userEscapesData.filter(ue => !ue.completed_at)) {
+      map[ue.escape_id] = ue.current_day
+    }
+    inProgressMap.value = map
   }
   loading.value = false
 })
 </script>
+
+<style scoped>
+
+.progress-label {
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--sepia);
+}
+
+.progress-bar {
+  width: 100%;
+  height: 5px;
+  background: rgba(30, 14, 4, 0.1);
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.progress-bar__fill {
+  height: 100%;
+  background: var(--gold);
+  border-radius: 999px;
+  transition: width 0.3s ease;
+}
+</style>

@@ -260,6 +260,11 @@ body {
 }
 
 .badge-gold {
+  color: #4a7c59;
+  border: 1px solid #4a7c59;
+}
+
+.badge-active {
   color: var(--gold);
   border: 1px solid var(--gold);
 }

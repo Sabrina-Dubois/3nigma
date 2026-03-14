@@ -54,6 +54,10 @@
 
         <div v-else class="grid gap-3">
           <div>
+            <label class="form-label">Mot de passe actuel</label>
+            <input v-model="currentPassword" type="password" class="input-field" placeholder="••••••••" />
+          </div>
+          <div>
             <label class="form-label">Nouveau mot de passe</label>
             <input v-model="newPassword" type="password" class="input-field" placeholder="••••••••" />
           </div>
@@ -65,10 +69,13 @@
             <button class="btn-primary flex-1" :disabled="savingPassword" @click="changePassword">
               {{ savingPassword ? '...' : 'Confirmer' }}
             </button>
-            <button class="btn-secondary" @click="showPasswordForm = false; newPassword = ''; confirmPassword = ''">
+            <button class="btn-secondary" @click="showPasswordForm = false; currentPassword = ''; newPassword = ''; confirmPassword = ''">
               Annuler
             </button>
           </div>
+          <button class="caption text-left" style="color: var(--sepia); text-decoration: underline; background: none; border: none; cursor: pointer;" @click="router.push('/forgot-password')">
+            Mot de passe oublié ?
+          </button>
         </div>
       </section>
 
@@ -197,6 +204,7 @@ const email = ref('')
 const savingAll = ref(false)
 
 const showPasswordForm = ref(false)
+const currentPassword = ref('')
 const newPassword = ref('')
 const confirmPassword = ref('')
 const savingPassword = ref(false)
@@ -284,6 +292,10 @@ async function saveAll() {
 }
 
 async function changePassword() {
+  if (!currentPassword.value) {
+    uiStore.showToast('Saisissez votre mot de passe actuel.', 'error')
+    return
+  }
   if (newPassword.value.length < 8) {
     uiStore.showToast('Minimum 8 caractères.', 'error')
     return
@@ -292,17 +304,29 @@ async function changePassword() {
     uiStore.showToast('Les mots de passe ne correspondent pas.', 'error')
     return
   }
+  const userEmail = authStore.user?.email ?? email.value.trim()
+  if (!userEmail) {
+    uiStore.showToast('Email introuvable, reconnectez-vous.', 'error')
+    return
+  }
   savingPassword.value = true
+  // Ré-authentification avec le mot de passe actuel
+  const { error: reAuthError } = await supabase.auth.signInWithPassword({
+    email: userEmail,
+    password: currentPassword.value,
+  })
+  if (reAuthError) {
+    savingPassword.value = false
+    uiStore.showToast('Mot de passe actuel incorrect.', 'error')
+    return
+  }
   const { error } = await supabase.auth.updateUser({ password: newPassword.value })
   savingPassword.value = false
   if (error) {
-    if (error.status === 422) {
-      uiStore.showToast('Le mot de passe doit être différent du précédent.', 'error')
-    } else {
-      uiStore.showToast('Erreur : ' + error.message, 'error')
-    }
+    uiStore.showToast('Le nouveau mot de passe doit être différent du précédent.', 'error')
   } else {
     showPasswordForm.value = false
+    currentPassword.value = ''
     newPassword.value = ''
     confirmPassword.value = ''
     uiStore.showToast('Mot de passe mis à jour.', 'success')

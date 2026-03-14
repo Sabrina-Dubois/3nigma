@@ -52,9 +52,9 @@
         <div class="caption mt-2">{{ xpRemaining }} XP pour le niveau {{ level + 1 }}</div>
       </section>
 
-      <!-- Badges -->
+      <!-- Success -->
       <section class="card double-frame p-4 mt-4">
-        <div class="section-title-sm">Badges ({{ unlockedBadges }}/{{ totalBadges }})</div>
+        <div class="section-title-sm">SUCCES ({{ unlockedBadges }}/{{ totalBadges }})</div>
         <div class="badges-scroll">
           <div class="badges-grid">
             <div v-for="badge in badges" :key="badge.id" class="badge-item"
