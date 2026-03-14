@@ -42,14 +42,12 @@
 
       <!-- Niveau & progression -->
       <section class="card double-frame p-4 mt-4">
-        <div class="level-row">
-          <div class="section-title-sm">Niveau {{ level }}</div>
-          <div class="xp-display">{{ totalXp }} / {{ xpNext }} XP</div>
-        </div>
-        <div class="xp-bar">
-          <div class="xp-bar__fill" :style="{ width: xpProgress + '%' }"></div>
-        </div>
-        <div class="caption mt-2">{{ xpRemaining }} XP pour le niveau {{ level + 1 }}</div>
+        <XpBar
+          :total-xp="totalXp"
+          :level="level"
+          :xp-next="xpNext"
+          :xp-current="xpStore.xpForCurrentLevel ?? 0"
+        />
       </section>
 
       <!-- Success -->
@@ -94,6 +92,7 @@ import { useAuthStore } from '@/stores/auth.store'
 import { useXpStore } from '@/stores/xp.store'
 import { useUiStore } from '@/stores/ui.store'
 import TopBar from '@/components/TopBar.vue'
+import XpBar from '@/components/XpBar.vue'
 import { supabase } from '@/lib/supabase'
 
 const router = useRouter()
@@ -110,8 +109,6 @@ const escapesCompleted = ref(0)
 const level = computed(() => authStore.profile?.level ?? xpStore.level ?? 1)
 
 const xpNext = computed(() => xpStore.xpForNextLevel ?? 0)
-const xpProgress = computed(() => xpStore.progressPercent ?? 0)
-const xpRemaining = computed(() => Math.max(0, xpNext.value - totalXp.value))
 
 const enigmasCompleted = ref(0)
 
@@ -277,31 +274,6 @@ onMounted(async () => {
   margin-top: 4px;
 }
 
-.level-row {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 8px;
-}
-
-.xp-display {
-  font-weight: 700;
-  font-size: 13px;
-  color: var(--gold);
-}
-
-.xp-bar {
-  width: 100%;
-  height: 12px;
-  background: rgba(30, 14, 4, 0.1);
-  border-radius: 999px;
-  overflow: hidden;
-}
-
-.xp-bar__fill {
-  height: 100%;
-  background: var(--gold);
-}
 
 .badges-scroll {
   max-height: 360px;
@@ -381,10 +353,6 @@ onMounted(async () => {
 }
 
 @media (max-width: 600px) {
-  .stats-grid {
-    grid-template-columns: 1fr;
-  }
-
   .badges-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }

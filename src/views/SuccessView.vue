@@ -16,7 +16,7 @@
 
       <!-- XP gagné -->
       <div class="sv__xp">
-        <span class="sv__xp-value">+{{ xpEarned }}</span>
+        <span class="sv__xp-value">+{{ displayXp }}</span>
         <span class="sv__xp-unit">XP</span>
       </div>
 
@@ -77,6 +77,7 @@ import { ref, computed, onMounted, onUnmounted } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 import { useAuthStore } from '@/stores/auth.store'
 import { useXpStore } from '@/stores/xp.store'
+import { useUiStore } from '@/stores/ui.store'
 import { useEscapesStore } from '@/stores/escapes.store'
 import { supabase } from '@/lib/supabase'
 
@@ -84,15 +85,32 @@ const router    = useRouter()
 const route     = useRoute()
 const authStore = useAuthStore()
 const xpStore   = useXpStore()
+const uiStore   = useUiStore()
 const escapesStore = useEscapesStore()
 
 const enigma  = ref(null)
 const escape  = ref(null)
 const attempt = ref(null)
 const loading = ref(true)
+const displayXp = ref(0)
 
 const isReplay = computed(() => route.query.replay === '1')
 const xpEarned = computed(() => (isReplay.value ? 0 : (attempt.value?.xp_earned ?? enigma.value?.xp_reward ?? 0)))
+
+function animateXp(target) {
+  if (target <= 0) return
+  const duration = 900
+  const start = Date.now()
+  const tick = () => {
+    const elapsed = Date.now() - start
+    const t = Math.min(elapsed / duration, 1)
+    // ease-out cubic
+    const eased = 1 - Math.pow(1 - t, 3)
+    displayXp.value = Math.round(eased * target)
+    if (t < 1) requestAnimationFrame(tick)
+  }
+  requestAnimationFrame(tick)
+}
 
 const storyParagraphs = computed(() => {
   if (!enigma.value?.story_after) return []
@@ -158,11 +176,18 @@ onMounted(async () => {
     loading.value = false
   }
 
+  // Lance le count-up dès que xpEarned est connu
+  animateXp(xpEarned.value)
+
   // Rafraîchit le profil et sync le xp.store pour que niveau/barre XP soient à jour
   try {
+    const levelBefore = xpStore.level
     await authStore.fetchProfile()
     if (authStore.profile?.total_xp != null) {
       xpStore.totalXp = authStore.profile.total_xp
+    }
+    if (xpStore.level > levelBefore) {
+      uiStore.showToast(`Niveau ${xpStore.level} atteint ! 🎉`, 'success')
     }
   } catch { /* non bloquant */ }
 })
