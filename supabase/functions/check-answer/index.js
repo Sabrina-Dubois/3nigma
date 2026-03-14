@@ -109,7 +109,11 @@ Deno.serve(async (req) => {
     }
 
     // ── 7. Calcul XP ──
-    const xpEarned = is_replay ? 0 : (hint_used ? Math.max(0, enigma.xp_reward - 50) : enigma.xp_reward)
+    const xpEarned = is_replay
+      ? 0
+      : hint_used
+        ? Math.max(0, enigma.xp_reward - 50)
+        : enigma.xp_reward
 
     const unlockedNextAt = new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString()
 

@@ -1,6 +1,8 @@
 <template>
   <div class="sv">
 
+    <BadgePopup :badges="newBadges" />
+
     <!-- Loader -->
     <div v-if="loading" class="sv__center">
       <p class="sv__label">Chargement...</p>
@@ -79,6 +81,8 @@ import { useAuthStore } from '@/stores/auth.store'
 import { useXpStore } from '@/stores/xp.store'
 import { useUiStore } from '@/stores/ui.store'
 import { useEscapesStore } from '@/stores/escapes.store'
+import { useBadges } from '@/composables/useBadges'
+import BadgePopup from '@/components/BadgePopup.vue'
 import { supabase } from '@/lib/supabase'
 
 const router    = useRouter()
@@ -87,6 +91,9 @@ const authStore = useAuthStore()
 const xpStore   = useXpStore()
 const uiStore   = useUiStore()
 const escapesStore = useEscapesStore()
+const { checkAndAward } = useBadges()
+
+const newBadges = ref([])
 
 const enigma  = ref(null)
 const escape  = ref(null)
@@ -190,6 +197,18 @@ onMounted(async () => {
       uiStore.showToast(`Niveau ${xpStore.level} atteint ! 🎉`, 'success')
     }
   } catch { /* non bloquant */ }
+
+  // Vérification des succès (non bloquant, seulement si ce n'est pas un replay)
+  if (!isReplay.value && authStore.user?.id) {
+    try {
+      newBadges.value = await checkAndAward({
+        userId: authStore.user.id,
+        hintUsed: attempt.value?.hint_used ?? false,
+        isPremium: authStore.profile?.is_premium ?? false,
+        currentStreak: xpStore.currentStreak ?? 0,
+      })
+    } catch { /* non bloquant */ }
+  }
 })
 
 onUnmounted(() => {

@@ -91,6 +91,7 @@ import { useRouter } from 'vue-router'
 import { useAuthStore } from '@/stores/auth.store'
 import { useXpStore } from '@/stores/xp.store'
 import { useUiStore } from '@/stores/ui.store'
+import { BADGES_DEF } from '@/composables/useBadges'
 import TopBar from '@/components/TopBar.vue'
 import XpBar from '@/components/XpBar.vue'
 import { supabase } from '@/lib/supabase'
@@ -154,21 +155,31 @@ async function loadEnigmasCompleted() {
   }
 }
 
-const badges = computed(() => [
-  { id: 1, label: 'Premier Pas', icon: '🔑', description: 'Valider 1 énigme', unlocked: enigmasCompleted.value >= 1, premiumOnly: false },
-  { id: 2, label: 'Détective', icon: '🕵️', description: '10 énigmes validées', unlocked: enigmasCompleted.value >= 10, premiumOnly: false },
-  { id: 3, label: 'Archiviste', icon: '📚', description: '1 escape terminé', unlocked: escapesCompleted.value >= 1, premiumOnly: false },
-  { id: 4, label: 'Maître', icon: '🧠', description: '50 énigmes validées', unlocked: enigmasCompleted.value >= 50, premiumOnly: false },
-  { id: 5, label: 'Collectionneur', icon: '🗂️', description: '3 escapes terminés', unlocked: escapesCompleted.value >= 3, premiumOnly: false },
-  { id: 6, label: 'Légende', icon: '👑', description: 'Premium actif', unlocked: isPremium.value, premiumOnly: true },
-])
+const earnedBadgeIds = ref(new Set())
+
+async function loadEarnedBadges() {
+  const userId = authStore.user?.id
+  if (!userId) return
+  const { data } = await supabase
+    .from('user_badges')
+    .select('badge_id')
+    .eq('user_id', userId)
+  if (data) earnedBadgeIds.value = new Set(data.map((b) => b.badge_id))
+}
+
+const badges = computed(() =>
+  BADGES_DEF.map((def) => ({
+    ...def,
+    unlocked: earnedBadgeIds.value.has(def.id),
+    premiumOnly: def.id === 'legende',
+  }))
+)
 
 const unlockedBadges = computed(() => badges.value.filter((b) => b.unlocked).length)
 const totalBadges = computed(() => badges.value.length)
 
 onMounted(async () => {
-  await loadEscapesCompleted()
-  await loadEnigmasCompleted()
+  await Promise.all([loadEscapesCompleted(), loadEnigmasCompleted(), loadEarnedBadges()])
 })
 </script>
 
