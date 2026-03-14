@@ -120,14 +120,6 @@ const currentUserId = computed(() => authStore.user?.id)
 
 const loading = ref(false)
 
-/*
-MODE DESIGN
-true = utilise les fausses données
-false = charge Supabase
-*/
-const USE_MOCKS = true
-
-// FAUSSES DONNÉES POUR LE DESIGN
 const mockPlayers = [
     { id: 'mock-1', username: 'LeSherlock', total_xp: 8400, is_premium: true },
     { id: 'mock-2', username: 'Agatha_R', total_xp: 6200, is_premium: false },
@@ -166,14 +158,6 @@ function computeLevel(xp) {
 }
 
 onMounted(async () => {
-
-    // MODE DESIGN → on utilise les mocks
-    if (USE_MOCKS) {
-        players.value = mockPlayers
-        return
-    }
-
-    // MODE PROD → Supabase
     loading.value = true
 
     const { data } = await supabase
@@ -182,10 +166,16 @@ onMounted(async () => {
         .order('total_xp', { ascending: false })
         .limit(100)
 
-    if (data) {
-        players.value = data
-    }
+    const realPlayers = data ?? []
 
+    // Compléter avec les mocks pour éviter un classement trop vide,
+    // en excluant les mocks qui doubleraient un vrai joueur
+    const realIds = new Set(realPlayers.map((p) => p.id))
+    const fillerMocks = mockPlayers.filter((m) => !realIds.has(m.id))
+    const merged = [...realPlayers, ...fillerMocks]
+        .sort((a, b) => b.total_xp - a.total_xp)
+
+    players.value = merged
     loading.value = false
 })
 </script>
