@@ -71,7 +71,8 @@ function checkPWAState() {
 function onBeforeInstallPrompt(e) {
 	e.preventDefault();
 	deferredPrompt = e;
-	checkPWAState();
+	// InstallBanner gère Android — on masque le FAB
+	showButton.value = false;
 }
 
 function onAppInstalled() {

@@ -18,6 +18,7 @@
     </div>
 
     <BottomNav />
+    <InstallBanner />
   </div>
 </template>
 
@@ -30,6 +31,7 @@ import AppLoader from '@/components/AppLoader.vue'
 import AppToast from '@/components/AppToast.vue'
 import BottomNav from '@/components/BottomNav.vue'
 import StarField from '@/components/StarField.vue'
+import InstallBanner from '@/components/InstallBanner.vue'
 
 const authStore = useAuthStore()
 const uiStore = useUiStore()
