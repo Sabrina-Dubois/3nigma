@@ -52,7 +52,7 @@
 
       <!-- Success -->
       <section class="card double-frame p-4 mt-4">
-        <div class="section-title-sm">SUCCES ({{ unlockedBadges }}/{{ totalBadges }})</div>
+        <div class="section-title-sm">SUCCÈS ({{ unlockedBadges }}/{{ totalBadges }})</div>
         <div class="badges-scroll">
           <div class="badges-grid">
             <div v-for="badge in badges" :key="badge.id" class="badge-item"
@@ -71,7 +71,7 @@
       <section class="card double-frame p-4 mt-4">
         <div class="section-title-sm">Résumé</div>
         <p class="caption mt-2">
-          Continuez vos enquêtes pour débloquer plus de badges et terminer de nouvelles aventures.
+          Continuez vos enquêtes pour débloquer plus de succès et terminer de nouvelles aventures.
         </p>
       </section>
 
