@@ -38,6 +38,9 @@
             <EnigmaBook v-else-if="enigma?.type === 'book'" :enigma="enigma" :answer-error="answerError"
                 @submit="emit('submit', $event)" />
 
+            <EnigmaPadlock v-else-if="enigma?.type === 'padlock'" :enigma="enigma" :answer-error="answerError"
+                @submit="emit('submit', $event)" />
+
             <div v-else class="enigma-card" :class="{ 'enigma-card--error': answerError }">
                 <div v-if="enigma?.question" class="enigma-question">
                     {{ enigma.question }}
@@ -69,6 +72,7 @@ import EnigmaChoice from "@/components/EnigmaChoice.vue"
 import EnigmaEnvelope from "@/components/EnigmaEnvelope.vue"
 import EnigmaSpotDifference from "@/components/EnigmaSpotDifference.vue"
 import EnigmaBook from "@/components/EnigmaBook.vue"
+import EnigmaPadlock from "@/components/EnigmaPadlock.vue"
 
 const props = defineProps({
     enigma: { type: Object, required: true },
