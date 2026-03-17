@@ -29,6 +29,15 @@
             <EnigmaChoice v-else-if="enigma?.type === 'choice'" :enigma="enigma" :answer-error="answerError"
                 @submit="emit('submit', $event)" />
 
+            <EnigmaEnvelope v-else-if="enigma?.type === 'envelope'" :enigma="enigma" :answer-error="answerError"
+                @submit="emit('submit', $event)" />
+
+            <EnigmaSpotDifference v-else-if="enigma?.type === 'spot_difference'" :enigma="enigma" :answer-error="answerError"
+                @submit="emit('submit', $event)" />
+
+            <EnigmaBook v-else-if="enigma?.type === 'book'" :enigma="enigma" :answer-error="answerError"
+                @submit="emit('submit', $event)" />
+
             <div v-else class="enigma-card" :class="{ 'enigma-card--error': answerError }">
                 <div v-if="enigma?.question" class="enigma-question">
                     {{ enigma.question }}
@@ -57,6 +66,9 @@ import EnigmaSuperposition from "@/components/EnigmaSuperposition.vue"
 import EnigmaCipher from "@/components/EnigmaCipher.vue"
 import EnigmaAudio from "@/components/EnigmaAudio.vue"
 import EnigmaChoice from "@/components/EnigmaChoice.vue"
+import EnigmaEnvelope from "@/components/EnigmaEnvelope.vue"
+import EnigmaSpotDifference from "@/components/EnigmaSpotDifference.vue"
+import EnigmaBook from "@/components/EnigmaBook.vue"
 
 const props = defineProps({
     enigma: { type: Object, required: true },
@@ -134,6 +146,10 @@ watch(
 .enigma-screen--star .enigma-bg {
     background: transparent;
     animation: none;
+}
+
+.enigma-screen--star .enigma-overlay {
+    background: transparent;
 }
 
 /* overlay */

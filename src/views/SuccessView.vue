@@ -75,12 +75,11 @@
 </template>
 
 <script setup>
-import { ref, computed, onMounted, onUnmounted } from 'vue'
+import { ref, computed, onMounted } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 import { useAuthStore } from '@/stores/auth.store'
 import { useXpStore } from '@/stores/xp.store'
 import { useUiStore } from '@/stores/ui.store'
-import { useEscapesStore } from '@/stores/escapes.store'
 import { useBadges } from '@/composables/useBadges'
 import BadgePopup from '@/components/BadgePopup.vue'
 import { supabase } from '@/lib/supabase'
@@ -90,7 +89,6 @@ const route     = useRoute()
 const authStore = useAuthStore()
 const xpStore   = useXpStore()
 const uiStore   = useUiStore()
-const escapesStore = useEscapesStore()
 const { checkAndAward } = useBadges()
 
 const newBadges = ref([])
@@ -147,7 +145,6 @@ const storyParagraphs = computed(() => {
 
 onMounted(async () => {
   const escapeId  = route.params.id
-  escapesStore.currentEscapeId = escapeId
   const dayNumber = Number(route.params.n)
 
   try {
@@ -209,10 +206,6 @@ onMounted(async () => {
       })
     } catch { /* non bloquant */ }
   }
-})
-
-onUnmounted(() => {
-  escapesStore.currentEscapeId = null
 })
 
 function goNextDay() {

@@ -112,7 +112,7 @@
 </template>
 
 <script setup>
-import { ref, computed, onMounted, onUnmounted } from 'vue'
+import { ref, computed, onMounted } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 import { useEnigma } from '@/composables/useEnigma'
 import { useEscapesStore } from '@/stores/escapes.store'
@@ -133,7 +133,9 @@ const {
 const showStory = ref(false)
 const confirmingHint = ref(false)
 const isReplay = ref(false)
-const isEclipse = computed(() => (escape.value?.id ?? escapesStore.currentEscapeId) === 'eclipse')
+// Escapes avec fond personnalisé dans App.vue → le fond du EnigmaRenderer doit être transparent
+const CUSTOM_BG_ESCAPES = ['eclipse', 'boucle']
+const isEclipse = computed(() => CUSTOM_BG_ESCAPES.includes(escape.value?.id ?? escapesStore.currentEscapeId))
 
 function onHintClick() {
   if (hintUsed.value) {
@@ -158,7 +160,6 @@ const storyParagraphs = computed(() => {
 })
 
 onMounted(async () => {
-  escapesStore.currentEscapeId = route.params.id
   await loadEnigma(route.params.id, Number(route.params.n))
 
   // Détecter le mode replay via localStorage
@@ -172,10 +173,6 @@ onMounted(async () => {
   if (enigma.value?.story_before) {
     showStory.value = true
   }
-})
-
-onUnmounted(() => {
-  escapesStore.currentEscapeId = null
 })
 
 function handleBack() {

@@ -1,14 +1,18 @@
 <template>
-  <div class="min-h-screen" style="background: var(--parch)">
+  <div class="min-h-screen" :style="isDark ? {} : { background: 'var(--parch)' }">
 
     <!-- Header avec bouton retour -->
     <div class="flex items-center px-4 py-3 sticky top-0 z-40"
-      style="background: var(--parch2); border-bottom: 1px solid var(--border);">
-      <button @click="router.back()" style="background: none; border: none; cursor: pointer; color: var(--sepia);">
+      :style="isDark
+        ? { background: 'rgba(10,6,2,0.85)', backdropFilter: 'blur(8px)', borderBottom: '1px solid rgba(240,192,112,0.15)' }
+        : { background: 'var(--parch2)', borderBottom: '1px solid var(--border)' }">
+      <button @click="router.back()" style="background: none; border: none; cursor: pointer;"
+        :style="{ color: isDark ? '#c9a96e' : 'var(--sepia)' }">
         <i class="mdi mdi-arrow-left" style="font-size: 24px;"></i>
       </button>
       <span
-        style="font-family: 'Cinzel', serif; font-size: 14px; font-weight: 700; color: var(--ink); margin-left: 12px; letter-spacing: 1px;">
+        style="font-family: 'Cinzel', serif; font-size: 14px; font-weight: 700; margin-left: 12px; letter-spacing: 1px;"
+        :style="{ color: isDark ? '#f2e8d0' : 'var(--ink)' }">
         {{ escape?.title }}
       </span>
     </div>
@@ -40,11 +44,13 @@
           <span style="font-size: 40px;">{{ escape.theme_emoji }}</span>
           <div>
             <h1
-              style="font-family: 'Cinzel', serif; font-size: 22px; font-weight: 900; color: var(--ink); letter-spacing: 1px;">
+              style="font-family: 'Cinzel', serif; font-size: 22px; font-weight: 900; letter-spacing: 1px;"
+              :style="{ color: isDark ? '#f2e8d0' : 'var(--ink)' }">
               {{ escape.title }}
             </h1>
             <p
-              style="font-family: 'Cinzel', serif; font-size: 11px; letter-spacing: 2px; color: var(--sepia); text-transform: uppercase; margin-top: 2px;">
+              style="font-family: 'Cinzel', serif; font-size: 11px; letter-spacing: 2px; text-transform: uppercase; margin-top: 2px;"
+              :style="{ color: isDark ? '#c9a96e' : 'var(--sepia)' }">
               {{ escape.duration_days }} jours · Thriller
             </p>
           </div>
@@ -54,13 +60,17 @@
         <div class="w-full h-1 rounded mb-6" :style="{ background: escape.accent_color }"></div>
 
         <!-- Prologue -->
-        <div class="card double-frame rounded p-6 mb-6 relative">
+        <div class="rounded p-6 mb-6 relative"
+          :style="isDark
+            ? { background: 'rgba(242,232,208,0.04)', border: '1px solid rgba(240,192,112,0.2)' }
+            : { background: 'var(--parch2)', border: '1px solid var(--border)' }">
 
-          <p class="section-title-sm mb-4">Prologue</p>
+          <p class="section-title-sm mb-4" :style="{ color: isDark ? '#c9a96e' : '' }">Prologue</p>
 
           <div v-for="(paragraph, i) in prologueParagraphs" :key="i">
             <p
-              style="font-family: 'IM Fell English', serif; font-size: 17px; color: var(--ink); line-height: 1.7; margin-bottom: 16px;">
+              style="font-family: 'IM Fell English', serif; font-size: 17px; line-height: 1.7; margin-bottom: 16px;"
+              :style="{ color: isDark ? '#e8d8b8' : 'var(--ink)' }">
               {{ paragraph }}
             </p>
           </div>
@@ -99,7 +109,7 @@
 </template>
 
 <script setup>
-import { ref, computed, onMounted, onUnmounted } from 'vue'
+import { ref, computed, onMounted } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 import { useAuthStore } from '@/stores/auth.store'
 import { useEscapesStore } from '@/stores/escapes.store'
@@ -115,14 +125,15 @@ const userEscape = ref(null)
 const loading = ref(true)
 const starting = ref(false)
 
+const DARK_ESCAPES = ['eclipse', 'boucle']
+const isDark = computed(() => DARK_ESCAPES.includes(escapesStore.currentEscapeId))
+
 const prologueParagraphs = computed(() => {
   return escape.value?.prologue?.split('\n').filter(p => p.trim() !== '') || []
 })
 
 onMounted(async () => {
   const id = route.params.id
-  escapesStore.currentEscapeId = id
-
   // Charger l'escape
   const { data: escapeData, error: escapeError } = await supabase
     .from('escapes')
@@ -146,10 +157,6 @@ onMounted(async () => {
 
   userEscape.value = userEscapeData
   loading.value = false
-})
-
-onUnmounted(() => {
-  escapesStore.currentEscapeId = null
 })
 
 function startReplay() {

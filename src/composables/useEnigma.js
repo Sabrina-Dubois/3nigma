@@ -19,7 +19,7 @@ export function useEnigma() {
   const escape = ref(null) // escape courant (duration_days)
   const previousEnigma = ref(null) // énigme précédente (id, story_before)
   const previousAttempt = ref(null) // tentative liée à l'énigme précédente
-  const loading = ref(false)
+  const loading = ref(true)
   const error = ref(null)
   const hintVisible = ref(false) // indice affiché ou non
   const hintUsed = ref(false) // indice utilisé (coût XP)
@@ -36,6 +36,7 @@ export function useEnigma() {
 
   // L'énigme est-elle disponible maintenant ?
   const isAvailable = computed(() => {
+    if (import.meta.env.DEV) return true   // ← bypass timer en développement
     if (enigma.value?.day_number === 1) return true
     if (!unlockedNextAt.value) return false
     return new Date() >= new Date(unlockedNextAt.value)
