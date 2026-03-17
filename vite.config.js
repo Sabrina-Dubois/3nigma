@@ -45,7 +45,9 @@ export default defineConfig({
           },
           {
             urlPattern: ({ url, request }) =>
-              url.protocol.startsWith('http') && (
+              url.protocol.startsWith('http') &&
+              !url.hostname.includes('googleapis.com') &&
+              (
                 request.destination === 'script' ||
                 request.destination === 'style' ||
                 request.destination === 'worker'
@@ -67,7 +69,10 @@ export default defineConfig({
             },
           },
           {
-            urlPattern: ({ url, request }) => url.protocol.startsWith('http') && request.destination === 'font',
+            urlPattern: ({ url, request }) =>
+              url.protocol.startsWith('http') &&
+              !url.hostname.includes('googleapis.com') &&
+              request.destination === 'font',
             handler: 'CacheFirst',
             options: {
               cacheName: 'fonts',
