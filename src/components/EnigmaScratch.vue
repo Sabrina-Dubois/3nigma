@@ -8,14 +8,12 @@
     @pointercancel="onUp"
   >
 
-    <!-- Fond (image du rebord ou couleur sombre) -->
-    <div class="sc__bg" :style="bgStyle"></div>
+    <!-- Image (toujours visible sous le grattage) -->
+    <img v-if="imageUrl" :src="imageUrl" class="sc__img" draggable="false" />
+    <div v-else class="sc__bg-fallback" />
 
-    <!-- Voile sombre -->
-    <div class="sc__veil"></div>
-
-    <!-- Couche révélée : texte gravé -->
-    <div class="sc__reveal" :style="revealStyle">
+    <!-- Couche texte révélée (seulement si message_lines défini) -->
+    <div v-if="messageLines.length" class="sc__reveal" :style="revealStyle">
       <p
         v-for="(line, i) in messageLines"
         :key="i"
@@ -73,12 +71,21 @@ const props = defineProps({
 const emit = defineEmits(['submit'])
 
 // ── CONFIG ──
-const imageUrl    = computed(() => props.enigma?.config?.image ? `/enigmas/${props.enigma.config.image}` : null)
-const revealColor = computed(() => props.enigma?.config?.reveal_color  ?? '#1a1a2e')
-const scratchColor= computed(() => props.enigma?.config?.scratch_color ?? '#8B7355')
-const messageLines= computed(() => props.enigma?.config?.message_lines ?? [])
-const threshold   = computed(() => props.enigma?.config?.completion_threshold ?? 85)
-const autoAnswer  = computed(() => props.enigma?.config?.auto_answer ?? null)
+const config = computed(() => {
+  if (!props.enigma?.config) return {}
+  if (typeof props.enigma.config === 'string') {
+    try { return JSON.parse(props.enigma.config) } catch { return {} }
+  }
+  return props.enigma.config
+})
+
+const imageUrl    = computed(() => config.value.image ? `${import.meta.env.VITE_SUPABASE_URL}/storage/v1/object/public/enigmas/${config.value.image}` : null)
+const revealColor = computed(() => config.value.reveal_color  ?? '#1a1a2e')
+const scratchColor= computed(() => config.value.scratch_color ?? '#8B7355')
+const messageLines= computed(() => config.value.message_lines ?? [])
+const threshold   = computed(() => config.value.completion_threshold ?? 85)
+const autoAnswer  = computed(() => config.value.auto_answer ?? null)
+const scratchArea = computed(() => config.value.scratch_area ?? null) // { x, y, w, h } en %
 
 // ── REFS DOM ──
 const containerRef  = ref(null)
@@ -117,9 +124,16 @@ function initCanvas() {
 
   ctx = canvas.getContext('2d')
 
-  // Couche de poussière principale
+  // Zone à gratter (toute l'image ou zone définie)
+  const area = scratchArea.value
+  const ax = area ? (area.x / 100) * canvas.width  : 0
+  const ay = area ? (area.y / 100) * canvas.height : 0
+  const aw = area ? (area.w / 100) * canvas.width  : canvas.width
+  const ah = area ? (area.h / 100) * canvas.height : canvas.height
+
+  // Couche de poussière principale (seulement sur la zone)
   ctx.fillStyle = scratchColor.value
-  ctx.fillRect(0, 0, canvas.width, canvas.height)
+  ctx.fillRect(ax, ay, aw, ah)
 
   // Texture grain aléatoire
   ctx.globalCompositeOperation = 'source-over'
@@ -127,8 +141,8 @@ function initCanvas() {
     const alpha = Math.random() * 0.18
     ctx.fillStyle = `rgba(0,0,0,${alpha})`
     ctx.fillRect(
-      Math.random() * canvas.width,
-      Math.random() * canvas.height,
+      ax + Math.random() * aw,
+      ay + Math.random() * ah,
       Math.random() * 4 + 1,
       Math.random() * 2 + 0.5,
     )
@@ -240,7 +254,6 @@ onUnmounted(() => {
 .sc {
   position: relative;
   width: 100%;
-  height: 100vh;
   overflow: hidden;
   user-select: none;
   -webkit-user-select: none;
@@ -259,19 +272,17 @@ onUnmounted(() => {
   100% { transform: translateX(0); }
 }
 
-/* ── FOND ── */
-.sc__bg {
-  position: absolute;
-  inset: 0;
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
+/* ── IMAGE ── */
+.sc__img {
+  width: 100%;
+  display: block;
+  pointer-events: none;
 }
 
-.sc__veil {
-  position: absolute;
-  inset: 0;
-  background: rgba(5, 3, 15, 0.25);
+.sc__bg-fallback {
+  width: 100%;
+  aspect-ratio: 1;
+  background: #1a0e08;
 }
 
 /* ── COUCHE RÉVÉLÉE ── */

@@ -17,6 +17,9 @@
             <EnigmaTuner v-else-if="enigma?.type === 'tuner'" :enigma="enigma" :answer-error="answerError"
                 @submit="emit('submit', $event)" />
 
+            <EnigmaMedaillon v-else-if="enigma?.type === 'superposition' && isMedaillonMode(enigma)" :enigma="enigma" :answer-error="answerError"
+                @submit="emit('submit', $event)" />
+
             <EnigmaSuperposition v-else-if="enigma?.type === 'superposition'" :enigma="enigma" :answer-error="answerError"
                 @submit="emit('submit', $event)" />
 
@@ -38,7 +41,31 @@
             <EnigmaBook v-else-if="enigma?.type === 'book'" :enigma="enigma" :answer-error="answerError"
                 @submit="emit('submit', $event)" />
 
-            <EnigmaPadlock v-else-if="enigma?.type === 'padlock'" :enigma="enigma" :answer-error="answerError"
+            <EnigmaPadlock v-else-if="enigma?.type === 'padlock'" :enigma="enigma" :answer-error="answerError" :solved="solved"
+                @submit="emit('submit', $event)" />
+
+            <EnigmaSearch v-else-if="enigma?.type === 'search'" :enigma="enigma" :answer-error="answerError"
+                @submit="emit('submit', $event)" />
+
+            <EnigmaMirror v-else-if="enigma?.type === 'mirror'" :enigma="enigma" :answer-error="answerError"
+                @submit="emit('submit', $event)" />
+
+            <EnigmaHotCold v-else-if="enigma?.type === 'hot_cold'" :enigma="enigma" :answer-error="answerError"
+                @submit="emit('submit', $event)" />
+
+            <EnigmaWall v-else-if="enigma?.type === 'wall'" :enigma="enigma" :answer-error="answerError"
+                @submit="emit('submit', $event)" />
+
+            <EnigmaZoom v-else-if="enigma?.type === 'zoom'" :enigma="enigma" :answer-error="answerError"
+                @submit="emit('submit', $event)" />
+
+            <EnigmaSequence v-else-if="enigma?.type === 'sequence'" :enigma="enigma" :answer-error="answerError"
+                @submit="emit('submit', $event)" />
+
+            <EnigmaVinyl v-else-if="enigma?.type === 'vinyl'" :enigma="enigma" :answer-error="answerError"
+                @submit="emit('submit', $event)" />
+
+            <EnigmaPuzzle v-else-if="enigma?.type === 'puzzle'" :enigma="enigma" :answer-error="answerError"
                 @submit="emit('submit', $event)" />
 
             <div v-else class="enigma-card" :class="{ 'enigma-card--error': answerError }">
@@ -73,6 +100,15 @@ import EnigmaEnvelope from "@/components/EnigmaEnvelope.vue"
 import EnigmaSpotDifference from "@/components/EnigmaSpotDifference.vue"
 import EnigmaBook from "@/components/EnigmaBook.vue"
 import EnigmaPadlock from "@/components/EnigmaPadlock.vue"
+import EnigmaMedaillon from "@/components/EnigmaMedaillon.vue"
+import EnigmaSearch from "@/components/EnigmaSearch.vue"
+import EnigmaMirror from "@/components/EnigmaMirror.vue"
+import EnigmaHotCold from "@/components/EnigmaHotCold.vue"
+import EnigmaWall from "@/components/EnigmaWall.vue"
+import EnigmaZoom from "@/components/EnigmaZoom.vue"
+import EnigmaSequence from "@/components/EnigmaSequence.vue"
+import EnigmaVinyl from "@/components/EnigmaVinyl.vue"
+import EnigmaPuzzle from "@/components/EnigmaPuzzle.vue"
 
 const props = defineProps({
     enigma: { type: Object, required: true },
@@ -85,6 +121,13 @@ const emit = defineEmits(["submit"])
 
 const answer = ref("")
 const answerInput = ref(null)
+
+function isMedaillonMode(enigma) {
+    try {
+        const c = typeof enigma.config === 'string' ? JSON.parse(enigma.config) : enigma.config
+        return !!c?.image_tableau
+    } catch { return false }
+}
 
 function onSubmit() {
     if (!answer.value.trim()) return

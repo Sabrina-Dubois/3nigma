@@ -23,12 +23,13 @@
           >
             <div class="ch__icon-wrap">
               <img
+                v-if="opt.icon && opt.icon.includes('/')"
                 :src="storageUrl(opt.icon)"
                 :alt="opt.label"
                 class="ch__icon"
                 @error="(e) => e.target.style.display = 'none'"
               />
-              <span class="ch__icon-fallback">{{ opt.id === 'soleil' ? '☀' : 'Δ' }}</span>
+              <span class="ch__icon-fallback">{{ opt.icon && !opt.icon.includes('/') ? opt.icon : 'Δ' }}</span>
             </div>
             <span class="ch__label">{{ opt.label }}</span>
           </button>
