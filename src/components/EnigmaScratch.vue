@@ -29,11 +29,6 @@
       @pointerdown="onDown"
     ></canvas>
 
-    <!-- Instruction (disparaît après le premier grattage) -->
-    <p class="sc__hint" :style="{ opacity: hasScratchStarted ? 0 : 1 }">
-      ↑ Gratte pour révéler le message
-    </p>
-
     <!-- Barre de progression -->
     <div class="sc__progress-bar">
       <div class="sc__progress-fill" :style="{ width: `${progress}%` }"></div>
